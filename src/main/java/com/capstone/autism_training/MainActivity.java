@@ -4,6 +4,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -19,7 +20,7 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    private CardTableManager cardTableManager;
+    private DeckTableManager deckTableManager;
     private Cursor cursor;
 
     private ActivityResultLauncher<String> mGetContent;
@@ -29,14 +30,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        cardTableManager = new CardTableManager(getApplicationContext());
-        cardTableManager.open("IMAGE_DECK");
+        deckTableManager = new DeckTableManager(getApplicationContext());
+        deckTableManager.open("IMAGE_DECK");
 
         mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
                 uri -> {
                     try {
                         byte[] image = getBitmapAsByteArray(BitmapFactory.decodeStream(getApplicationContext().getContentResolver().openInputStream(uri)));
-                        long rowNumber = cardTableManager.insert(image);
+                        long rowNumber = deckTableManager.insert("caption", image);
                         if (rowNumber != -1) {
                             Toast.makeText(getApplicationContext(), "Successfully inserted image at row " + rowNumber + ". Fetch rows again to change image.", Toast.LENGTH_LONG).show();
                         }
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void fetchRows_onClick(View view) {
-        cursor = cardTableManager.fetch();
+        cursor = deckTableManager.fetch();
         TextView textView = findViewById(R.id.databaseInfo);
         textView.setText(String.format(Locale.getDefault(), "%d rows fetched from the table", cursor.getCount()));
 
@@ -102,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void deleteTable_onClick(View view) {
-        cardTableManager.deleteTable();
+        deckTableManager.deleteTable();
         Toast.makeText(getApplicationContext(), "Successfully deleted the table. Fetch rows again to see the change.", Toast.LENGTH_LONG).show();
     }
 
@@ -114,8 +115,12 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        cardTableManager.close();
+        deckTableManager.close();
         cursor.close();
         super.onDestroy();
+    }
+
+    public void allDecks_onClick(View view) {
+        startActivity(new Intent(this, DeckActivity.class));
     }
 }

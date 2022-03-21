@@ -36,7 +36,7 @@ public class SuperMemoTableManager {
     }
 
     public Cursor fetch() {
-        String[] columns = new String[] { SuperMemoTableHelper._ID, SuperMemoTableHelper.REPETITIONS, SuperMemoTableHelper.INTERVAL, SuperMemoTableHelper.EASINESS };
+        String[] columns = new String[] { SuperMemoTableHelper.ID, SuperMemoTableHelper.REPETITIONS, SuperMemoTableHelper.INTERVAL, SuperMemoTableHelper.EASINESS };
         Cursor cursor = database.query(SuperMemoTableHelper.TABLE_NAME, columns, null, null, null, null, null);
         if (cursor != null) {
             cursor.moveToFirst();
@@ -44,16 +44,16 @@ public class SuperMemoTableManager {
         return cursor;
     }
 
-    public int update(long _id, int repetitions, int interval, double easiness) {
+    public int update(long id, int repetitions, int interval, double easiness) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(SuperMemoTableHelper.REPETITIONS, repetitions);
         contentValues.put(SuperMemoTableHelper.INTERVAL, interval);
         contentValues.put(SuperMemoTableHelper.EASINESS, easiness);
-        return database.update(SuperMemoTableHelper.TABLE_NAME, contentValues, SuperMemoTableHelper._ID + " = " + _id, null);
+        return database.update(SuperMemoTableHelper.TABLE_NAME, contentValues, SuperMemoTableHelper.ID + " = " + id, null);
     }
 
-    public void delete(long _id) {
-        database.delete(SuperMemoTableHelper.TABLE_NAME, SuperMemoTableHelper._ID + "=" + _id, null);
+    public void delete(long id) {
+        database.delete(SuperMemoTableHelper.TABLE_NAME, SuperMemoTableHelper.ID + "=" + id, null);
     }
 
     public void deleteTable() {

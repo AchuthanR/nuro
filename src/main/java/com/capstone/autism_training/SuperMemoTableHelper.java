@@ -8,7 +8,7 @@ public class SuperMemoTableHelper extends SQLiteOpenHelper {
 
     public static String TABLE_NAME;
 
-    public static final String _ID = "_id";
+    public static final String ID = "id";
     public static final String REPETITIONS = "repetitions";
     public static final String INTERVAL = "interval";
     public static final String EASINESS = "easiness";
@@ -23,7 +23,7 @@ public class SuperMemoTableHelper extends SQLiteOpenHelper {
         super(context, DB_NAME, null, DB_VERSION);
         TABLE_NAME = table_name;
         CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
-                + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + ID + " INTEGER PRIMARY KEY, "
                 + REPETITIONS + " INTEGER NOT NULL, "
                 + INTERVAL + " INTEGER NOT NULL, "
                 + EASINESS + " REAL NOT NULL);";
