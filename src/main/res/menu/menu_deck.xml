@@ -4,7 +4,6 @@
     tools:context="com.capstone.autism_training.DeckActivity">
     <item
         android:id="@+id/action_settings"
-        android:orderInCategory="100"
         android:title="@string/deck_activity_action_settings"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="collapseActionView" />
 </menu>
