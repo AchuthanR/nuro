@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LanguageTherapyAssistanceForAutisticChildren">
         <activity
+            android:name=".CardsActivity"
+            android:exported="false" />
+        <activity
             android:name=".Modules"
             android:exported="false" />
         <activity

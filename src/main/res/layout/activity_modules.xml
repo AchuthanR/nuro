@@ -53,6 +53,7 @@
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="16dp"
         android:text="Show all Card Decks"
+        android:onClick="showDecks_onClick"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
