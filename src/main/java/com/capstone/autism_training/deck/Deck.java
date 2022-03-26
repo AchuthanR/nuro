@@ -1,4 +1,6 @@
-package com.capstone.autism_training;
+package com.capstone.autism_training.deck;
+
+import com.capstone.autism_training.card.Card;
 
 import java.util.ArrayList;
 import java.util.Comparator;

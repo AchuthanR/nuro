@@ -1,10 +1,12 @@
-package com.capstone.autism_training;
+package com.capstone.autism_training.deck;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+
+import com.capstone.autism_training.deck.DeckTableHelper;
 
 public class DeckTableManager {
 

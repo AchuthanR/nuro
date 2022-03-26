@@ -1,8 +1,13 @@
-package com.capstone.autism_training;
+package com.capstone.autism_training.deck;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import com.capstone.autism_training.R;
+import com.capstone.autism_training.card.CardActivity;
+import com.capstone.autism_training.deck.AddDeckDialogFragment;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,8 +18,10 @@ public class DeckActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_deck);
+
+        MaterialToolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(view -> onBackPressed());
 
         ExtendedFloatingActionButton extendedFAB = findViewById(R.id.extendedFAB);
         extendedFAB.setOnClickListener(view -> {
@@ -25,7 +32,10 @@ public class DeckActivity extends AppCompatActivity {
             addDeckDialogFragment.show(transaction, AddDeckDialogFragment.TAG);
         });
 
-        MaterialToolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(view -> onBackPressed());
+        MaterialCardView materialCardView = findViewById(R.id.cardView);
+        materialCardView.setOnClickListener(view2 -> {
+            Intent intent = new Intent(this, CardActivity.class);
+            startActivity(intent);
+        });
     }
 }

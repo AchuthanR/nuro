@@ -20,8 +20,4 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-
-    <style name="Theme.LanguageTherapyAssistanceForAutisticChildren.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="Theme.LanguageTherapyAssistanceForAutisticChildren.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

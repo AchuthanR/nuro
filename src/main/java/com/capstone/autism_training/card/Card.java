@@ -1,4 +1,4 @@
-package com.capstone.autism_training;
+package com.capstone.autism_training.card;
 
 import android.graphics.drawable.BitmapDrawable;
 

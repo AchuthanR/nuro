@@ -1,9 +1,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.capstone.autism_training.deck.DeckActivity">
+    tools:context="com.capstone.autism_training.ModuleActivity">
     <item
         android:id="@+id/action_settings"
-        android:title="@string/action_settings_activity_deck"
+        android:title="@string/action_settings_activity_card"
         app:showAsAction="collapseActionView" />
 </menu>

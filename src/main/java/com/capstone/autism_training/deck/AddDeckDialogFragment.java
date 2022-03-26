@@ -1,17 +1,19 @@
-package com.capstone.autism_training;
+package com.capstone.autism_training.deck;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.DialogFragment;
 
+import com.capstone.autism_training.R;
 import com.google.android.material.appbar.MaterialToolbar;
 
-public class AddCardDialogFragment extends DialogFragment {
+public class AddDeckDialogFragment extends DialogFragment {
 
-    public static final String TAG = "AddCardDialog";
+    public static final String TAG = "AddDeckDialog";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -22,7 +24,7 @@ public class AddCardDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.layout_add_card, container, false);
+        View view = inflater.inflate(R.layout.layout_add_deck, container, false);
 
         MaterialToolbar toolbar = view.findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(view2 -> {

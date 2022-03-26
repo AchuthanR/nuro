@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.capstone.autism_training.deck.DeckTableManager;
+
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.util.Locale;
@@ -120,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    public void allDecks_onClick(View view) {
-        startActivity(new Intent(this, Modules.class));
+    public void modules_onClick(View view) {
+        startActivity(new Intent(this, ModuleActivity.class));
     }
 }

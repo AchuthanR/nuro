@@ -1,4 +1,4 @@
-package com.capstone.autism_training;
+package com.capstone.autism_training.deck;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

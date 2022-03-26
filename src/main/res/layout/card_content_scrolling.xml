@@ -9,8 +9,8 @@
     android:paddingStart="18dp"
     android:paddingEnd="18dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".CardsActivity"
-    tools:showIn="@layout/activity_cards">
+    tools:context=".card.CardActivity"
+    tools:showIn="@layout/activity_card">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -27,8 +27,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="match_parent"
@@ -38,14 +37,11 @@
                     android:contentDescription="Content description" />
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Image Name"
-
+                    android:text="Image caption"
+                    android:layout_margin="16dp"
                     android:textAppearance="?attr/textAppearanceHeadline6" />
-
-
-
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
     </LinearLayout>

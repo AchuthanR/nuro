@@ -12,12 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LanguageTherapyAssistanceForAutisticChildren">
         <activity
-            android:name=".CardsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Modules"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -27,9 +21,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".DeckActivity"
+            android:name=".deck.DeckActivity"
             android:exported="false"
             android:label="@string/title_activity_deck" />
+        <activity
+            android:name=".card.CardActivity"
+            android:exported="false"
+            android:label="@string/title_activity_card" />
+        <activity
+            android:name=".ModuleActivity"
+            android:exported="false"
+            android:label="@string/title_activity_module" />
     </application>
 
 </manifest>
