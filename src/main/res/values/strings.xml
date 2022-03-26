@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">Language therapy assistance for autistic children</string>
     <string name="title_activity_deck">Decks</string>
-    <string name="deck_activity_page_title">Your decks</string>
-    <string name="deck_activity_action_settings">Settings</string>
+    <string name="page_title_activity_deck">Your decks</string>
+    <string name="action_settings_activity_deck">Settings</string>
+
+    <string name="page_title_activity_add_deck">Add deck</string>
+    <string name="action_add_activity_add_deck">Add</string>
+
+    <string name="page_title_activity_add_card">Add card</string>
+    <string name="action_add_activity_add_card">Add</string>
 </resources>

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.capstone.autism_training.DeckActivity">
     <item
-        android:id="@+id/action_settings"
-        android:title="@string/action_settings_activity_deck"
-        app:showAsAction="collapseActionView" />
+        android:id="@+id/action_add"
+        android:title="@string/action_add_activity_add_deck"
+        app:showAsAction="ifRoom" />
 </menu>

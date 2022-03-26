@@ -2,30 +2,30 @@ package com.capstone.autism_training;
 
 import android.os.Bundle;
 
-import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.appbar.MaterialToolbar;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import android.view.View;
-
-import com.capstone.autism_training.databinding.ActivityDeckBinding;
+import androidx.fragment.app.FragmentTransaction;
 
 public class DeckActivity extends AppCompatActivity {
-
-    private ActivityDeckBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityDeckBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        setContentView(R.layout.activity_deck);
 
-        //MaterialToolbar toolbar = binding.toolbar;
-        //setSupportActionBar(toolbar);
+        ExtendedFloatingActionButton extendedFAB = findViewById(R.id.extendedFAB);
+        extendedFAB.setOnClickListener(view -> {
+            AddDeckDialogFragment addDeckDialogFragment = new AddDeckDialogFragment();
+
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            addDeckDialogFragment.show(transaction, AddDeckDialogFragment.TAG);
+        });
+
+        MaterialToolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(view -> onBackPressed());
     }
 }
