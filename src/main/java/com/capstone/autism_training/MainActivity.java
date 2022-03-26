@@ -121,6 +121,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void allDecks_onClick(View view) {
-        startActivity(new Intent(this, DeckActivity.class));
+        startActivity(new Intent(this, Modules.class));
     }
 }
