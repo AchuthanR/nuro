@@ -25,9 +25,7 @@ public class DeckActivity extends AppCompatActivity {
         binding = ActivityDeckBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        MaterialToolbar toolbar = binding.toolbar;
-        setSupportActionBar(toolbar);
-        CollapsingToolbarLayout toolBarLayout = binding.toolbarLayout;
-        toolBarLayout.setTitle(getTitle());
+        //MaterialToolbar toolbar = binding.toolbar;
+        //setSupportActionBar(toolbar);
     }
 }

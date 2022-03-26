@@ -4,6 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingTop="20dp"
+    android:paddingBottom="20dp"
+    android:paddingStart="18dp"
+    android:paddingEnd="18dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".DeckActivity"
     tools:showIn="@layout/activity_deck">
@@ -12,10 +16,6 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
-        android:paddingStart="18dp"
-        android:paddingEnd="18dp"
         android:orientation="vertical">
 
         <com.google.android.material.card.MaterialCardView
@@ -54,9 +54,10 @@
                         android:text="Secondary text"
                         android:textAppearance="?attr/textAppearanceBody2"
                         android:textColor="?android:attr/textColorSecondary" />
+
                 </LinearLayout>
+
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
-
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
