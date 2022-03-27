@@ -11,8 +11,10 @@
         <item name="colorSecondaryContainer">@color/blue_900</item>
         <item name="colorOnSecondary">@color/white</item>
         <!-- Customize your theme here. -->
-        <item name="android:windowBackground">@color/black</item>
         <item name="colorSurface">@color/grey_900</item>
         <item name="colorOutline">@color/grey_900</item>
+        <item name="android:windowBackground">@color/black</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
     </style>
 </resources>

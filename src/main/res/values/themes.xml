@@ -11,9 +11,11 @@
         <item name="colorSecondaryContainer">@color/blue_700</item>
         <item name="colorOnSecondary">@color/white</item>
         <!-- Customize your theme here. -->
-        <item name="android:windowBackground">@color/white</item>
         <item name="colorSurface">@color/blue_grey_50</item>
         <item name="colorOutline">@color/grey_900</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
     </style>
 
     <style name="Theme.LanguageTherapyAssistanceForAutisticChildren.NoActionBar">
