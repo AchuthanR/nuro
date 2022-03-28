@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.capstone.autism_training.card.DeckTableHelper;
+
 public class SuperMemoTableManager {
 
     private SuperMemoTableHelper superMemoTableHelper;
@@ -21,6 +23,7 @@ public class SuperMemoTableManager {
     public void open(String table_name) throws SQLException {
         superMemoTableHelper = new SuperMemoTableHelper(context, table_name);
         database = superMemoTableHelper.getWritableDatabase();
+        database.execSQL(SuperMemoTableHelper.CREATE_TABLE);
     }
 
     public void close() {

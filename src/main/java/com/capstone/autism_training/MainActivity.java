@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         deckTableManager = new DeckTableManager(getApplicationContext());
-        deckTableManager.open("IMAGE_DECK");
 
         mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
                 uri -> {
@@ -116,8 +115,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
+    protected void onStart() {
+        super.onStart();
+        deckTableManager.open("FLASH_CARD");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
         deckTableManager.close();
+    }
+
+    @Override
+    protected void onDestroy() {
         cursor.close();
         super.onDestroy();
     }

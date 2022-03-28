@@ -17,7 +17,7 @@ public class DeckInfoTableHelper extends SQLiteOpenHelper {
 
     static final int DB_VERSION = 1;
 
-    private final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
+    public static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
             + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + NAME + " TEXT NOT NULL, "
             + IMAGE + " BLOB NOT NULL, "

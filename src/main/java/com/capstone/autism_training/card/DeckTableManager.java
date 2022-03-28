@@ -23,6 +23,7 @@ public class DeckTableManager {
     public void open(String table_name) throws SQLException {
         deckTableHelper = new DeckTableHelper(context, table_name);
         database = deckTableHelper.getWritableDatabase();
+        database.execSQL(DeckTableHelper.CREATE_TABLE);
     }
 
     public void close() {

@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.capstone.autism_training.card.DeckTableHelper;
+
 public class DeckInfoTableManager {
 
     private DeckInfoTableHelper deckInfoTableHelper;
@@ -21,6 +23,7 @@ public class DeckInfoTableManager {
     public void open() throws SQLException {
         deckInfoTableHelper = new DeckInfoTableHelper(context);
         database = deckInfoTableHelper.getWritableDatabase();
+        database.execSQL(DeckInfoTableHelper.CREATE_TABLE);
     }
 
     public void close() {

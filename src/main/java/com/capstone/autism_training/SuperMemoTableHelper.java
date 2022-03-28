@@ -17,7 +17,7 @@ public class SuperMemoTableHelper extends SQLiteOpenHelper {
 
     static final int DB_VERSION = 1;
 
-    private static String CREATE_TABLE;
+    public static String CREATE_TABLE;
 
     public SuperMemoTableHelper(Context context, String table_name) {
         super(context, DB_NAME, null, DB_VERSION);
