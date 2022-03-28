@@ -3,7 +3,7 @@
     <string name="title_activity_deck">Decks</string>
     <string name="title_activity_card">Cards</string>
     <string name="title_activity_module">Modules</string>
-    
+
     <string name="page_title_activity_deck">Your decks</string>
     <string name="action_settings_activity_deck">Settings</string>
     <string name="fab_text_activity_deck">Add deck</string>
@@ -22,7 +22,7 @@
 
     <string name="page_title_activity_add_card">Add card</string>
     <string name="action_add_activity_add_card">Add</string>
-    
+
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
