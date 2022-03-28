@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-public class Identification_Question_selection extends AppCompatActivity {
+public class IdentificationQuestionSelection extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,6 +16,6 @@ public class Identification_Question_selection extends AppCompatActivity {
 
     //from selection of question to the main identification task
     public void goto_identification_activity(View view) {
-        startActivity(new Intent(this, Identification_Activity.class));
+        startActivity(new Intent(this, IdentificationActivity.class));
     }
 }

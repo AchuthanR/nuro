@@ -24,6 +24,6 @@ public class ModuleActivity extends AppCompatActivity {
 
         //for starting the identification task
         MaterialCardView materialCardView1 = findViewById(R.id.identificationTask);
-        materialCardView1.setOnClickListener(view -> startActivity(new Intent(this, Identification_Question_selection.class)) );
+        materialCardView1.setOnClickListener(view -> startActivity(new Intent(this, IdentificationQuestionSelection.class)) );
     }
 }

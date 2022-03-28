@@ -12,12 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LanguageTherapyAssistanceForAutisticChildren">
         <activity
-            android:name=".Identification_Activity"
-            android:exported="false" />
-        <activity
-            android:name=".Identification_Question_selection"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -38,6 +32,12 @@
             android:name=".ModuleActivity"
             android:exported="false"
             android:label="@string/title_activity_module" />
+        <activity
+            android:name=".IdentificationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".IdentificationQuestionSelection"
+            android:exported="false" />
     </application>
 
 </manifest>
