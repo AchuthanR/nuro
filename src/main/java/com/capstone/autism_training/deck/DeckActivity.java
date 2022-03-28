@@ -2,6 +2,9 @@ package com.capstone.autism_training.deck;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.capstone.autism_training.R;
 import com.capstone.autism_training.card.CardActivity;
@@ -34,6 +37,9 @@ public class DeckActivity extends AppCompatActivity {
         MaterialCardView materialCardView = findViewById(R.id.cardView);
         materialCardView.setOnClickListener(view2 -> {
             Intent intent = new Intent(this, CardActivity.class);
+            if (materialCardView.getTag() != null) {
+                intent.putExtra("TABLE_NAME", materialCardView.getTag().toString());
+            }
             startActivity(intent);
         });
     }

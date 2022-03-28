@@ -52,7 +52,7 @@ public class SuperMemoTableManager {
         return database.update(SuperMemoTableHelper.TABLE_NAME, contentValues, SuperMemoTableHelper.ID + " = " + id, null);
     }
 
-    public void delete(long id) {
+    public void deleteRow(long id) {
         database.delete(SuperMemoTableHelper.TABLE_NAME, SuperMemoTableHelper.ID + "=" + id, null);
     }
 

@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.capstone.autism_training.deck.DeckTableManager;
+import com.capstone.autism_training.card.DeckTableManager;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
                 uri -> {
                     try {
                         byte[] image = getBitmapAsByteArray(BitmapFactory.decodeStream(getApplicationContext().getContentResolver().openInputStream(uri)));
-                        long rowNumber = deckTableManager.insert("caption", image);
+                        long rowNumber = deckTableManager.insert(image, "caption", "answer");
                         if (rowNumber != -1) {
                             Toast.makeText(getApplicationContext(), "Successfully inserted image at row " + rowNumber + ". Fetch rows again to change image.", Toast.LENGTH_LONG).show();
                         }

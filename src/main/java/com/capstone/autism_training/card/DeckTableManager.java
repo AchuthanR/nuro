@@ -1,4 +1,4 @@
-package com.capstone.autism_training.deck;
+package com.capstone.autism_training.card;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.capstone.autism_training.deck.DeckTableHelper;
+import com.capstone.autism_training.card.DeckTableHelper;
 
 public class DeckTableManager {
 
@@ -29,15 +29,16 @@ public class DeckTableManager {
         deckTableHelper.close();
     }
 
-    public long insert(String caption, byte[] image) {
+    public long insert(byte[] image, String caption, String answer) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(DeckTableHelper.CAPTION, caption);
         contentValues.put(DeckTableHelper.IMAGE, image);
+        contentValues.put(DeckTableHelper.CAPTION, caption);
+        contentValues.put(DeckTableHelper.ANSWER, answer);
         return database.insert(DeckTableHelper.TABLE_NAME, null, contentValues);
     }
 
     public Cursor fetch() {
-        String[] columns = new String[] { DeckTableHelper.ID, DeckTableHelper.CAPTION, DeckTableHelper.IMAGE };
+        String[] columns = new String[] { DeckTableHelper.ID, DeckTableHelper.IMAGE, DeckTableHelper.CAPTION, DeckTableHelper.ANSWER };
         Cursor cursor = database.query(DeckTableHelper.TABLE_NAME, columns, null, null, null, null, null);
         if (cursor != null) {
             cursor.moveToFirst();
@@ -45,14 +46,15 @@ public class DeckTableManager {
         return cursor;
     }
 
-    public int update(long id, String caption, byte[] image) {
+    public int update(long id, byte[] image, String caption, String answer) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(DeckTableHelper.CAPTION, caption);
         contentValues.put(DeckTableHelper.IMAGE, image);
+        contentValues.put(DeckTableHelper.CAPTION, caption);
+        contentValues.put(DeckTableHelper.ANSWER, answer);
         return database.update(DeckTableHelper.TABLE_NAME, contentValues, DeckTableHelper.ID + " = " + id, null);
     }
 
-    public void delete(long id) {
+    public void deleteRow(long id) {
         database.delete(DeckTableHelper.TABLE_NAME, DeckTableHelper.ID + "=" + id, null);
     }
 
