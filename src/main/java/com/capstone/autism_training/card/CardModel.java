@@ -1,18 +1,18 @@
 package com.capstone.autism_training.card;
 
-import java.util.List;
+public class CardModel {
 
-public class Card {
-
-    public List<byte[]> image;
-    public List<String> caption;
-    public List<String> answer;
+    public int id;
+    public byte[] image;
+    public String caption;
+    public String answer;
     public long nextPracticeTime;
     public int repetitions;
     public int interval;
     public double easiness;
 
-    public Card(List<byte[]> image, List<String> caption, List<String> answer, long nextPracticeTime, int repetitions, int interval, double easiness) {
+    public CardModel(int id, byte[] image, String caption, String answer, long nextPracticeTime, int repetitions, int interval, double easiness) {
+        this.id = id;
         this.image = image;
         this.caption = caption;
         this.answer = answer;
@@ -22,7 +22,8 @@ public class Card {
         this.easiness = easiness;
     }
 
-    public Card(List<byte[]> image, List<String> caption, List<String> answer, long nextPracticeTime, int repetitions, int interval) {
+    public CardModel(int id, byte[] image, String caption, String answer, long nextPracticeTime, int repetitions, int interval) {
+        this.id = id;
         this.image = image;
         this.caption = caption;
         this.answer = answer;
@@ -32,7 +33,8 @@ public class Card {
         this.easiness = 2.5;
     }
 
-    public Card(List<byte[]> image, List<String> caption, List<String> answer, long nextPracticeTime, int repetitions) {
+    public CardModel(int id, byte[] image, String caption, String answer, long nextPracticeTime, int repetitions) {
+        this.id = id;
         this.image = image;
         this.caption = caption;
         this.answer = answer;
@@ -42,7 +44,8 @@ public class Card {
         this.easiness = 2.5;
     }
 
-    public Card(List<byte[]> image, List<String> caption, List<String> answer, long nextPracticeTime) {
+    public CardModel(int id, byte[] image, String caption, String answer, long nextPracticeTime) {
+        this.id = id;
         this.image = image;
         this.caption = caption;
         this.answer = answer;
@@ -52,7 +55,8 @@ public class Card {
         this.easiness = 2.5;
     }
 
-    public Card(List<byte[]> image, List<String> caption, List<String> answer) {
+    public CardModel(int id, byte[] image, String caption, String answer) {
+        this.id = id;
         this.image = image;
         this.caption = caption;
         this.answer = answer;
@@ -85,6 +89,5 @@ public class Card {
         easiness = Math.max(1.3, easiness + 0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02));
 
         nextPracticeTime = System.currentTimeMillis() + 60L * 60 * 24 * 1000 * interval;
-        // Store everything in the database
     }
 }

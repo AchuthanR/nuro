@@ -4,6 +4,6 @@
     tools:context="com.capstone.autism_training.MainActivity">
     <item
         android:id="@+id/action_settings"
-        android:title="@string/action_settings_activity_module"
+        android:title="@string/action_settings_activity_main"
         app:showAsAction="collapseActionView" />
 </menu>

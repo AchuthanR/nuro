@@ -3,6 +3,13 @@
     <string name="title_activity_deck">Decks</string>
     <string name="title_activity_card">Cards</string>
 
+    <string name="page_title_activity_main">Modules</string>
+    <string name="action_settings_activity_main">Settings</string>
+    <string name="visual_scheduling_title_main">Visual scheduling</string>
+    <string name="flashcard_training_title_main">Flashcard training</string>
+    <string name="all_decks_title_main">All decks</string>
+    <string name="identification_task_title_main">Identification task</string>
+
     <string name="page_title_activity_deck">Your decks</string>
     <string name="action_settings_activity_deck">Settings</string>
     <string name="fab_text_activity_deck">Add deck</string>
@@ -10,13 +17,8 @@
     <string name="page_title_activity_card">Flash cards</string>
     <string name="action_settings_activity_card">Settings</string>
     <string name="fab_text_activity_card">Add card</string>
-
-    <string name="page_title_activity_main">Modules</string>
-    <string name="action_settings_activity_module">Settings</string>
-    <string name="visual_scheduling_title_module">Visual scheduling</string>
-    <string name="flashcard_training_title_module">Flashcard training</string>
-    <string name="all_decks_title_module">All decks</string>
-    <string name="identification_task_title_module">Identification task</string>
+    <string name="show_answer_button_text_activity_card">Show answer</string>
+    <string name="hide_answer_button_text_activity_card">Hide answer</string>
 
     <string name="page_title_activity_add_deck">Add deck</string>
     <string name="name_edit_text_hint_activity_add_deck">Name of the deck</string>
@@ -31,13 +33,4 @@
     <string name="caption_edit_text_hint_activity_add_card">Caption for the flash card</string>
     <string name="answer_edit_text_hint_activity_add_card">Answer of the flash card</string>
     <string name="add_card_button_activity_add_card">Add card</string>
-    
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>

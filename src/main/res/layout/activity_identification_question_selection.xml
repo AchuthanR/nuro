@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    tools:context=".IdentificationQuestionSelection">
-
+    tools:context=".activities.IdentificationQuestionSelection">
 
     <TextView
         android:id="@+id/textView2"
@@ -37,8 +36,8 @@
             android:autofillHints="Deck Name"
             tools:layout_editor_absoluteX="1dp"
             tools:layout_editor_absoluteY="193dp" />
-
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -59,7 +58,6 @@
             android:autofillHints="Deck Name"
             tools:layout_editor_absoluteX="1dp"
             tools:layout_editor_absoluteY="193dp" />
-
     </LinearLayout>
 
     <Button
@@ -69,6 +67,4 @@
         android:layout_height="wrap_content"
         android:text="Create question"
         android:onClick="goto_identification_activity"/>
-
-
 </LinearLayout>

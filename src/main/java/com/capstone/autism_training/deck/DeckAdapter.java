@@ -3,7 +3,6 @@ package com.capstone.autism_training.deck;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,7 @@ import java.util.ArrayList;
 
 public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
 
-    private ArrayList<DeckInfo> decks;
+    private ArrayList<DeckModel> decks;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final Context context;
@@ -60,7 +59,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
         }
     }
 
-    public DeckAdapter(ArrayList<DeckInfo> decks) {
+    public DeckAdapter(ArrayList<DeckModel> decks) {
         this.decks = decks;
     }
 

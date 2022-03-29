@@ -40,7 +40,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/visual_scheduling_title_module"
+                    android:text="@string/visual_scheduling_title_main"
                     android:layout_margin="16dp"
                     android:textAppearance="?attr/textAppearanceHeadline6" />
             </LinearLayout>
@@ -68,7 +68,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/flashcard_training_title_module"
+                    android:text="@string/flashcard_training_title_main"
                     android:layout_margin="16dp"
                     android:textAppearance="?attr/textAppearanceHeadline6" />
             </LinearLayout>
@@ -96,7 +96,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/all_decks_title_module"
+                    android:text="@string/all_decks_title_main"
                     android:layout_margin="16dp"
                     android:textAppearance="?attr/textAppearanceHeadline6" />
             </LinearLayout>
@@ -124,7 +124,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/identification_task_title_module"
+                    android:text="@string/identification_task_title_main"
                     android:layout_margin="16dp"
                     android:textAppearance="?attr/textAppearanceHeadline6" />
             </LinearLayout>

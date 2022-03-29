@@ -1,8 +1,10 @@
-package com.capstone.autism_training;
+package com.capstone.autism_training.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.capstone.autism_training.R;
 
 public class IdentificationActivity extends AppCompatActivity {
 

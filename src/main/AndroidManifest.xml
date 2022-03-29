@@ -29,10 +29,10 @@
             android:exported="false"
             android:label="@string/title_activity_card" />
         <activity
-            android:name=".IdentificationActivity"
+            android:name=".activities.IdentificationActivity"
             android:exported="false" />
         <activity
-            android:name=".IdentificationQuestionSelection"
+            android:name=".activities.IdentificationQuestionSelection"
             android:exported="false" />
     </application>
 

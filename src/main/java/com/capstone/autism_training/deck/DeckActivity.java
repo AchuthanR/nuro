@@ -19,7 +19,7 @@ public class DeckActivity extends AppCompatActivity {
     protected RecyclerView mRecyclerView;
     protected DeckAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
-    protected ArrayList<DeckInfo> mDecks;
+    protected ArrayList<DeckModel> mDecks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +58,8 @@ public class DeckActivity extends AppCompatActivity {
         int nameIndex = cursor.getColumnIndex(DeckInfoTableHelper.NAME);
         int descriptionIndex = cursor.getColumnIndex(DeckInfoTableHelper.DESCRIPTION);
         while (!cursor.isAfterLast() || cursor.isFirst()) {
-            DeckInfo deckInfo = new DeckInfo(cursor.getInt(idIndex), cursor.getBlob(imageIndex), cursor.getString(nameIndex), cursor.getString(descriptionIndex));
-            mDecks.add(deckInfo);
+            DeckModel deckModel = new DeckModel(cursor.getInt(idIndex), cursor.getBlob(imageIndex), cursor.getString(nameIndex), cursor.getString(descriptionIndex));
+            mDecks.add(deckModel);
             cursor.moveToNext();
         }
     }

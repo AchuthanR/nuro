@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    tools:context=".IdentificationActivity">
+    tools:context=".activities.IdentificationActivity">
 
     <TextView
         android:id="@+id/heading_identification_module"
@@ -24,7 +24,6 @@
         android:textAlignment="center"
         android:textSize="24sp"
         android:layout_margin="8dp"/>
-
 
     <TableLayout
         android:layout_width="match_parent"
@@ -65,9 +64,5 @@
                 android:layout_height="wrap_content"
                 tools:srcCompat="@tools:sample/avatars" />
         </TableRow>
-
-
     </TableLayout>
-
-
 </LinearLayout>
