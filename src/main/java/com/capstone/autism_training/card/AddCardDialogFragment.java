@@ -18,7 +18,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.capstone.autism_training.R;
-import com.capstone.autism_training.deck.DeckInfoTableManager;
 import com.google.android.material.appbar.MaterialToolbar;
 
 import java.io.ByteArrayOutputStream;

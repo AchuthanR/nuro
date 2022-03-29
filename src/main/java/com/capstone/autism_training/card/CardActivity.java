@@ -18,12 +18,13 @@ public class CardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card);
 
-        if (getIntent().hasExtra("TABLE_NAME")) {
-            TABLE_NAME = getIntent().getStringExtra("TABLE_NAME");
-        }
-
         MaterialToolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(view -> onBackPressed());
+
+        if (getIntent().hasExtra("TABLE_NAME")) {
+            TABLE_NAME = getIntent().getStringExtra("TABLE_NAME");
+            toolbar.setTitle("Flash cards in " + TABLE_NAME);
+        }
 
         ExtendedFloatingActionButton extendedFAB = findViewById(R.id.extendedFAB);
         extendedFAB.setOnClickListener(view -> {

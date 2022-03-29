@@ -29,10 +29,6 @@
             android:exported="false"
             android:label="@string/title_activity_card" />
         <activity
-            android:name=".ModuleActivity"
-            android:exported="false"
-            android:label="@string/title_activity_module" />
-        <activity
             android:name=".IdentificationActivity"
             android:exported="false" />
         <activity

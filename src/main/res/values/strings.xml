@@ -2,21 +2,21 @@
     <string name="app_name">Language therapy assistance for autistic children</string>
     <string name="title_activity_deck">Decks</string>
     <string name="title_activity_card">Cards</string>
-    <string name="title_activity_module">Modules</string>
 
     <string name="page_title_activity_deck">Your decks</string>
     <string name="action_settings_activity_deck">Settings</string>
     <string name="fab_text_activity_deck">Add deck</string>
 
-    <string name="page_title_activity_card">Your flash cards</string>
+    <string name="page_title_activity_card">Flash cards</string>
     <string name="action_settings_activity_card">Settings</string>
     <string name="fab_text_activity_card">Add card</string>
 
-    <string name="page_title_activity_module">Modules</string>
+    <string name="page_title_activity_main">Modules</string>
     <string name="action_settings_activity_module">Settings</string>
     <string name="visual_scheduling_title_module">Visual scheduling</string>
     <string name="flashcard_training_title_module">Flashcard training</string>
     <string name="all_decks_title_module">All decks</string>
+    <string name="identification_task_title_module">Identification task</string>
 
     <string name="page_title_activity_add_deck">Add deck</string>
     <string name="name_edit_text_hint_activity_add_deck">Name of the deck</string>

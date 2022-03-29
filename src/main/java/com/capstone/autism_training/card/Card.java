@@ -1,49 +1,62 @@
 package com.capstone.autism_training.card;
 
-import android.graphics.drawable.BitmapDrawable;
-
 import java.util.List;
 
 public class Card {
 
-    public BitmapDrawable front;
-    public List<String> back;
+    public List<byte[]> image;
+    public List<String> caption;
+    public List<String> answer;
     public long nextPracticeTime;
     public int repetitions;
     public int interval;
     public double easiness;
 
-    public Card(BitmapDrawable front, List<String> back, long nextPracticeTime, int repetitions, int interval, double easiness) {
-        this.front = front;
-        this.back = back;
+    public Card(List<byte[]> image, List<String> caption, List<String> answer, long nextPracticeTime, int repetitions, int interval, double easiness) {
+        this.image = image;
+        this.caption = caption;
+        this.answer = answer;
         this.nextPracticeTime = nextPracticeTime;
         this.repetitions = repetitions;
         this.interval = interval;
         this.easiness = easiness;
     }
 
-    public Card(BitmapDrawable front, List<String> back, long nextPracticeTime, int repetitions, int interval) {
-        this.front = front;
-        this.back = back;
+    public Card(List<byte[]> image, List<String> caption, List<String> answer, long nextPracticeTime, int repetitions, int interval) {
+        this.image = image;
+        this.caption = caption;
+        this.answer = answer;
         this.nextPracticeTime = nextPracticeTime;
         this.repetitions = repetitions;
         this.interval = interval;
         this.easiness = 2.5;
     }
 
-    public Card(BitmapDrawable front, List<String> back, long nextPracticeTime, int repetitions) {
-        this.front = front;
-        this.back = back;
+    public Card(List<byte[]> image, List<String> caption, List<String> answer, long nextPracticeTime, int repetitions) {
+        this.image = image;
+        this.caption = caption;
+        this.answer = answer;
         this.nextPracticeTime = nextPracticeTime;
         this.repetitions = repetitions;
         this.interval = 1;
         this.easiness = 2.5;
     }
 
-    public Card(BitmapDrawable front, List<String> back, long nextPracticeTime) {
-        this.front = front;
-        this.back = back;
+    public Card(List<byte[]> image, List<String> caption, List<String> answer, long nextPracticeTime) {
+        this.image = image;
+        this.caption = caption;
+        this.answer = answer;
         this.nextPracticeTime = nextPracticeTime;
+        this.repetitions = 0;
+        this.interval = 1;
+        this.easiness = 2.5;
+    }
+
+    public Card(List<byte[]> image, List<String> caption, List<String> answer) {
+        this.image = image;
+        this.caption = caption;
+        this.answer = answer;
+        this.nextPracticeTime = System.currentTimeMillis();
         this.repetitions = 0;
         this.interval = 1;
         this.easiness = 2.5;

@@ -1,21 +1,25 @@
 package com.capstone.autism_training.deck;
 
-import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import com.capstone.autism_training.R;
-import com.capstone.autism_training.card.CardActivity;
 import com.google.android.material.appbar.MaterialToolbar;
-import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
 
 public class DeckActivity extends AppCompatActivity {
+
+    protected RecyclerView mRecyclerView;
+    protected DeckAdapter mAdapter;
+    protected RecyclerView.LayoutManager mLayoutManager;
+    protected ArrayList<DeckInfo> mDecks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,13 +38,29 @@ public class DeckActivity extends AppCompatActivity {
             addDeckDialogFragment.show(transaction, AddDeckDialogFragment.TAG);
         });
 
-        MaterialCardView materialCardView = findViewById(R.id.cardView);
-        materialCardView.setOnClickListener(view2 -> {
-            Intent intent = new Intent(this, CardActivity.class);
-            if (materialCardView.getTag() != null) {
-                intent.putExtra("TABLE_NAME", materialCardView.getTag().toString());
-            }
-            startActivity(intent);
-        });
+        mDecks = new ArrayList<>();
+        initializeDecks();
+
+        mRecyclerView = findViewById(R.id.recyclerView);
+        mLayoutManager = new LinearLayoutManager(this);
+        mAdapter = new DeckAdapter(mDecks);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setAdapter(mAdapter);
+    }
+
+    private void initializeDecks() {
+        DeckInfoTableManager deckInfoTableManager = new DeckInfoTableManager(getApplicationContext());
+        deckInfoTableManager.open();
+        Cursor cursor = deckInfoTableManager.fetch();
+
+        int idIndex = cursor.getColumnIndex(DeckInfoTableHelper.ID);
+        int imageIndex = cursor.getColumnIndex(DeckInfoTableHelper.IMAGE);
+        int nameIndex = cursor.getColumnIndex(DeckInfoTableHelper.NAME);
+        int descriptionIndex = cursor.getColumnIndex(DeckInfoTableHelper.DESCRIPTION);
+        while (!cursor.isAfterLast() || cursor.isFirst()) {
+            DeckInfo deckInfo = new DeckInfo(cursor.getInt(idIndex), cursor.getBlob(imageIndex), cursor.getString(nameIndex), cursor.getString(descriptionIndex));
+            mDecks.add(deckInfo);
+            cursor.moveToNext();
+        }
     }
 }
