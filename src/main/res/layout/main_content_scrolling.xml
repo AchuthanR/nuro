@@ -4,8 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="20dp"
-    android:paddingBottom="20dp"
     android:paddingStart="18dp"
     android:paddingEnd="18dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -16,7 +14,37 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         android:orientation="vertical">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/allDecksCardView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="20dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/deck"
+                    android:scaleType="centerCrop" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/all_decks_module_title_main"
+                    android:layout_margin="16dp"
+                    android:textAppearance="?attr/textAppearanceHeadline6" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/visualSchedulingCardView"
@@ -33,14 +61,42 @@
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="194dp"
-                    app:srcCompat="@drawable/media"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/visual_schedule"
                     android:scaleType="centerCrop" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/visual_scheduling_title_main"
+                    android:text="@string/visual_scheduling_module_title_main"
+                    android:layout_margin="16dp"
+                    android:textAppearance="?attr/textAppearanceHeadline6" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/activitiesCardView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="20dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/activities"
+                    android:scaleType="centerCrop" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/activities_module_title_main"
                     android:layout_margin="16dp"
                     android:textAppearance="?attr/textAppearanceHeadline6" />
             </LinearLayout>
@@ -61,70 +117,14 @@
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="194dp"
-                    app:srcCompat="@drawable/media"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/training"
                     android:scaleType="centerCrop" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/flashcard_training_title_main"
-                    android:layout_margin="16dp"
-                    android:textAppearance="?attr/textAppearanceHeadline6" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/allDecksCardView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="20dp"
-            android:clickable="true"
-            android:focusable="true">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="194dp"
-                    app:srcCompat="@drawable/media"
-                    android:scaleType="centerCrop" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/all_decks_title_main"
-                    android:layout_margin="16dp"
-                    android:textAppearance="?attr/textAppearanceHeadline6" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/identificationTask"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="20dp"
-            android:clickable="true"
-            android:focusable="true">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="194dp"
-                    app:srcCompat="@drawable/media"
-                    android:scaleType="centerCrop" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/identification_task_title_main"
+                    android:text="@string/training_module_title_main"
                     android:layout_margin="16dp"
                     android:textAppearance="?attr/textAppearanceHeadline6" />
             </LinearLayout>

@@ -2,13 +2,15 @@
     <string name="app_name">Language therapy assistance for autistic children</string>
     <string name="title_activity_deck">Decks</string>
     <string name="title_activity_card">Cards</string>
+    <string name="title_activity_activities">Activities</string>
+    <string name="title_activity_identification">Identification activity</string>
 
     <string name="page_title_activity_main">Modules</string>
     <string name="action_settings_activity_main">Settings</string>
-    <string name="visual_scheduling_title_main">Visual scheduling</string>
-    <string name="flashcard_training_title_main">Flashcard training</string>
-    <string name="all_decks_title_main">All decks</string>
-    <string name="identification_task_title_main">Identification task</string>
+    <string name="all_decks_module_title_main">All decks</string>
+    <string name="visual_scheduling_module_title_main">Visual scheduling</string>
+    <string name="activities_module_title_main">Activities</string>
+    <string name="training_module_title_main">Training</string>
 
     <string name="page_title_activity_deck">Your decks</string>
     <string name="action_settings_activity_deck">Settings</string>
@@ -30,7 +32,14 @@
     <string name="page_title_activity_add_card">Add card</string>
     <string name="select_image_button_activity_add_card">Select image for the flash card</string>
     <string name="content_description_image_view_activity_add_card">Image for the new flash card</string>
-    <string name="caption_edit_text_hint_activity_add_card">Caption for the flash card</string>
+    <string name="caption_edit_text_hint_activity_add_card">Caption for the image</string>
     <string name="answer_edit_text_hint_activity_add_card">Answer of the flash card</string>
     <string name="add_card_button_activity_add_card">Add card</string>
+
+    <string name="page_title_activity_activities">Activities</string>
+    <string name="identification_activity_title_activity_activities">Identification activity</string>
+
+    <string name="page_title_activity_identification">Identification activity</string>
+    <string name="choose_deck_text_view_text_activity_identification">Choose deck</string>
+    <string name="heading_text_view_text_activity_identification">Identify the correct answer</string>
 </resources>

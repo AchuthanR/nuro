@@ -8,12 +8,10 @@
     tools:context=".deck.DeckActivity">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/app_bar_height">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:id="@+id/toolbar_layout"
             style="@style/Widget.Material3.CollapsingToolbar.Large"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -46,5 +44,4 @@
         android:clickable="true"
         android:focusable="true"
         app:icon="@drawable/ic_baseline_add_24" />
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

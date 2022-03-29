@@ -29,11 +29,12 @@
             android:exported="false"
             android:label="@string/title_activity_card" />
         <activity
-            android:name=".activities.IdentificationActivity"
-            android:exported="false" />
+            android:name=".activities.ActivitiesActivity"
+            android:exported="false"
+            android:label="@string/title_activity_activities" />
         <activity
-            android:name=".activities.IdentificationQuestionSelection"
-            android:exported="false" />
+            android:name=".activities.IdentificationActivity"
+            android:exported="false"
+            android:label="@string/title_activity_identification" />
     </application>
-
 </manifest>

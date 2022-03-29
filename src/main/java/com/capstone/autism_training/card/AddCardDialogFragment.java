@@ -57,7 +57,7 @@ public class AddCardDialogFragment extends DialogFragment {
         mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
                 uri -> {
                     try {
-                        if (getContext() != null) {
+                        if (getContext() != null && uri != null) {
                             image = getBitmapAsByteArray(BitmapFactory.decodeStream(getContext().getContentResolver().openInputStream(uri)));
                             BitmapFactory.Options options1 = new BitmapFactory.Options();
                             options1.inJustDecodeBounds = true;

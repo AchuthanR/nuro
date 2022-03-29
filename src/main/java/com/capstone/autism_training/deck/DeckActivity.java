@@ -62,5 +62,7 @@ public class DeckActivity extends AppCompatActivity {
             mDecks.add(deckModel);
             cursor.moveToNext();
         }
+        deckInfoTableManager.close();
+        cursor.close();
     }
 }
