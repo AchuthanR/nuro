@@ -59,15 +59,15 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
         }
     }
 
-    public DeckAdapter(ArrayList<DeckModel> decks) {
-        this.decks = decks;
+    public DeckAdapter() {
+        decks = new ArrayList<>();
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.deck_item, viewGroup, false);
+                .inflate(R.layout.layout_deck_item, viewGroup, false);
 
         return new ViewHolder(view);
     }
@@ -105,5 +105,10 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
     @Override
     public int getItemCount() {
         return decks.size();
+    }
+
+    public void addItem(DeckModel deckModel) {
+        decks.add(0, deckModel);
+        notifyItemInserted(0);
     }
 }

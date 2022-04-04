@@ -50,15 +50,15 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         }
     }
 
-    public CardAdapter(ArrayList<CardModel> cards) {
-        this.cards = cards;
+    public CardAdapter() {
+        cards = new ArrayList<>();
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.card_item, viewGroup, false);
+                .inflate(R.layout.layout_card_item, viewGroup, false);
 
         return new ViewHolder(view);
     }
@@ -101,5 +101,10 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
     @Override
     public int getItemCount() {
         return cards.size();
+    }
+
+    public void addItem(CardModel cardModel) {
+        cards.add(0, cardModel);
+        notifyItemInserted(0);
     }
 }

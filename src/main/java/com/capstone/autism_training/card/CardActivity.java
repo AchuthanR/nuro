@@ -1,5 +1,6 @@
 package com.capstone.autism_training.card;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,7 +24,6 @@ public class CardActivity extends AppCompatActivity {
     protected RecyclerView mRecyclerView;
     protected CardAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
-    protected ArrayList<CardModel> mCards;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,17 +47,17 @@ public class CardActivity extends AppCompatActivity {
             addCardDialogFragment.show(transaction, AddCardDialogFragment.TAG);
         });
 
-        mCards = new ArrayList<>();
-        initializeDecks();
-
         mRecyclerView = findViewById(R.id.recyclerView);
         mLayoutManager = new LinearLayoutManager(this);
-        mAdapter = new CardAdapter(mCards);
+        mAdapter = new CardAdapter();
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    private void initializeDecks() {
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+
         DeckTableManager deckTableManager = new DeckTableManager(getApplicationContext());
         deckTableManager.open(TABLE_NAME);
         Cursor cursor = deckTableManager.fetch();
@@ -68,7 +68,7 @@ public class CardActivity extends AppCompatActivity {
         int answerIndex = cursor.getColumnIndex(DeckTableHelper.ANSWER);
         while (!cursor.isAfterLast() || cursor.isFirst()) {
             CardModel cardModel = new CardModel(cursor.getInt(idIndex), cursor.getBlob(imageIndex), cursor.getString(captionIndex), cursor.getString(answerIndex));
-            mCards.add(cardModel);
+            mAdapter.addItem(cardModel);
             cursor.moveToNext();
         }
         deckTableManager.close();

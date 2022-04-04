@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Language therapy assistance for autistic children</string>
+    <string name="app_name">Autism training</string>
     <string name="title_activity_deck">Decks</string>
     <string name="title_activity_card">Cards</string>
     <string name="title_activity_activities">Activities</string>

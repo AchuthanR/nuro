@@ -7,6 +7,7 @@ import com.capstone.autism_training.R;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,7 +20,6 @@ public class DeckActivity extends AppCompatActivity {
     protected RecyclerView mRecyclerView;
     protected DeckAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
-    protected ArrayList<DeckModel> mDecks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,17 +38,17 @@ public class DeckActivity extends AppCompatActivity {
             addDeckDialogFragment.show(transaction, AddDeckDialogFragment.TAG);
         });
 
-        mDecks = new ArrayList<>();
-        initializeDecks();
-
         mRecyclerView = findViewById(R.id.recyclerView);
         mLayoutManager = new LinearLayoutManager(this);
-        mAdapter = new DeckAdapter(mDecks);
+        mAdapter = new DeckAdapter();
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    private void initializeDecks() {
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+
         DeckInfoTableManager deckInfoTableManager = new DeckInfoTableManager(getApplicationContext());
         deckInfoTableManager.open();
         Cursor cursor = deckInfoTableManager.fetch();
@@ -59,7 +59,7 @@ public class DeckActivity extends AppCompatActivity {
         int descriptionIndex = cursor.getColumnIndex(DeckInfoTableHelper.DESCRIPTION);
         while (!cursor.isAfterLast() || cursor.isFirst()) {
             DeckModel deckModel = new DeckModel(cursor.getInt(idIndex), cursor.getBlob(imageIndex), cursor.getString(nameIndex), cursor.getString(descriptionIndex));
-            mDecks.add(deckModel);
+            mAdapter.addItem(deckModel);
             cursor.moveToNext();
         }
         deckInfoTableManager.close();
