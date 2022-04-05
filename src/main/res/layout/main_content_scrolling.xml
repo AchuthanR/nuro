@@ -32,7 +32,7 @@
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="194dp"
                     app:srcCompat="@drawable/deck"
                     android:scaleType="centerCrop" />
 
@@ -60,7 +60,7 @@
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="194dp"
                     app:srcCompat="@drawable/visual_schedule"
                     android:scaleType="centerCrop" />
 
@@ -88,7 +88,7 @@
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="194dp"
                     app:srcCompat="@drawable/activities"
                     android:scaleType="centerCrop" />
 
@@ -116,7 +116,7 @@
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="194dp"
                     app:srcCompat="@drawable/training"
                     android:scaleType="centerCrop" />
 

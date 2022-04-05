@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.IdentificationActivity">
+    tools:context=".activities.ImageIdentificationActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:elevation="0dp"
-            app:title="@string/page_title_activity_identification"
+            app:title="@string/page_title_activity_image_identification"
             app:navigationIcon="@drawable/ic_round_arrow_back_24" />
     </com.google.android.material.appbar.AppBarLayout>
 

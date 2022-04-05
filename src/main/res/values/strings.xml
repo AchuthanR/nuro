@@ -37,9 +37,19 @@
     <string name="add_card_button_activity_add_card">Add card</string>
 
     <string name="page_title_activity_activities">Activities</string>
-    <string name="identification_activity_title_activity_activities">Identification activity</string>
+    <string name="image_identification_activity_title_activity_activities">Identification activity - Images</string>
+    <string name="image_identification_activity_description_activity_activities">Find the correct image among four options that is associated with the given word</string>
+    <string name="word_identification_activity_title_activity_activities">Identification activity - Words</string>
+    <string name="word_identification_activity_description_activity_activities">Find the correct word among four options that is associated with the given image</string>
 
-    <string name="page_title_activity_identification">Identification activity</string>
-    <string name="choose_deck_text_view_text_activity_identification">Choose deck</string>
-    <string name="heading_text_view_text_activity_identification">Identify the correct answer</string>
+    <string name="page_title_activity_image_identification">Identification activity - Images</string>
+    <string name="choose_deck_text_view_text_activity_image_identification">Choose deck</string>
+    <string name="identify_question_text_view_text_activity_image_identification">Identify %1$s</string>
+    <string name="choose_answer_text_view_text_activity_image_identification">Choose your answer</string>
+    <string name="first_chip_text_activity_image_identification">First image</string>
+    <string name="second_chip_text_activity_image_identification">Second image</string>
+    <string name="third_chip_text_activity_image_identification">Third image</string>
+    <string name="fourth_chip_text_activity_image_identification">Fourth image</string>
+    <string name="submit_button_text_activity_image_identification">Submit</string>
+    <string name="next_button_text_activity_image_identification">Next</string>
 </resources>

@@ -19,7 +19,7 @@ public class ActivitiesActivity extends AppCompatActivity {
         MaterialToolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(view -> onBackPressed());
 
-        MaterialCardView materialCardView = findViewById(R.id.identificationActivityCardView);
-        materialCardView.setOnClickListener(view -> startActivity(new Intent(this, IdentificationActivity.class)) );
+        MaterialCardView materialCardView = findViewById(R.id.imageIdentificationActivityCardView);
+        materialCardView.setOnClickListener(view -> startActivity(new Intent(this, ImageIdentificationActivity.class)) );
     }
 }
