@@ -35,6 +35,10 @@
         <activity
             android:name=".activities.ImageIdentificationActivity"
             android:exported="false"
-            android:label="@string/title_activity_identification" />
+            android:label="@string/title_activity_image_identification" />
+        <activity
+            android:name=".activities.WordIdentificationActivity"
+            android:exported="false"
+            android:label="@string/title_activity_word_identification" />
     </application>
 </manifest>

@@ -3,7 +3,8 @@
     <string name="title_activity_deck">Decks</string>
     <string name="title_activity_card">Cards</string>
     <string name="title_activity_activities">Activities</string>
-    <string name="title_activity_identification">Identification activity</string>
+    <string name="title_activity_image_identification">Identification activity - Images</string>
+    <string name="title_activity_word_identification">Identification activity - Words</string>
 
     <string name="page_title_activity_main">Modules</string>
     <string name="action_settings_activity_main">Settings</string>
@@ -52,4 +53,11 @@
     <string name="fourth_chip_text_activity_image_identification">Fourth image</string>
     <string name="submit_button_text_activity_image_identification">Submit</string>
     <string name="next_button_text_activity_image_identification">Next</string>
+
+    <string name="page_title_activity_word_identification">Identification activity - Words</string>
+    <string name="choose_deck_text_view_text_activity_word_identification">Choose deck</string>
+    <string name="identify_question_text_view_text_activity_word_identification">Identify the below image</string>
+    <string name="choose_answer_text_view_text_activity_word_identification">Choose your answer</string>
+    <string name="submit_button_text_activity_word_identification">Submit</string>
+    <string name="next_button_text_activity_word_identification">Next</string>
 </resources>

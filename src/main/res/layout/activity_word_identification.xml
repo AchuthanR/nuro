@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.ImageIdentificationActivity">
+    tools:context=".activities.WordIdentificationActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -17,10 +17,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:elevation="0dp"
-            app:title="@string/page_title_activity_image_identification"
+            app:title="@string/page_title_activity_word_identification"
             app:navigationIcon="@drawable/ic_round_arrow_back_24" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/image_identification_content_scrolling" />
+    <include layout="@layout/word_identification_content_scrolling" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
