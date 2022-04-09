@@ -44,6 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
+                android:text="@string/identify_question_text_view_text_activity_word_identification"
                 android:textAppearance="?attr/textAppearanceHeadline5"
                 android:textAlignment="center" />
 

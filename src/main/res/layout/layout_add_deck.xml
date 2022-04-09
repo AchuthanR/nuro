@@ -21,6 +21,6 @@
             app:navigationIcon="@drawable/ic_round_close_24" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/add_deck_content_scrolling" />
+    <include layout="@layout/content_scrolling_add_deck" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

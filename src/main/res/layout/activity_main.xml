@@ -32,6 +32,6 @@
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/main_content_scrolling" />
+    <include layout="@layout/content_scrolling_main" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
