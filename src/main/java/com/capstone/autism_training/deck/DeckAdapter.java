@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
 
-    private ArrayList<DeckModel> decks;
+    private final ArrayList<DeckModel> decks;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final Context context;

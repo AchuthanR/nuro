@@ -111,7 +111,8 @@
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
                     app:icon="@drawable/ic_round_looks_one_24"
-                    app:iconSize="22sp" />
+                    app:iconSize="22sp"
+                    app:iconPadding="10dp" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/option2"
@@ -123,7 +124,8 @@
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
                     app:icon="@drawable/ic_round_looks_two_24"
-                    app:iconSize="22sp" />
+                    app:iconSize="22sp"
+                    app:iconPadding="10dp" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/option3"
@@ -135,7 +137,8 @@
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
                     app:icon="@drawable/ic_round_looks_3_24"
-                    app:iconSize="22sp" />
+                    app:iconSize="22sp"
+                    app:iconPadding="10dp" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/option4"
@@ -147,7 +150,8 @@
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
                     app:icon="@drawable/ic_round_looks_4_24"
-                    app:iconSize="22sp" />
+                    app:iconSize="22sp"
+                    app:iconPadding="10dp" />
             </com.google.android.material.button.MaterialButtonToggleGroup>
 
             <com.google.android.material.button.MaterialButton

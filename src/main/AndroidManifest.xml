@@ -22,23 +22,21 @@
         </activity>
         <activity
             android:name=".deck.DeckActivity"
-            android:exported="false"
-            android:label="@string/title_activity_deck" />
+            android:exported="false" />
         <activity
             android:name=".card.CardActivity"
-            android:exported="false"
-            android:label="@string/title_activity_card" />
+            android:exported="false" />
+        <activity
+            android:name=".visual_schedule.VisualScheduleActivity"
+            android:exported="false" />
         <activity
             android:name=".activities.ActivitiesActivity"
-            android:exported="false"
-            android:label="@string/title_activity_activities" />
+            android:exported="false" />
         <activity
             android:name=".activities.ImageIdentificationActivity"
-            android:exported="false"
-            android:label="@string/title_activity_image_identification" />
+            android:exported="false" />
         <activity
             android:name=".activities.WordIdentificationActivity"
-            android:exported="false"
-            android:label="@string/title_activity_word_identification" />
+            android:exported="false" />
     </application>
 </manifest>

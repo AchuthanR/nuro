@@ -12,17 +12,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.capstone.autism_training.R;
+import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
 
-    private ArrayList<CardModel> cards;
+    private final ArrayList<CardModel> cards;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final ImageView imageView;
         private final TextView captionTextView;
-        private final Button showAnswerButton;
+        private final MaterialButton showAnswerButton;
         private final TextView answerTextView;
 
         public ViewHolder(View view) {

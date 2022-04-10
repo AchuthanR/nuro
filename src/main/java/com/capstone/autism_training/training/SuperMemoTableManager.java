@@ -1,12 +1,10 @@
-package com.capstone.autism_training;
+package com.capstone.autism_training.training;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-
-import com.capstone.autism_training.card.DeckTableHelper;
 
 public class SuperMemoTableManager {
 

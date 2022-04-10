@@ -54,7 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/select_image_button_activity_add_deck" />
+            android:text="@string/select_image_button_text_activity_add_deck" />
 
         <ImageView
             android:id="@+id/imageView"
@@ -70,6 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="32dp"
-            android:text="@string/add_deck_button_activity_add_deck" />
+            android:layout_marginBottom="16dp"
+            android:text="@string/add_deck_button_text_activity_add_deck" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

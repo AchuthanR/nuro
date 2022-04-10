@@ -1,4 +1,4 @@
-package com.capstone.autism_training;
+package com.capstone.autism_training.training;
 
 import com.capstone.autism_training.card.CardModel;
 

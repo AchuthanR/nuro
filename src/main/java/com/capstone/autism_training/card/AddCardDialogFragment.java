@@ -27,7 +27,7 @@ public class AddCardDialogFragment extends DialogFragment {
 
     public static final String TAG = "AddCardDialog";
 
-    private String TABLE_NAME = "";
+    private final String TABLE_NAME;
     private ActivityResultLauncher<String> mGetContent;
     private byte[] image = null;
 
@@ -80,15 +80,13 @@ public class AddCardDialogFragment extends DialogFragment {
                             imageView.setImageBitmap(BitmapFactory.decodeByteArray(image, 0, image.length, options2));
                         }
                     } catch (FileNotFoundException e) {
-                        Toast.makeText(getContext(), "File not found!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "Image not found!", Toast.LENGTH_LONG).show();
                         e.printStackTrace();
                     }
                 });
 
         Button selectImageButton = view.findViewById(R.id.selectImageButton);
-        selectImageButton.setOnClickListener(view1 -> {
-            mGetContent.launch("image/*");
-        });
+        selectImageButton.setOnClickListener(view1 -> mGetContent.launch("image/*"));
 
         Button addCardButton = view.findViewById(R.id.addCardButton);
         addCardButton.setOnClickListener(view1 -> {

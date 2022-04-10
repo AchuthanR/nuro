@@ -1,21 +1,17 @@
 package com.capstone.autism_training.card;
 
+import android.database.Cursor;
+import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.DialogInterface;
-import android.database.Cursor;
-import android.os.Bundle;
-import android.widget.Toast;
-
 import com.capstone.autism_training.R;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
-
-import java.util.ArrayList;
 
 public class CardActivity extends AppCompatActivity {
 

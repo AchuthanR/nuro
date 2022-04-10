@@ -75,15 +75,13 @@ public class AddDeckDialogFragment extends DialogFragment {
                             imageView.setImageBitmap(BitmapFactory.decodeByteArray(image, 0, image.length, options2));
                         }
                     } catch (FileNotFoundException e) {
-                        Toast.makeText(getContext(), "File not found!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "Image not found!", Toast.LENGTH_LONG).show();
                         e.printStackTrace();
                     }
                 });
 
         Button selectImageButton = view.findViewById(R.id.selectImageButton);
-        selectImageButton.setOnClickListener(view1 -> {
-            mGetContent.launch("image/*");
-        });
+        selectImageButton.setOnClickListener(view1 -> mGetContent.launch("image/*"));
 
         Button addDeckButton = view.findViewById(R.id.addDeckButton);
         addDeckButton.setOnClickListener(view1 -> {
