@@ -8,11 +8,11 @@
     <string name="training_module_title_activity_main">Training</string>
 
     <string name="page_title_activity_deck">All decks</string>
-    <string name="action_settings_activity_deck">Settings</string>
+    <string name="action_delete_activity_deck">Delete</string>
     <string name="fab_text_activity_deck">Add deck</string>
 
     <string name="page_title_activity_card">Flash cards</string>
-    <string name="action_settings_activity_card">Settings</string>
+    <string name="action_delete_activity_card">Delete</string>
     <string name="fab_text_activity_card">Add card</string>
     <string name="show_answer_button_text_activity_card">Show answer</string>
     <string name="hide_answer_button_text_activity_card">Hide answer</string>
@@ -32,6 +32,7 @@
     <string name="add_card_button_activity_add_card">Add card</string>
 
     <string name="page_title_activity_visual_schedule">Visual Scheduling</string>
+    <string name="action_delete_activity_visual_schedule">Delete</string>
     <string name="fab_text_activity_visual_schedule">Add task</string>
     <string name="choose_day_text_view_text_activity_visual_schedule">Choose day</string>
     <string name="start_task_button_text_activity_visual_schedule">Start task</string>

@@ -7,9 +7,14 @@
     android:layout_gravity="center_vertical">
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardView"
         style="@style/Widget.Material3.CardView.Elevated"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true"
+        android:checkable="true"
+        app:checkedIconGravity="BOTTOM_END">
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DeckTableHelper extends SQLiteOpenHelper {
 
-    public static String TABLE_NAME;
+    public String TABLE_NAME;
 
     public static final String ID = "id";
     public static final String IMAGE = "image";
@@ -17,7 +17,7 @@ public class DeckTableHelper extends SQLiteOpenHelper {
 
     static final int DB_VERSION = 1;
 
-    public static String CREATE_TABLE;
+    public String CREATE_TABLE;
 
     public DeckTableHelper(Context context, String table_name) {
         super(context, DB_NAME, null, DB_VERSION);

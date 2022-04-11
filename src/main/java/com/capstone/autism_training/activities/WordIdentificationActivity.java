@@ -20,6 +20,7 @@ import com.capstone.autism_training.deck.DeckInfoTableManager;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.button.MaterialButtonToggleGroup;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 
 import java.util.ArrayList;
@@ -102,7 +103,8 @@ public class WordIdentificationActivity extends AppCompatActivity {
         submitButton.setOnClickListener(view -> {
             int id = buttonToggleGroup.getCheckedButtonId();
             if (id == View.NO_ID) {
-                Toast.makeText(getApplicationContext(), "Please select an answer!", Toast.LENGTH_LONG).show();
+                Snackbar.make(view, "Please select an answer", Snackbar.LENGTH_LONG)
+                        .setAction("OKAY", view1 -> {}).show();
                 return;
             }
 
@@ -133,17 +135,19 @@ public class WordIdentificationActivity extends AppCompatActivity {
             }
 
             if (correctAnswer) {
-                Toast.makeText(getApplicationContext(), "Correct answer", Toast.LENGTH_SHORT).show();
+                Snackbar.make(view, "Correct answer", Snackbar.LENGTH_LONG)
+                        .setAction("OKAY", view1 -> {}).show();
             }
             else {
-                Toast.makeText(getApplicationContext(), "Wrong answer", Toast.LENGTH_SHORT).show();
+                Snackbar.make(view, "Wrong answer", Snackbar.LENGTH_LONG)
+                        .setAction("OKAY", view1 -> {}).show();
             }
         });
 
         nextButton.setOnClickListener(view -> {
             currentAnswerIndex++;
             if (currentAnswerIndex == cardPositions.size()) {
-                Toast.makeText(getApplicationContext(), "You have come to the end of the deck", Toast.LENGTH_LONG).show();
+                Snackbar.make(view, "You have come to the end of the deck", Snackbar.LENGTH_LONG).show();
                 LinearLayout activityLinearLayout = findViewById(R.id.activityLinearLayout);
                 activityLinearLayout.setVisibility(View.GONE);
             }

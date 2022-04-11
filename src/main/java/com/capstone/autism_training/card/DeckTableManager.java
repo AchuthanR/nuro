@@ -6,8 +6,6 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.capstone.autism_training.card.DeckTableHelper;
-
 public class DeckTableManager {
 
     private DeckTableHelper deckTableHelper;
@@ -23,7 +21,7 @@ public class DeckTableManager {
     public void open(String table_name) throws SQLException {
         deckTableHelper = new DeckTableHelper(context, table_name);
         database = deckTableHelper.getWritableDatabase();
-        database.execSQL(DeckTableHelper.CREATE_TABLE);
+        database.execSQL(deckTableHelper.CREATE_TABLE);
     }
 
     public void close() {
@@ -35,12 +33,12 @@ public class DeckTableManager {
         contentValues.put(DeckTableHelper.IMAGE, image);
         contentValues.put(DeckTableHelper.CAPTION, caption);
         contentValues.put(DeckTableHelper.ANSWER, answer);
-        return database.insert(DeckTableHelper.TABLE_NAME, null, contentValues);
+        return database.insert(deckTableHelper.TABLE_NAME, null, contentValues);
     }
 
     public Cursor fetch() {
         String[] columns = new String[] { DeckTableHelper.ID, DeckTableHelper.IMAGE, DeckTableHelper.CAPTION, DeckTableHelper.ANSWER };
-        Cursor cursor = database.query(DeckTableHelper.TABLE_NAME, columns, null, null, null, null, null);
+        Cursor cursor = database.query(deckTableHelper.TABLE_NAME, columns, null, null, null, null, null);
         if (cursor != null) {
             cursor.moveToFirst();
         }
@@ -52,14 +50,14 @@ public class DeckTableManager {
         contentValues.put(DeckTableHelper.IMAGE, image);
         contentValues.put(DeckTableHelper.CAPTION, caption);
         contentValues.put(DeckTableHelper.ANSWER, answer);
-        return database.update(DeckTableHelper.TABLE_NAME, contentValues, DeckTableHelper.ID + " = " + id, null);
+        return database.update(deckTableHelper.TABLE_NAME, contentValues, DeckTableHelper.ID + " = " + id, null);
     }
 
     public void deleteRow(long id) {
-        database.delete(DeckTableHelper.TABLE_NAME, DeckTableHelper.ID + "=" + id, null);
+        database.delete(deckTableHelper.TABLE_NAME, DeckTableHelper.ID + "=" + id, null);
     }
 
     public void deleteTable() {
-        database.delete(DeckTableHelper.TABLE_NAME, null, null);
+        database.delete(deckTableHelper.TABLE_NAME, null, null);
     }
 }

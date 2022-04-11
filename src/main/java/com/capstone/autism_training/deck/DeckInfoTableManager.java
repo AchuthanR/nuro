@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.capstone.autism_training.card.DeckTableHelper;
+import com.capstone.autism_training.card.DeckTableManager;
 
 public class DeckInfoTableManager {
 
@@ -56,7 +56,17 @@ public class DeckInfoTableManager {
     }
 
     public void deleteRow(long id) {
-        database.delete(DeckInfoTableHelper.TABLE_NAME, DeckInfoTableHelper.ID + "=" + id, null);
+        String[] columns = new String[] { DeckInfoTableHelper.NAME };
+        Cursor cursor = database.query(DeckInfoTableHelper.TABLE_NAME, columns, DeckInfoTableHelper.ID + "=" + id, null, null, null, null);
+        if (cursor.getCount() != 0) {
+            cursor.moveToFirst();
+            DeckTableManager deckTableManager = new DeckTableManager(context);
+            deckTableManager.open(cursor.getString(0).replace(" ", "_"));
+            deckTableManager.deleteTable();
+            deckTableManager.close();
+            database.delete(DeckInfoTableHelper.TABLE_NAME, DeckInfoTableHelper.ID + "=" + id, null);
+        }
+        cursor.close();
     }
 
     public void deleteTable() {

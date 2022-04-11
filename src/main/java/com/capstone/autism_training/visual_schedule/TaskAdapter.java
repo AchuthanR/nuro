@@ -10,10 +10,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.selection.ItemDetailsLookup;
+import androidx.recyclerview.selection.SelectionTracker;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.capstone.autism_training.R;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -24,9 +27,11 @@ import java.util.concurrent.TimeUnit;
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
     private final ArrayList<TaskModel> tasks;
+    private SelectionTracker<Long> selectionTracker;
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private final Context context;
+        private final MaterialCardView cardView;
         private final ImageView imageView;
         private final TextView nameTextView;
         private final TextView instructionTextView;
@@ -34,10 +39,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         private final MaterialButton timerButton;
         private final TextView timerTextView;
         private final MaterialButton resetButton;
+        private final TaskItemDetails taskItemDetails;
 
         public ViewHolder(View view) {
             super(view);
             context = view.getContext();
+            cardView = view.findViewById(R.id.cardView);
             imageView = view.findViewById(R.id.imageView);
             nameTextView = view.findViewById(R.id.nameTextView);
             instructionTextView = view.findViewById(R.id.instructionTextView);
@@ -45,10 +52,15 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             timerButton = view.findViewById(R.id.timerButton);
             timerTextView = view.findViewById(R.id.timerTextView);
             resetButton = view.findViewById(R.id.resetButton);
+            taskItemDetails = new TaskItemDetails();
         }
 
         public Context getContext() {
             return context;
+        }
+
+        public MaterialCardView getCardView() {
+            return cardView;
         }
 
         public ImageView getImageView() {
@@ -78,10 +90,30 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         public MaterialButton getResetButton() {
             return resetButton;
         }
+
+        public ItemDetailsLookup.ItemDetails<Long> getItemDetails() {
+            taskItemDetails.setPosition(getAdapterPosition());
+            taskItemDetails.setSelectionKey(tasks.get(getAdapterPosition()).id);
+            return taskItemDetails;
+        }
+
+        public final void bind(boolean isActive) {
+            cardView.setChecked(isActive);
+        }
     }
 
     public TaskAdapter() {
         tasks = new ArrayList<>();
+        setHasStableIds(true);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return tasks.get(position).id;
+    }
+
+    public void setSelectionTracker(SelectionTracker<Long> selectionTracker) {
+        this.selectionTracker = selectionTracker;
     }
 
     @NonNull
@@ -188,6 +220,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             remainingTime[0] = tasks.get(viewHolder.getAdapterPosition()).duration;
             isOngoing[0] = false;
         });
+
+        viewHolder.bind(selectionTracker.isSelected(tasks.get(position).id));
     }
 
     @Override
@@ -198,6 +232,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     public void addItem(TaskModel taskModel) {
         tasks.add(0, taskModel);
         notifyItemInserted(0);
+    }
+
+    public void removeItem(int position) {
+        tasks.remove(position);
+        notifyItemRemoved(position);
     }
 
     public void clearAll() {

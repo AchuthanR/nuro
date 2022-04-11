@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.selection.ItemDetailsLookup;
+import androidx.recyclerview.selection.SelectionTracker;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.capstone.autism_training.R;
@@ -21,13 +23,15 @@ import java.util.ArrayList;
 public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
 
     private final ArrayList<DeckModel> decks;
+    private SelectionTracker<Long> selectionTracker;
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private final Context context;
         private final MaterialCardView cardView;
         private final ImageView imageView;
         private final TextView titleTextView;
         private final TextView descriptionTextView;
+        private final DeckItemDetails deckItemDetails;
 
         public ViewHolder(View view) {
             super(view);
@@ -36,6 +40,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
             imageView = view.findViewById(R.id.imageView);
             titleTextView = view.findViewById(R.id.titleTextView);
             descriptionTextView = view.findViewById(R.id.descriptionTextView);
+            deckItemDetails = new DeckItemDetails();
         }
 
         public Context getContext() {
@@ -57,10 +62,30 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
         public TextView getDescriptionTextView() {
             return descriptionTextView;
         }
+
+        public ItemDetailsLookup.ItemDetails<Long> getItemDetails() {
+            deckItemDetails.setPosition(getAdapterPosition());
+            deckItemDetails.setSelectionKey(decks.get(getAdapterPosition()).id);
+            return deckItemDetails;
+        }
+
+        public final void bind(boolean isActive) {
+            cardView.setChecked(isActive);
+        }
     }
 
     public DeckAdapter() {
         decks = new ArrayList<>();
+        setHasStableIds(true);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return decks.get(position).id;
+    }
+
+    public void setSelectionTracker(SelectionTracker<Long> selectionTracker) {
+        this.selectionTracker = selectionTracker;
     }
 
     @NonNull
@@ -97,9 +122,11 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
 
         viewHolder.getCardView().setOnClickListener(view1 -> {
             Intent intent = new Intent(viewHolder.getContext(), CardActivity.class);
-            intent.putExtra("TABLE_NAME", decks.get(position).name);
+            intent.putExtra("TABLE_NAME", decks.get(viewHolder.getAdapterPosition()).name);
             viewHolder.getContext().startActivity(intent);
         });
+
+        viewHolder.bind(selectionTracker.isSelected(decks.get(position).id));
     }
 
     @Override
@@ -110,5 +137,10 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
     public void addItem(DeckModel deckModel) {
         decks.add(0, deckModel);
         notifyItemInserted(0);
+    }
+
+    public void removeItem(int position) {
+        decks.remove(position);
+        notifyItemRemoved(position);
     }
 }

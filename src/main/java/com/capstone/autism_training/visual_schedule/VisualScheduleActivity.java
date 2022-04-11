@@ -2,16 +2,25 @@ package com.capstone.autism_training.visual_schedule;
 
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.ActionMode;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.selection.SelectionPredicates;
+import androidx.recyclerview.selection.SelectionTracker;
+import androidx.recyclerview.selection.StorageStrategy;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.capstone.autism_training.R;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 
@@ -26,6 +35,9 @@ public class VisualScheduleActivity extends AppCompatActivity {
     protected RecyclerView mRecyclerView;
     protected TaskAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
+    private SelectionTracker<Long> selectionTracker;
+    private VisualScheduleTableManager visualScheduleTableManager;
+    private ActionMode actionMode;
 
     private MaterialAutoCompleteTextView chooseDayAutoCompleteTextView;
 
@@ -51,6 +63,72 @@ public class VisualScheduleActivity extends AppCompatActivity {
         mAdapter = new TaskAdapter();
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
+
+        selectionTracker = new SelectionTracker.Builder<>(
+                "selectionId",
+                mRecyclerView,
+                new TaskItemKeyProvider(mRecyclerView),
+                new TaskDetailsLookup(mRecyclerView),
+                StorageStrategy.createLongStorage())
+                .withSelectionPredicate(SelectionPredicates.createSelectSingleAnything())
+                .build();
+
+        ActionMode.Callback actionModeCallback = new ActionMode.Callback() {
+            @Override
+            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                MenuInflater inflater = mode.getMenuInflater();
+                inflater.inflate(R.menu.menu_task, menu);
+                return true;
+            }
+
+            @Override
+            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                return false;
+            }
+
+            @Override
+            public boolean onActionItemClicked(ActionMode mode, MenuItem menuItem) {
+                if (menuItem.getItemId() == R.id.action_delete) {
+                    new MaterialAlertDialogBuilder(VisualScheduleActivity.this, com.google.android.material.R.style.ThemeOverlay_Material3_MaterialAlertDialog_Centered)
+                            .setIcon(R.drawable.ic_round_delete_24)
+                            .setTitle("Delete task?")
+                            .setMessage("The selected task will be deleted permanently.")
+                            .setPositiveButton("Delete", (dialogInterface, i) -> {
+                                if (selectionTracker.hasSelection()) {
+                                    long id = selectionTracker.getSelection().iterator().next();
+                                    selectionTracker.clearSelection();
+                                    visualScheduleTableManager.deleteRow(id);
+                                    mAdapter.removeItem(mRecyclerView.findViewHolderForItemId(id).getAdapterPosition());
+                                    Toast.makeText(VisualScheduleActivity.this, "Deleted the task", Toast.LENGTH_LONG).show();
+                                }
+                            })
+                            .setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.cancel())
+                            .setOnDismissListener(dialogInterface -> mode.finish())
+                            .show();
+                }
+                return true;
+            }
+
+            @Override
+            public void onDestroyActionMode(ActionMode mode) {
+                actionMode = null;
+                selectionTracker.clearSelection();
+            }
+        };
+
+        selectionTracker.addObserver(new SelectionTracker.SelectionObserver<Long>() {
+            @Override
+            public void onSelectionChanged() {
+                super.onSelectionChanged();
+                if (!selectionTracker.getSelection().isEmpty() && actionMode == null) {
+                    actionMode = toolbar.startActionMode(actionModeCallback);
+                }
+                else if (selectionTracker.getSelection().isEmpty() && actionMode != null) {
+                    actionMode.finish();
+                }
+            }
+        });
+        mAdapter.setSelectionTracker(selectionTracker);
     }
 
     @Override
@@ -74,7 +152,7 @@ public class VisualScheduleActivity extends AppCompatActivity {
     private void daySelected(String day) {
         mAdapter.clearAll();
 
-        VisualScheduleTableManager visualScheduleTableManager = new VisualScheduleTableManager(getApplicationContext());
+        visualScheduleTableManager = new VisualScheduleTableManager(getApplicationContext());
         visualScheduleTableManager.open(day.toUpperCase());
         Cursor cursor = visualScheduleTableManager.fetch();
 
@@ -89,7 +167,12 @@ public class VisualScheduleActivity extends AppCompatActivity {
             mAdapter.addItem(taskModel);
             cursor.moveToNext();
         }
-        visualScheduleTableManager.close();
         cursor.close();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        visualScheduleTableManager.close();
     }
 }

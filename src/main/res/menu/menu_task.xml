@@ -1,10 +1,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.capstone.autism_training.deck.DeckActivity">
+    tools:context="com.capstone.autism_training.visual_schedule.VisualScheduleActivity">
     <item
         android:id="@+id/action_delete"
-        android:title="@string/action_delete_activity_deck"
+        android:title="@string/action_delete_activity_visual_schedule"
         android:icon="@drawable/ic_round_delete_24"
         app:showAsAction="collapseActionView" />
 </menu>

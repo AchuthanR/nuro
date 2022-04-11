@@ -21,7 +21,7 @@ public class VisualScheduleTableManager {
     public void open(String table_name) throws SQLException {
         visualScheduleTableHelper = new VisualScheduleTableHelper(context, table_name);
         database = visualScheduleTableHelper.getWritableDatabase();
-        database.execSQL(VisualScheduleTableHelper.CREATE_TABLE);
+        database.execSQL(visualScheduleTableHelper.CREATE_TABLE);
     }
 
     public void close() {
@@ -35,12 +35,12 @@ public class VisualScheduleTableManager {
         contentValues.put(VisualScheduleTableHelper.INSTRUCTION, instruction);
         contentValues.put(VisualScheduleTableHelper.START_TIME, start_time);
         contentValues.put(VisualScheduleTableHelper.DURATION, duration);
-        return database.insert(VisualScheduleTableHelper.TABLE_NAME, null, contentValues);
+        return database.insert(visualScheduleTableHelper.TABLE_NAME, null, contentValues);
     }
 
     public Cursor fetch() {
         String[] columns = new String[] { VisualScheduleTableHelper.ID, VisualScheduleTableHelper.NAME, VisualScheduleTableHelper.IMAGE, VisualScheduleTableHelper.INSTRUCTION, VisualScheduleTableHelper.START_TIME, VisualScheduleTableHelper.DURATION };
-        Cursor cursor = database.query(VisualScheduleTableHelper.TABLE_NAME, columns, null, null, null, null, VisualScheduleTableHelper.START_TIME);
+        Cursor cursor = database.query(visualScheduleTableHelper.TABLE_NAME, columns, null, null, null, null, VisualScheduleTableHelper.START_TIME);
         if (cursor != null) {
             cursor.moveToFirst();
         }
@@ -54,14 +54,14 @@ public class VisualScheduleTableManager {
         contentValues.put(VisualScheduleTableHelper.INSTRUCTION, instruction);
         contentValues.put(VisualScheduleTableHelper.START_TIME, start_time);
         contentValues.put(VisualScheduleTableHelper.DURATION, duration);
-        return database.update(VisualScheduleTableHelper.TABLE_NAME, contentValues, VisualScheduleTableHelper.ID + " = " + id, null);
+        return database.update(visualScheduleTableHelper.TABLE_NAME, contentValues, VisualScheduleTableHelper.ID + " = " + id, null);
     }
 
     public void deleteRow(long id) {
-        database.delete(VisualScheduleTableHelper.TABLE_NAME, VisualScheduleTableHelper.ID + "=" + id, null);
+        database.delete(visualScheduleTableHelper.TABLE_NAME, VisualScheduleTableHelper.ID + "=" + id, null);
     }
 
     public void deleteTable() {
-        database.delete(VisualScheduleTableHelper.TABLE_NAME, null, null);
+        database.delete(visualScheduleTableHelper.TABLE_NAME, null, null);
     }
 }

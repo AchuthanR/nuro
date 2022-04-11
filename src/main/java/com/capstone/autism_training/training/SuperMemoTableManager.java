@@ -21,7 +21,7 @@ public class SuperMemoTableManager {
     public void open(String table_name) throws SQLException {
         superMemoTableHelper = new SuperMemoTableHelper(context, table_name);
         database = superMemoTableHelper.getWritableDatabase();
-        database.execSQL(SuperMemoTableHelper.CREATE_TABLE);
+        database.execSQL(superMemoTableHelper.CREATE_TABLE);
     }
 
     public void close() {
@@ -33,12 +33,12 @@ public class SuperMemoTableManager {
         contentValues.put(SuperMemoTableHelper.REPETITIONS, repetitions);
         contentValues.put(SuperMemoTableHelper.INTERVAL, interval);
         contentValues.put(SuperMemoTableHelper.EASINESS, easiness);
-        return database.insert(SuperMemoTableHelper.TABLE_NAME, null, contentValues);
+        return database.insert(superMemoTableHelper.TABLE_NAME, null, contentValues);
     }
 
     public Cursor fetch() {
         String[] columns = new String[] { SuperMemoTableHelper.ID, SuperMemoTableHelper.REPETITIONS, SuperMemoTableHelper.INTERVAL, SuperMemoTableHelper.EASINESS };
-        Cursor cursor = database.query(SuperMemoTableHelper.TABLE_NAME, columns, null, null, null, null, null);
+        Cursor cursor = database.query(superMemoTableHelper.TABLE_NAME, columns, null, null, null, null, null);
         if (cursor != null) {
             cursor.moveToFirst();
         }
@@ -50,14 +50,14 @@ public class SuperMemoTableManager {
         contentValues.put(SuperMemoTableHelper.REPETITIONS, repetitions);
         contentValues.put(SuperMemoTableHelper.INTERVAL, interval);
         contentValues.put(SuperMemoTableHelper.EASINESS, easiness);
-        return database.update(SuperMemoTableHelper.TABLE_NAME, contentValues, SuperMemoTableHelper.ID + " = " + id, null);
+        return database.update(superMemoTableHelper.TABLE_NAME, contentValues, SuperMemoTableHelper.ID + " = " + id, null);
     }
 
     public void deleteRow(long id) {
-        database.delete(SuperMemoTableHelper.TABLE_NAME, SuperMemoTableHelper.ID + "=" + id, null);
+        database.delete(superMemoTableHelper.TABLE_NAME, SuperMemoTableHelper.ID + "=" + id, null);
     }
 
     public void deleteTable() {
-        database.delete(SuperMemoTableHelper.TABLE_NAME, null, null);
+        database.delete(superMemoTableHelper.TABLE_NAME, null, null);
     }
 }

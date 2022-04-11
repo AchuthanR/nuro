@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.capstone.autism_training.card.CardActivity">
     <item
-        android:id="@+id/action_settings"
-        android:title="@string/action_settings_activity_card"
+        android:id="@+id/action_delete"
+        android:title="@string/action_delete_activity_card"
+        android:icon="@drawable/ic_round_delete_24"
         app:showAsAction="collapseActionView" />
 </menu>

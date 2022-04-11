@@ -2,7 +2,7 @@ package com.capstone.autism_training.card;
 
 public class CardModel {
 
-    public int id;
+    public long id;
     public byte[] image;
     public String caption;
     public String answer;
@@ -11,7 +11,7 @@ public class CardModel {
     public int interval;
     public double easiness;
 
-    public CardModel(int id, byte[] image, String caption, String answer, long nextPracticeTime, int repetitions, int interval, double easiness) {
+    public CardModel(long id, byte[] image, String caption, String answer, long nextPracticeTime, int repetitions, int interval, double easiness) {
         this.id = id;
         this.image = image;
         this.caption = caption;
@@ -22,7 +22,7 @@ public class CardModel {
         this.easiness = easiness;
     }
 
-    public CardModel(int id, byte[] image, String caption, String answer, long nextPracticeTime, int repetitions, int interval) {
+    public CardModel(long id, byte[] image, String caption, String answer, long nextPracticeTime, int repetitions, int interval) {
         this.id = id;
         this.image = image;
         this.caption = caption;
@@ -33,7 +33,7 @@ public class CardModel {
         this.easiness = 2.5;
     }
 
-    public CardModel(int id, byte[] image, String caption, String answer, long nextPracticeTime, int repetitions) {
+    public CardModel(long id, byte[] image, String caption, String answer, long nextPracticeTime, int repetitions) {
         this.id = id;
         this.image = image;
         this.caption = caption;
@@ -44,7 +44,7 @@ public class CardModel {
         this.easiness = 2.5;
     }
 
-    public CardModel(int id, byte[] image, String caption, String answer, long nextPracticeTime) {
+    public CardModel(long id, byte[] image, String caption, String answer, long nextPracticeTime) {
         this.id = id;
         this.image = image;
         this.caption = caption;
@@ -55,7 +55,7 @@ public class CardModel {
         this.easiness = 2.5;
     }
 
-    public CardModel(int id, byte[] image, String caption, String answer) {
+    public CardModel(long id, byte[] image, String caption, String answer) {
         this.id = id;
         this.image = image;
         this.caption = caption;

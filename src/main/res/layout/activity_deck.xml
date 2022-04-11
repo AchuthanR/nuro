@@ -25,7 +25,6 @@
                 android:elevation="0dp"
                 app:title="@string/page_title_activity_deck"
                 app:navigationIcon="@drawable/ic_round_arrow_back_24"
-                app:menu="@menu/menu_deck"
                 app:layout_collapseMode="pin" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
