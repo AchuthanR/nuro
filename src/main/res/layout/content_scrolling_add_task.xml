@@ -128,14 +128,5 @@
             android:layout_marginTop="16dp"
             android:contentDescription="@string/content_description_image_view_activity_add_task"
             tools:src="@drawable/media" />
-
-        <Button
-            android:id="@+id/addTaskButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="32dp"
-            android:layout_marginBottom="16dp"
-            android:text="@string/add_task_button_text_activity_add_task" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

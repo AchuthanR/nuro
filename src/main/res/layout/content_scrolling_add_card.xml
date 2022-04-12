@@ -15,24 +15,9 @@
         android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/selectImageButton"
-            style="@style/Widget.Material3.Button.OutlinedButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/select_image_button_text_activity_add_card" />
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            tools:src="@drawable/media" />
-
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             app:endIconMode="clear_text">
 
@@ -64,12 +49,18 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/addCardButton"
-            android:layout_width="wrap_content"
+            android:id="@+id/selectImageButton"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="32dp"
-            android:layout_marginBottom="16dp"
-            android:text="@string/add_card_button_activity_add_card" />
+            android:layout_marginTop="16dp"
+            android:text="@string/select_image_button_text_activity_add_card" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            tools:src="@drawable/media" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

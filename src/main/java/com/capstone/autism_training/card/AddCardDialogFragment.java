@@ -1,6 +1,5 @@
 package com.capstone.autism_training.card;
 
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,22 +17,18 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.capstone.autism_training.R;
+import com.capstone.autism_training.utilities.ImageHelper;
 import com.google.android.material.appbar.MaterialToolbar;
 
-import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 
 public class AddCardDialogFragment extends DialogFragment {
 
     public static final String TAG = "AddCardDialog";
 
-    private final String TABLE_NAME;
     private ActivityResultLauncher<String> mGetContent;
+    private CardActivity cardActivity;
     private byte[] image = null;
-
-    public AddCardDialogFragment(String table_name) {
-        TABLE_NAME = table_name;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,6 +39,7 @@ public class AddCardDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        cardActivity = (CardActivity) getActivity();
         return inflater.inflate(R.layout.layout_add_card, container, false);
     }
 
@@ -58,26 +54,9 @@ public class AddCardDialogFragment extends DialogFragment {
                 uri -> {
                     try {
                         if (getContext() != null && uri != null) {
-                            image = getBitmapAsByteArray(BitmapFactory.decodeStream(getContext().getContentResolver().openInputStream(uri)));
-                            BitmapFactory.Options options1 = new BitmapFactory.Options();
-                            options1.inJustDecodeBounds = true;
-                            BitmapFactory.decodeByteArray(image, 0, image.length, options1);
-
-                            final int REQUIRED_SIZE = 300;
-
-                            int width_tmp = options1.outWidth, height_tmp = options1.outHeight;
-                            int scale = 1;
-                            while (width_tmp / 2 >= REQUIRED_SIZE && height_tmp / 2 >= REQUIRED_SIZE) {
-                                width_tmp /= 2;
-                                height_tmp /= 2;
-                                scale *= 2;
-                            }
-
-                            BitmapFactory.Options options2 = new BitmapFactory.Options();
-                            options2.inSampleSize = scale;
-                            options2.inJustDecodeBounds = false;
+                            image = ImageHelper.getBitmapAsByteArray(BitmapFactory.decodeStream(getContext().getContentResolver().openInputStream(uri)));
                             ImageView imageView = view.findViewById(R.id.imageView);
-                            imageView.setImageBitmap(BitmapFactory.decodeByteArray(image, 0, image.length, options2));
+                            imageView.setImageBitmap(ImageHelper.toCompressedBitmap(image));
                         }
                     } catch (FileNotFoundException e) {
                         Toast.makeText(getContext(), "Image not found!", Toast.LENGTH_LONG).show();
@@ -94,12 +73,11 @@ public class AddCardDialogFragment extends DialogFragment {
             EditText answerEditText = view.findViewById(R.id.answerEditText);
 
             if (image != null && !captionEditText.getText().toString().equals("") && !answerEditText.getText().toString().equals("")) {
-                DeckTableManager deckTableManager = new DeckTableManager(getContext());
-                deckTableManager.open(TABLE_NAME);
-                long rowNumber = deckTableManager.insert(image, captionEditText.getText().toString(), answerEditText.getText().toString());
+                long rowNumber = cardActivity.deckTableManager.insert(image, captionEditText.getText().toString(), answerEditText.getText().toString());
                 if (rowNumber != -1) {
+                    CardModel cardModel = new CardModel(rowNumber, image, captionEditText.getText().toString(), answerEditText.getText().toString());
+                    cardActivity.mAdapter.addItem(cardModel);
                     Toast.makeText(getContext(), "Successfully added the deck", Toast.LENGTH_LONG).show();
-                    deckTableManager.close();
                     this.dismiss();
                 }
                 else {
@@ -110,11 +88,5 @@ public class AddCardDialogFragment extends DialogFragment {
                 Toast.makeText(getContext(), "All fields are necessary", Toast.LENGTH_LONG).show();
             }
         });
-    }
-
-    public byte[] getBitmapAsByteArray(Bitmap bitmap) {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 0, outputStream);
-        return outputStream.toByteArray();
     }
 }

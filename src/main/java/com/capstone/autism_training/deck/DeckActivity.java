@@ -27,8 +27,8 @@ public class DeckActivity extends AppCompatActivity {
     protected RecyclerView mRecyclerView;
     protected DeckAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
+    public DeckInfoTableManager deckInfoTableManager;
     private SelectionTracker<Long> selectionTracker;
-    private DeckInfoTableManager deckInfoTableManager;
     private ActionMode actionMode;
 
     @Override

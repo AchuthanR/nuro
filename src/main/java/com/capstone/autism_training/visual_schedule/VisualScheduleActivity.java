@@ -35,11 +35,9 @@ public class VisualScheduleActivity extends AppCompatActivity {
     protected RecyclerView mRecyclerView;
     protected TaskAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
+    public VisualScheduleTableManager visualScheduleTableManager;
     private SelectionTracker<Long> selectionTracker;
-    private VisualScheduleTableManager visualScheduleTableManager;
     private ActionMode actionMode;
-
-    private MaterialAutoCompleteTextView chooseDayAutoCompleteTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +49,7 @@ public class VisualScheduleActivity extends AppCompatActivity {
 
         ExtendedFloatingActionButton extendedFAB = findViewById(R.id.extendedFAB);
         extendedFAB.setOnClickListener(view -> {
-            AddTaskDialogFragment addTaskDialogFragment = new AddTaskDialogFragment(chooseDayAutoCompleteTextView.getText().toString().toUpperCase());
+            AddTaskDialogFragment addTaskDialogFragment = new AddTaskDialogFragment();
 
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
@@ -138,7 +136,7 @@ public class VisualScheduleActivity extends AppCompatActivity {
         ArrayList<String> days = new ArrayList<>(Arrays.asList("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"));
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, days);
-        chooseDayAutoCompleteTextView = findViewById(R.id.chooseDayAutoCompleteTextView);
+        MaterialAutoCompleteTextView chooseDayAutoCompleteTextView = findViewById(R.id.chooseDayAutoCompleteTextView);
         chooseDayAutoCompleteTextView.setAdapter(adapter);
 
         SimpleDateFormat formatter = new SimpleDateFormat("EEEE", Locale.ENGLISH);

@@ -29,8 +29,8 @@ public class CardActivity extends AppCompatActivity {
     protected RecyclerView mRecyclerView;
     protected CardAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
+    public DeckTableManager deckTableManager;
     private SelectionTracker<Long> selectionTracker;
-    private DeckTableManager deckTableManager;
     private ActionMode actionMode;
 
     @Override
@@ -48,7 +48,7 @@ public class CardActivity extends AppCompatActivity {
 
         ExtendedFloatingActionButton extendedFAB = findViewById(R.id.extendedFAB);
         extendedFAB.setOnClickListener(view -> {
-            AddCardDialogFragment addCardDialogFragment = new AddCardDialogFragment(TABLE_NAME);
+            AddCardDialogFragment addCardDialogFragment = new AddCardDialogFragment();
 
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);

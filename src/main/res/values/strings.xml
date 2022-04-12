@@ -22,14 +22,14 @@
     <string name="description_edit_text_hint_activity_add_deck">Description</string>
     <string name="select_image_button_text_activity_add_deck">Select cover image for the deck</string>
     <string name="content_description_image_view_activity_add_deck">Cover image for the new deck</string>
-    <string name="add_deck_button_text_activity_add_deck">Add deck</string>
+    <string name="add_deck_button_text_activity_add_deck">Add</string>
 
     <string name="page_title_activity_add_card">Add card</string>
     <string name="select_image_button_text_activity_add_card">Select image for the flash card</string>
     <string name="content_description_image_view_activity_add_card">Image for the new flash card</string>
-    <string name="caption_edit_text_hint_activity_add_card">Caption for the image</string>
+    <string name="caption_edit_text_hint_activity_add_card">Caption of the flash card</string>
     <string name="answer_edit_text_hint_activity_add_card">Answer of the flash card</string>
-    <string name="add_card_button_activity_add_card">Add card</string>
+    <string name="add_card_button_text_activity_add_card">Add</string>
 
     <string name="page_title_activity_visual_schedule">Visual Scheduling</string>
     <string name="action_delete_activity_visual_schedule">Delete</string>
@@ -50,7 +50,7 @@
     <string name="duration_minute_edit_text_hint_activity_add_task">No. of minutes</string>
     <string name="select_image_button_text_activity_add_task">Select image for the task</string>
     <string name="content_description_image_view_activity_add_task">Image for the new task</string>
-    <string name="add_task_button_text_activity_add_task">Add task</string>
+    <string name="add_task_button_text_activity_add_task">Add</string>
 
     <string name="page_title_activity_activities">Activities</string>
     <string name="image_identification_activity_title_activity_activities">Identification activity - Images</string>

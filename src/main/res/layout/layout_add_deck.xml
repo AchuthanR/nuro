@@ -18,7 +18,16 @@
             android:layout_height="wrap_content"
             android:elevation="0dp"
             app:title="@string/page_title_activity_add_deck"
-            app:navigationIcon="@drawable/ic_round_close_24" />
+            app:navigationIcon="@drawable/ic_round_close_24">
+
+            <Button
+                android:id="@+id/addDeckButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_gravity="end"
+                android:text="@string/add_deck_button_text_activity_add_deck" />
+        </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
     <include layout="@layout/content_scrolling_add_deck" />

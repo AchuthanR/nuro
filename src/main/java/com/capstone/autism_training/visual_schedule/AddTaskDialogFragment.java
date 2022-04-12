@@ -1,6 +1,5 @@
 package com.capstone.autism_training.visual_schedule;
 
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,12 +17,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.capstone.autism_training.R;
+import com.capstone.autism_training.utilities.ImageHelper;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 
-import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.text.DateFormat;
 import java.util.TimeZone;
@@ -32,15 +31,11 @@ import java.util.concurrent.TimeUnit;
 public class AddTaskDialogFragment extends DialogFragment {
 
     public static final String TAG = "AddTaskDialog";
-    public static String TABLE_NAME = "";
 
+    public VisualScheduleActivity visualScheduleActivity;
     private ActivityResultLauncher<String> mGetContent;
     private byte[] image = null;
     private long start_time = -1;
-
-    public AddTaskDialogFragment(String table_name) {
-        TABLE_NAME = table_name;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,6 +46,7 @@ public class AddTaskDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        visualScheduleActivity = (VisualScheduleActivity) getActivity();
         return inflater.inflate(R.layout.layout_add_task, container, false);
     }
 
@@ -65,26 +61,9 @@ public class AddTaskDialogFragment extends DialogFragment {
                 uri -> {
                     try {
                         if (getContext() != null && uri != null) {
-                            image = getBitmapAsByteArray(BitmapFactory.decodeStream(getContext().getContentResolver().openInputStream(uri)));
-                            BitmapFactory.Options options1 = new BitmapFactory.Options();
-                            options1.inJustDecodeBounds = true;
-                            BitmapFactory.decodeByteArray(image, 0, image.length, options1);
-
-                            final int REQUIRED_SIZE = 300;
-
-                            int width_tmp = options1.outWidth, height_tmp = options1.outHeight;
-                            int scale = 1;
-                            while (width_tmp / 2 >= REQUIRED_SIZE && height_tmp / 2 >= REQUIRED_SIZE) {
-                                width_tmp /= 2;
-                                height_tmp /= 2;
-                                scale *= 2;
-                            }
-
-                            BitmapFactory.Options options2 = new BitmapFactory.Options();
-                            options2.inSampleSize = scale;
-                            options2.inJustDecodeBounds = false;
+                            image = ImageHelper.getBitmapAsByteArray(BitmapFactory.decodeStream(getContext().getContentResolver().openInputStream(uri)));
                             ImageView imageView = view.findViewById(R.id.imageView);
-                            imageView.setImageBitmap(BitmapFactory.decodeByteArray(image, 0, image.length, options2));
+                            imageView.setImageBitmap(ImageHelper.toCompressedBitmap(image));
                         }
                     } catch (FileNotFoundException e) {
                         Toast.makeText(getContext(), "Image not found!", Toast.LENGTH_LONG).show();
@@ -98,7 +77,7 @@ public class AddTaskDialogFragment extends DialogFragment {
             int minute = 0;
             if (start_time != -1) {
                 hour = (int) TimeUnit.MILLISECONDS.toHours(start_time);
-                minute = (int) TimeUnit.MILLISECONDS.toMinutes(start_time);
+                minute = (int) TimeUnit.MILLISECONDS.toMinutes(start_time) - hour * 60;
             }
             MaterialTimePicker timePicker = new MaterialTimePicker.Builder()
                     .setTimeFormat(TimeFormat.CLOCK_12H)
@@ -150,13 +129,12 @@ public class AddTaskDialogFragment extends DialogFragment {
                     return;
                 }
 
-                VisualScheduleTableManager visualScheduleTableManager = new VisualScheduleTableManager(getContext());
-                visualScheduleTableManager.open(TABLE_NAME);
                 long duration = TimeUnit.HOURS.toMillis(Long.parseLong(durationHourEditText.getText().toString())) + TimeUnit.MINUTES.toMillis(Long.parseLong(durationMinuteEditText.getText().toString()));
-                long rowNumber = visualScheduleTableManager.insert(nameEditText.getText().toString(), image, instructionEditText.getText().toString(), start_time, duration);
+                long rowNumber = visualScheduleActivity.visualScheduleTableManager.insert(nameEditText.getText().toString(), image, instructionEditText.getText().toString(), start_time, duration);
                 if (rowNumber != -1) {
+                    TaskModel taskModel = new TaskModel(rowNumber, nameEditText.getText().toString(), image, instructionEditText.getText().toString(), start_time, duration);
+                    visualScheduleActivity.mAdapter.addItem(taskModel);
                     Toast.makeText(getContext(), "Successfully added the task", Toast.LENGTH_LONG).show();
-                    visualScheduleTableManager.close();
                     this.dismiss();
                 }
                 else {
@@ -167,11 +145,5 @@ public class AddTaskDialogFragment extends DialogFragment {
                 Toast.makeText(getContext(), "All fields are necessary", Toast.LENGTH_LONG).show();
             }
         });
-    }
-
-    public byte[] getBitmapAsByteArray(Bitmap bitmap) {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 0, outputStream);
-        return outputStream.toByteArray();
     }
 }
