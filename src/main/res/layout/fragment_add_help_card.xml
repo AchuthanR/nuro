@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".card.CardActivity">
+    tools:context=".help.HelpCardActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -17,19 +17,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:elevation="0dp"
-            app:title="@string/page_title_activity_add_card"
+            app:title="@string/page_title_fragment_add_help_card"
             app:navigationIcon="@drawable/ic_round_close_24">
 
             <Button
-                android:id="@+id/addCardButton"
+                android:id="@+id/addHelpCardButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:layout_gravity="end"
-                android:text="@string/add_card_button_text_activity_add_card" />
+                android:text="@string/add_help_card_button_text_fragment_add_help_card" />
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/content_scrolling_add_card" />
+    <include layout="@layout/content_scrolling_fragment_add_help_card" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

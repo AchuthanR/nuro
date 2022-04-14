@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.capstone.autism_training.activities.ActivitiesActivity;
 import com.capstone.autism_training.deck.DeckActivity;
+import com.capstone.autism_training.help.HelpCardActivity;
 import com.capstone.autism_training.visual_schedule.VisualScheduleActivity;
 import com.google.android.material.card.MaterialCardView;
 
@@ -25,5 +26,8 @@ public class MainActivity extends AppCompatActivity {
 
         MaterialCardView materialCardView2 = findViewById(R.id.activitiesCardView);
         materialCardView2.setOnClickListener(view -> startActivity(new Intent(this, ActivitiesActivity.class)) );
+
+        MaterialCardView materialCardView3 = findViewById(R.id.helpCardCardView);
+        materialCardView3.setOnClickListener(view -> startActivity(new Intent(this, HelpCardActivity.class)) );
     }
 }

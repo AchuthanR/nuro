@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".visual_schedule.VisualScheduleActivity">
+    tools:context=".deck.DeckActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -17,19 +17,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:elevation="0dp"
-            app:title="@string/page_title_activity_add_task"
+            app:title="@string/page_title_fragment_add_deck"
             app:navigationIcon="@drawable/ic_round_close_24">
 
             <Button
-                android:id="@+id/addTaskButton"
+                android:id="@+id/addDeckButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:layout_gravity="end"
-                android:text="@string/add_task_button_text_activity_add_task" />
+                android:text="@string/add_deck_button_text_fragment_add_deck" />
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/content_scrolling_add_task" />
+    <include layout="@layout/content_scrolling_fragment_add_deck" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

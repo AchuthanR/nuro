@@ -6,13 +6,13 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".visual_schedule.VisualScheduleActivity"
-    tools:showIn="@layout/layout_add_task">
+    tools:showIn="@layout/fragment_add_task">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:layout_marginVertical="@dimen/activity_vertical_margin"
         android:orientation="vertical">
 
         <com.google.android.material.textfield.TextInputLayout
@@ -25,7 +25,7 @@
                 android:id="@+id/nameEditText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="@string/name_edit_text_hint_activity_add_task"
+                android:hint="@string/name_edit_text_hint_fragment_add_task"
                 android:inputType="text"
                 android:textSize="20sp" />
 
@@ -42,7 +42,7 @@
                 android:id="@+id/instructionEditText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="@string/instruction_edit_text_hint_activity_add_task"
+                android:hint="@string/instruction_edit_text_hint_fragment_add_task"
                 android:inputType="text"
                 android:textSize="20sp" />
 
@@ -54,7 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/select_start_time_button_text_activity_add_task" />
+            android:text="@string/select_start_time_button_text_fragment_add_task" />
 
         <TextView
             android:id="@+id/startTimeTextView"
@@ -68,7 +68,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/duration_text_view_text_activity_add_task"
+            android:text="@string/duration_text_view_text_fragment_add_task"
             android:textAppearance="?attr/textAppearanceTitleLarge" />
 
         <LinearLayout
@@ -88,7 +88,7 @@
                     android:id="@+id/durationHourEditText"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="@string/duration_hour_edit_text_hint_activity_add_task"
+                    android:hint="@string/duration_hour_edit_text_hint_fragment_add_task"
                     android:inputType="text"
                     android:textSize="20sp" />
 
@@ -106,7 +106,7 @@
                     android:id="@+id/durationMinuteEditText"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="@string/duration_minute_edit_text_hint_activity_add_task"
+                    android:hint="@string/duration_minute_edit_text_hint_fragment_add_task"
                     android:inputType="text"
                     android:textSize="20sp" />
 
@@ -119,14 +119,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/select_image_button_text_activity_add_task" />
+            android:text="@string/select_image_button_text_fragment_add_task" />
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:contentDescription="@string/content_description_image_view_activity_add_task"
+            android:contentDescription="@string/image_view_content_description_fragment_add_task"
             tools:src="@drawable/media" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

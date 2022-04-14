@@ -47,7 +47,7 @@ public class AddTaskDialogFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         visualScheduleActivity = (VisualScheduleActivity) getActivity();
-        return inflater.inflate(R.layout.layout_add_task, container, false);
+        return inflater.inflate(R.layout.fragment_add_task, container, false);
     }
 
     @Override

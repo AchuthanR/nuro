@@ -21,6 +21,6 @@
             app:navigationIcon="@drawable/ic_round_arrow_back_24" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/content_scrolling_word_identification" />
+    <include layout="@layout/content_scrolling_activity_word_identification" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

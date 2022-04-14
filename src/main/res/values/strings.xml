@@ -6,10 +6,18 @@
     <string name="visual_scheduling_module_title_activity_main">Visual scheduling</string>
     <string name="activities_module_title_activity_main">Activities</string>
     <string name="training_module_title_activity_main">Training</string>
+    <string name="help_card_module_title_activity_main">Help cards</string>
 
     <string name="page_title_activity_deck">All decks</string>
     <string name="action_delete_activity_deck">Delete</string>
     <string name="fab_text_activity_deck">Add deck</string>
+
+    <string name="page_title_fragment_add_deck">Add deck</string>
+    <string name="name_edit_text_hint_fragment_add_deck">Name of the deck</string>
+    <string name="description_edit_text_hint_fragment_add_deck">Description</string>
+    <string name="select_image_button_text_fragment_add_deck">Select cover image for the deck</string>
+    <string name="image_view_content_description_fragment_add_deck">Cover image for the new deck</string>
+    <string name="add_deck_button_text_fragment_add_deck">Add</string>
 
     <string name="page_title_activity_card">Flash cards</string>
     <string name="action_delete_activity_card">Delete</string>
@@ -17,19 +25,12 @@
     <string name="show_answer_button_text_activity_card">Show answer</string>
     <string name="hide_answer_button_text_activity_card">Hide answer</string>
 
-    <string name="page_title_activity_add_deck">Add deck</string>
-    <string name="name_edit_text_hint_activity_add_deck">Name of the deck</string>
-    <string name="description_edit_text_hint_activity_add_deck">Description</string>
-    <string name="select_image_button_text_activity_add_deck">Select cover image for the deck</string>
-    <string name="content_description_image_view_activity_add_deck">Cover image for the new deck</string>
-    <string name="add_deck_button_text_activity_add_deck">Add</string>
-
-    <string name="page_title_activity_add_card">Add card</string>
-    <string name="select_image_button_text_activity_add_card">Select image for the flash card</string>
-    <string name="content_description_image_view_activity_add_card">Image for the new flash card</string>
-    <string name="caption_edit_text_hint_activity_add_card">Caption of the flash card</string>
-    <string name="answer_edit_text_hint_activity_add_card">Answer of the flash card</string>
-    <string name="add_card_button_text_activity_add_card">Add</string>
+    <string name="page_title_fragment_add_card">Add card</string>
+    <string name="select_image_button_text_fragment_add_card">Select image for the flash card</string>
+    <string name="image_view_content_description_fragment_add_card">Image for the new flash card</string>
+    <string name="caption_edit_text_hint_fragment_add_card">Caption of the flash card</string>
+    <string name="answer_edit_text_hint_fragment_add_card">Answer of the flash card</string>
+    <string name="add_card_button_text_fragment_add_card">Add</string>
 
     <string name="page_title_activity_visual_schedule">Visual Scheduling</string>
     <string name="action_delete_activity_visual_schedule">Delete</string>
@@ -41,16 +42,16 @@
     <string name="completed_timer_text_view_text_activity_visual_schedule">Time\'s up!</string>
     <string name="reset_task_button_text_activity_visual_schedule">Reset</string>
 
-    <string name="page_title_activity_add_task">Add task</string>
-    <string name="name_edit_text_hint_activity_add_task">Name of the task</string>
-    <string name="instruction_edit_text_hint_activity_add_task">Instruction for the task</string>
-    <string name="select_start_time_button_text_activity_add_task">Select start time of the task</string>
-    <string name="duration_text_view_text_activity_add_task">Enter the duration of the task</string>
-    <string name="duration_hour_edit_text_hint_activity_add_task">No. of hours</string>
-    <string name="duration_minute_edit_text_hint_activity_add_task">No. of minutes</string>
-    <string name="select_image_button_text_activity_add_task">Select image for the task</string>
-    <string name="content_description_image_view_activity_add_task">Image for the new task</string>
-    <string name="add_task_button_text_activity_add_task">Add</string>
+    <string name="page_title_fragment_add_task">Add task</string>
+    <string name="name_edit_text_hint_fragment_add_task">Name of the task</string>
+    <string name="instruction_edit_text_hint_fragment_add_task">Instruction for the task</string>
+    <string name="select_start_time_button_text_fragment_add_task">Select start time of the task</string>
+    <string name="duration_text_view_text_fragment_add_task">Enter the duration of the task</string>
+    <string name="duration_hour_edit_text_hint_fragment_add_task">No. of hours</string>
+    <string name="duration_minute_edit_text_hint_fragment_add_task">No. of minutes</string>
+    <string name="select_image_button_text_fragment_add_task">Select image for the task</string>
+    <string name="image_view_content_description_fragment_add_task">Image for the new task</string>
+    <string name="add_task_button_text_fragment_add_task">Add</string>
 
     <string name="page_title_activity_activities">Activities</string>
     <string name="image_identification_activity_title_activity_activities">Identification activity - Images</string>
@@ -75,4 +76,15 @@
     <string name="choose_answer_text_view_text_activity_word_identification">Choose your answer</string>
     <string name="submit_button_text_activity_word_identification">Submit</string>
     <string name="next_button_text_activity_word_identification">Next</string>
+
+    <string name="page_title_activity_help_card">Help cards</string>
+    <string name="action_delete_activity_help_card">Delete</string>
+    <string name="fab_text_activity_help_card">Add help card</string>
+    <string name="choose_category_text_view_text_activity_help_card">Choose category</string>
+
+    <string name="page_title_fragment_add_help_card">Add help card</string>
+    <string name="name_edit_text_hint_fragment_add_help_card">Name of the help card</string>
+    <string name="select_image_button_text_fragment_add_help_card">Select image for the help card</string>
+    <string name="image_view_content_description_fragment_add_help_card">Image for the new help card</string>
+    <string name="add_help_card_button_text_fragment_add_help_card">Add</string>
 </resources>

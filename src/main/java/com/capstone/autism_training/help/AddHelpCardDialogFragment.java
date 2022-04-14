@@ -1,4 +1,4 @@
-package com.capstone.autism_training.card;
+package com.capstone.autism_training.help;
 
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -22,12 +22,12 @@ import com.google.android.material.appbar.MaterialToolbar;
 
 import java.io.FileNotFoundException;
 
-public class AddCardDialogFragment extends DialogFragment {
+public class AddHelpCardDialogFragment extends DialogFragment {
 
-    public static final String TAG = "AddCardDialog";
+    public static final String TAG = "AddHelpCardDialog";
 
+    public HelpCardActivity helpCardActivity;
     private ActivityResultLauncher<String> mGetContent;
-    private CardActivity cardActivity;
     private byte[] image = null;
 
     @Override
@@ -39,8 +39,8 @@ public class AddCardDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        cardActivity = (CardActivity) getActivity();
-        return inflater.inflate(R.layout.fragment_add_card, container, false);
+        helpCardActivity = (HelpCardActivity) getActivity();
+        return inflater.inflate(R.layout.fragment_add_help_card, container, false);
     }
 
     @Override
@@ -67,21 +67,20 @@ public class AddCardDialogFragment extends DialogFragment {
         Button selectImageButton = view.findViewById(R.id.selectImageButton);
         selectImageButton.setOnClickListener(view1 -> mGetContent.launch("image/*"));
 
-        Button addCardButton = view.findViewById(R.id.addCardButton);
-        addCardButton.setOnClickListener(view1 -> {
-            EditText captionEditText = view.findViewById(R.id.captionEditText);
-            EditText answerEditText = view.findViewById(R.id.answerEditText);
+        Button addHelpCardButton = view.findViewById(R.id.addHelpCardButton);
+        addHelpCardButton.setOnClickListener(view1 -> {
+            EditText nameEditText = view.findViewById(R.id.nameEditText);
 
-            if (image != null && !captionEditText.getText().toString().equals("") && !answerEditText.getText().toString().equals("")) {
-                long rowNumber = cardActivity.deckTableManager.insert(image, captionEditText.getText().toString(), answerEditText.getText().toString());
+            if (image != null && !nameEditText.getText().toString().equals("")) {
+                long rowNumber = helpCardActivity.helpCardTableManager.insert(nameEditText.getText().toString(), image);
                 if (rowNumber != -1) {
-                    CardModel cardModel = new CardModel(rowNumber, image, captionEditText.getText().toString(), answerEditText.getText().toString());
-                    cardActivity.mAdapter.addItem(cardModel);
-                    Toast.makeText(getContext(), "Successfully added the deck", Toast.LENGTH_LONG).show();
+                    HelpCardModel helpCardModel = new HelpCardModel(rowNumber, nameEditText.getText().toString(), image);
+                    helpCardActivity.mAdapter.addItem(helpCardModel);
+                    Toast.makeText(getContext(), "Successfully added the help card", Toast.LENGTH_LONG).show();
                     this.dismiss();
                 }
                 else {
-                    Toast.makeText(getContext(), "Error while adding the deck", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Error while adding the help card", Toast.LENGTH_LONG).show();
                 }
             }
             else {

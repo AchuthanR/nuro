@@ -38,5 +38,8 @@
         <activity
             android:name=".activities.WordIdentificationActivity"
             android:exported="false" />
+        <activity
+            android:name=".help.HelpCardActivity"
+            android:exported="false" />
     </application>
 </manifest>

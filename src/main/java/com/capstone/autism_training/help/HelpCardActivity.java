@@ -1,4 +1,4 @@
-package com.capstone.autism_training.visual_schedule;
+package com.capstone.autism_training.help;
 
 import android.database.Cursor;
 import android.os.Bundle;
@@ -24,49 +24,46 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Locale;
 
-public class VisualScheduleActivity extends AppCompatActivity {
+public class HelpCardActivity extends AppCompatActivity {
 
     protected RecyclerView mRecyclerView;
-    protected TaskAdapter mAdapter;
+    protected HelpCardAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
-    public VisualScheduleTableManager visualScheduleTableManager;
+    public HelpCardTableManager helpCardTableManager;
     private SelectionTracker<Long> selectionTracker;
     private ActionMode actionMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_visual_schedule);
+        setContentView(R.layout.activity_help_card);
 
         MaterialToolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(view -> onBackPressed());
 
         ExtendedFloatingActionButton extendedFAB = findViewById(R.id.extendedFAB);
         extendedFAB.setOnClickListener(view -> {
-            AddTaskDialogFragment addTaskDialogFragment = new AddTaskDialogFragment();
+            AddHelpCardDialogFragment addHelpCardDialogFragment = new AddHelpCardDialogFragment();
 
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-            addTaskDialogFragment.show(transaction, AddTaskDialogFragment.TAG);
+            addHelpCardDialogFragment.show(transaction, AddHelpCardDialogFragment.TAG);
         });
 
         mRecyclerView = findViewById(R.id.recyclerView);
         mLayoutManager = new LinearLayoutManager(this);
-        mAdapter = new TaskAdapter();
+        mAdapter = new HelpCardAdapter();
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
         selectionTracker = new SelectionTracker.Builder<>(
                 "selectionId",
                 mRecyclerView,
-                new TaskItemKeyProvider(mRecyclerView),
-                new TaskDetailsLookup(mRecyclerView),
+                new HelpCardItemKeyProvider(mRecyclerView),
+                new HelpCardDetailsLookup(mRecyclerView),
                 StorageStrategy.createLongStorage())
                 .withSelectionPredicate(SelectionPredicates.createSelectSingleAnything())
                 .build();
@@ -75,7 +72,7 @@ public class VisualScheduleActivity extends AppCompatActivity {
             @Override
             public boolean onCreateActionMode(ActionMode mode, Menu menu) {
                 MenuInflater inflater = mode.getMenuInflater();
-                inflater.inflate(R.menu.menu_task, menu);
+                inflater.inflate(R.menu.menu_help_card, menu);
                 return true;
             }
 
@@ -87,17 +84,17 @@ public class VisualScheduleActivity extends AppCompatActivity {
             @Override
             public boolean onActionItemClicked(ActionMode mode, MenuItem menuItem) {
                 if (menuItem.getItemId() == R.id.action_delete) {
-                    new MaterialAlertDialogBuilder(VisualScheduleActivity.this, com.google.android.material.R.style.ThemeOverlay_Material3_MaterialAlertDialog_Centered)
+                    new MaterialAlertDialogBuilder(HelpCardActivity.this, com.google.android.material.R.style.ThemeOverlay_Material3_MaterialAlertDialog_Centered)
                             .setIcon(R.drawable.ic_round_delete_24)
-                            .setTitle("Delete task?")
-                            .setMessage("The selected task will be deleted permanently.")
+                            .setTitle("Delete help card?")
+                            .setMessage("The selected help card will be deleted permanently.")
                             .setPositiveButton("Delete", (dialogInterface, i) -> {
                                 if (selectionTracker.hasSelection()) {
                                     long id = selectionTracker.getSelection().iterator().next();
                                     selectionTracker.clearSelection();
-                                    visualScheduleTableManager.deleteRow(id);
+                                    helpCardTableManager.deleteRow(id);
                                     mAdapter.removeItem(mRecyclerView.findViewHolderForItemId(id).getAdapterPosition());
-                                    Toast.makeText(VisualScheduleActivity.this, "Deleted the task", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(HelpCardActivity.this, "Deleted the help card", Toast.LENGTH_LONG).show();
                                 }
                             })
                             .setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.cancel())
@@ -133,36 +130,31 @@ public class VisualScheduleActivity extends AppCompatActivity {
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
 
-        ArrayList<String> days = new ArrayList<>(Arrays.asList("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"));
+        ArrayList<String> decks = new ArrayList<>(Arrays.asList("Requests", "Responses", "Emotions", "Problems"));
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, days);
-        MaterialAutoCompleteTextView chooseDayAutoCompleteTextView = findViewById(R.id.chooseDayAutoCompleteTextView);
-        chooseDayAutoCompleteTextView.setAdapter(adapter);
+                android.R.layout.simple_list_item_1, decks);
+        MaterialAutoCompleteTextView chooseCategoryAutoCompleteTextView = findViewById(R.id.chooseCategoryAutoCompleteTextView);
+        chooseCategoryAutoCompleteTextView.setAdapter(adapter);
 
-        SimpleDateFormat formatter = new SimpleDateFormat("EEEE", Locale.ENGLISH);
-        String day = formatter.format(Calendar.getInstance().getTime());
-        chooseDayAutoCompleteTextView.setText(day, false);
-        chooseDayAutoCompleteTextView.setOnItemClickListener((adapterView, view, i, l) -> daySelected(adapterView.getItemAtPosition(i).toString()));
+        chooseCategoryAutoCompleteTextView.setText(decks.get(0), false);
+        chooseCategoryAutoCompleteTextView.setOnItemClickListener((adapterView, view, i, l) -> categorySelected(adapterView.getItemAtPosition(i).toString()));
 
-        daySelected(day);
+        categorySelected(decks.get(0));
     }
 
-    private void daySelected(String day) {
+    private void categorySelected(String deck) {
         mAdapter.clearAll();
 
-        visualScheduleTableManager = new VisualScheduleTableManager(getApplicationContext());
-        visualScheduleTableManager.open(day.toUpperCase().replace(" ", "_"));
-        Cursor cursor = visualScheduleTableManager.fetch();
+        helpCardTableManager = new HelpCardTableManager(getApplicationContext());
+        helpCardTableManager.open(deck.toUpperCase().replace(" ", "_"));
+        Cursor cursor = helpCardTableManager.fetch();
 
-        int idIndex = cursor.getColumnIndex(VisualScheduleTableHelper.ID);
-        int nameIndex = cursor.getColumnIndex(VisualScheduleTableHelper.NAME);
-        int imageIndex = cursor.getColumnIndex(VisualScheduleTableHelper.IMAGE);
-        int instructionIndex = cursor.getColumnIndex(VisualScheduleTableHelper.INSTRUCTION);
-        int startTimeIndex = cursor.getColumnIndex(VisualScheduleTableHelper.START_TIME);
-        int durationIndex = cursor.getColumnIndex(VisualScheduleTableHelper.DURATION);
+        int idIndex = cursor.getColumnIndex(HelpCardTableHelper.ID);
+        int nameIndex = cursor.getColumnIndex(HelpCardTableHelper.NAME);
+        int imageIndex = cursor.getColumnIndex(HelpCardTableHelper.IMAGE);
         while (!cursor.isAfterLast() || cursor.isFirst()) {
-            TaskModel taskModel = new TaskModel(cursor.getInt(idIndex), cursor.getString(nameIndex), cursor.getBlob(imageIndex), cursor.getString(instructionIndex), cursor.getLong(startTimeIndex), cursor.getLong(durationIndex));
-            mAdapter.addItem(taskModel);
+            HelpCardModel helpCardModel = new HelpCardModel(cursor.getInt(idIndex), cursor.getString(nameIndex), cursor.getBlob(imageIndex));
+            mAdapter.addItem(helpCardModel);
             cursor.moveToNext();
         }
         cursor.close();
@@ -171,6 +163,6 @@ public class VisualScheduleActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        visualScheduleTableManager.close();
+        helpCardTableManager.close();
     }
 }

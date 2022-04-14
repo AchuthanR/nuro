@@ -40,7 +40,7 @@ public class AddDeckDialogFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         deckActivity = (DeckActivity) getActivity();
-        return inflater.inflate(R.layout.layout_add_deck, container, false);
+        return inflater.inflate(R.layout.fragment_add_deck, container, false);
     }
 
     @Override

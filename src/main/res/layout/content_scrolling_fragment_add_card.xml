@@ -6,13 +6,13 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".card.CardActivity"
-    tools:showIn="@layout/layout_add_card">
+    tools:showIn="@layout/fragment_add_card">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:layout_marginVertical="@dimen/activity_vertical_margin"
         android:orientation="vertical">
 
         <com.google.android.material.textfield.TextInputLayout
@@ -25,7 +25,7 @@
                 android:id="@+id/captionEditText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="@string/caption_edit_text_hint_activity_add_card"
+                android:hint="@string/caption_edit_text_hint_fragment_add_card"
                 android:inputType="text"
                 android:textSize="20sp" />
 
@@ -42,7 +42,7 @@
                 android:id="@+id/answerEditText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="@string/answer_edit_text_hint_activity_add_card"
+                android:hint="@string/answer_edit_text_hint_fragment_add_card"
                 android:inputType="text"
                 android:textSize="20sp" />
 
@@ -54,7 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/select_image_button_text_activity_add_card" />
+            android:text="@string/select_image_button_text_fragment_add_card" />
 
         <ImageView
             android:id="@+id/imageView"

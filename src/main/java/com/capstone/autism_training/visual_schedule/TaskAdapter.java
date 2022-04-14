@@ -153,10 +153,15 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         if (TimeUnit.MILLISECONDS.toHours(tasks.get(position).duration) != 0) {
             long hour = TimeUnit.MILLISECONDS.toHours(tasks.get(position).duration);
             long minute = TimeUnit.MILLISECONDS.toMinutes(tasks.get(position).duration) - hour * 60;
-            viewHolder.getTimerTextView().setText(String.format("Duration: %1$shrs %2$smins", hour, minute));
+            if (minute != 0) {
+                viewHolder.getTimerTextView().setText(String.format("Duration: %1$shr %2$smin", hour, minute));
+            }
+            else {
+                viewHolder.getTimerTextView().setText(String.format("Duration: %1$shr", hour));
+            }
         }
         else {
-            viewHolder.getTimerTextView().setText(String.format("Duration: %1$smins", TimeUnit.MILLISECONDS.toMinutes(tasks.get(position).duration)));
+            viewHolder.getTimerTextView().setText(String.format("Duration: %1$smin", TimeUnit.MILLISECONDS.toMinutes(tasks.get(position).duration)));
         }
 
         final boolean[] isOngoing = {false};
@@ -211,10 +216,15 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             if (TimeUnit.MILLISECONDS.toHours(tasks.get(viewHolder.getAdapterPosition()).duration) != 0) {
                 long hour = TimeUnit.MILLISECONDS.toHours(tasks.get(viewHolder.getAdapterPosition()).duration);
                 long minute = TimeUnit.MILLISECONDS.toMinutes(tasks.get(viewHolder.getAdapterPosition()).duration) - hour * 60;
-                viewHolder.getTimerTextView().setText(String.format("Duration: %1$shrs %2$smins", hour, minute));
+                if (minute != 0) {
+                    viewHolder.getTimerTextView().setText(String.format("Duration: %1$shr %2$smin", hour, minute));
+                }
+                else {
+                    viewHolder.getTimerTextView().setText(String.format("Duration: %1$shr", hour));
+                }
             }
             else {
-                viewHolder.getTimerTextView().setText(String.format("Duration: %1$smins", TimeUnit.MILLISECONDS.toMinutes(tasks.get(viewHolder.getAdapterPosition()).duration)));
+                viewHolder.getTimerTextView().setText(String.format("Duration: %1$smin", TimeUnit.MILLISECONDS.toMinutes(tasks.get(viewHolder.getAdapterPosition()).duration)));
             }
             view.setEnabled(false);
             remainingTime[0] = tasks.get(viewHolder.getAdapterPosition()).duration;
