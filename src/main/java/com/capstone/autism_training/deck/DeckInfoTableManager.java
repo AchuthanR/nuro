@@ -27,7 +27,9 @@ public class DeckInfoTableManager {
     }
 
     public void close() {
-        deckInfoTableHelper.close();
+        if (deckInfoTableHelper != null) {
+            deckInfoTableHelper.close();
+        }
     }
 
     public long insert(String name, byte[] image, String description) {
@@ -70,6 +72,6 @@ public class DeckInfoTableManager {
     }
 
     public void deleteTable() {
-        database.delete(DeckInfoTableHelper.TABLE_NAME, null, null);
+        database.execSQL("DROP TABLE IF EXISTS " + DeckInfoTableHelper.TABLE_NAME);
     }
 }

@@ -25,7 +25,9 @@ public class VisualScheduleTableManager {
     }
 
     public void close() {
-        visualScheduleTableHelper.close();
+        if (visualScheduleTableHelper != null) {
+            visualScheduleTableHelper.close();
+        }
     }
 
     public long insert(String name, byte[] image, String instruction, long start_time, long duration) {
@@ -35,11 +37,12 @@ public class VisualScheduleTableManager {
         contentValues.put(VisualScheduleTableHelper.INSTRUCTION, instruction);
         contentValues.put(VisualScheduleTableHelper.START_TIME, start_time);
         contentValues.put(VisualScheduleTableHelper.DURATION, duration);
+        contentValues.put(VisualScheduleTableHelper.COMPLETED, false);
         return database.insert(visualScheduleTableHelper.TABLE_NAME, null, contentValues);
     }
 
     public Cursor fetch() {
-        String[] columns = new String[] { VisualScheduleTableHelper.ID, VisualScheduleTableHelper.NAME, VisualScheduleTableHelper.IMAGE, VisualScheduleTableHelper.INSTRUCTION, VisualScheduleTableHelper.START_TIME, VisualScheduleTableHelper.DURATION };
+        String[] columns = new String[] { VisualScheduleTableHelper.ID, VisualScheduleTableHelper.NAME, VisualScheduleTableHelper.IMAGE, VisualScheduleTableHelper.INSTRUCTION, VisualScheduleTableHelper.START_TIME, VisualScheduleTableHelper.DURATION, VisualScheduleTableHelper.COMPLETED };
         Cursor cursor = database.query(visualScheduleTableHelper.TABLE_NAME, columns, null, null, null, null, VisualScheduleTableHelper.START_TIME);
         if (cursor != null) {
             cursor.moveToFirst();
@@ -57,11 +60,23 @@ public class VisualScheduleTableManager {
         return database.update(visualScheduleTableHelper.TABLE_NAME, contentValues, VisualScheduleTableHelper.ID + " = " + id, null);
     }
 
+    public int update(long id, boolean completed) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(VisualScheduleTableHelper.COMPLETED, completed);
+        return database.update(visualScheduleTableHelper.TABLE_NAME, contentValues, VisualScheduleTableHelper.ID + " = " + id, null);
+    }
+
+    public int markAllAsPending() {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(VisualScheduleTableHelper.COMPLETED, false);
+        return database.update(visualScheduleTableHelper.TABLE_NAME, contentValues, null, null);
+    }
+
     public void deleteRow(long id) {
         database.delete(visualScheduleTableHelper.TABLE_NAME, VisualScheduleTableHelper.ID + "=" + id, null);
     }
 
     public void deleteTable() {
-        database.delete(visualScheduleTableHelper.TABLE_NAME, null, null);
+        database.execSQL("DROP TABLE IF EXISTS " + visualScheduleTableHelper.TABLE_NAME);
     }
 }

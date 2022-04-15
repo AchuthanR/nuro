@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.capstone.autism_training.R;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
@@ -144,13 +145,21 @@ public class VisualScheduleActivity extends AppCompatActivity {
         chooseDayAutoCompleteTextView.setText(day, false);
         chooseDayAutoCompleteTextView.setOnItemClickListener((adapterView, view, i, l) -> daySelected(adapterView.getItemAtPosition(i).toString()));
 
+        visualScheduleTableManager = new VisualScheduleTableManager(getApplicationContext());
+        mAdapter.setVisualScheduleTableManager(visualScheduleTableManager);
         daySelected(day);
+
+        MaterialButton markAllAsPending = findViewById(R.id.markAllAsPendingButton);
+        markAllAsPending.setOnClickListener(view -> {
+            visualScheduleTableManager.markAllAsPending();
+            daySelected(chooseDayAutoCompleteTextView.getText().toString());
+        });
     }
 
     private void daySelected(String day) {
         mAdapter.clearAll();
 
-        visualScheduleTableManager = new VisualScheduleTableManager(getApplicationContext());
+        visualScheduleTableManager.close();
         visualScheduleTableManager.open(day.toUpperCase().replace(" ", "_"));
         Cursor cursor = visualScheduleTableManager.fetch();
 
@@ -160,8 +169,9 @@ public class VisualScheduleActivity extends AppCompatActivity {
         int instructionIndex = cursor.getColumnIndex(VisualScheduleTableHelper.INSTRUCTION);
         int startTimeIndex = cursor.getColumnIndex(VisualScheduleTableHelper.START_TIME);
         int durationIndex = cursor.getColumnIndex(VisualScheduleTableHelper.DURATION);
+        int completedIndex = cursor.getColumnIndex(VisualScheduleTableHelper.COMPLETED);
         while (!cursor.isAfterLast() || cursor.isFirst()) {
-            TaskModel taskModel = new TaskModel(cursor.getInt(idIndex), cursor.getString(nameIndex), cursor.getBlob(imageIndex), cursor.getString(instructionIndex), cursor.getLong(startTimeIndex), cursor.getLong(durationIndex));
+            TaskModel taskModel = new TaskModel(cursor.getInt(idIndex), cursor.getString(nameIndex), cursor.getBlob(imageIndex), cursor.getString(instructionIndex), cursor.getLong(startTimeIndex), cursor.getLong(durationIndex), cursor.getInt(completedIndex) > 0);
             mAdapter.addItem(taskModel);
             cursor.moveToNext();
         }

@@ -27,6 +27,7 @@ import java.util.concurrent.TimeUnit;
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
     private final ArrayList<TaskModel> tasks;
+    private VisualScheduleTableManager visualScheduleTableManager;
     private SelectionTracker<Long> selectionTracker;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -39,6 +40,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         private final MaterialButton timerButton;
         private final TextView timerTextView;
         private final MaterialButton resetButton;
+        private final MaterialButton markAsDoneButton;
         private final TaskItemDetails taskItemDetails;
 
         public ViewHolder(View view) {
@@ -52,6 +54,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             timerButton = view.findViewById(R.id.timerButton);
             timerTextView = view.findViewById(R.id.timerTextView);
             resetButton = view.findViewById(R.id.resetButton);
+            markAsDoneButton = view.findViewById(R.id.markAsDoneButton);
             taskItemDetails = new TaskItemDetails();
         }
 
@@ -91,6 +94,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             return resetButton;
         }
 
+        public MaterialButton getMarkAsDoneButton() {
+            return markAsDoneButton;
+        }
+
         public ItemDetailsLookup.ItemDetails<Long> getItemDetails() {
             taskItemDetails.setPosition(getAdapterPosition());
             taskItemDetails.setSelectionKey(tasks.get(getAdapterPosition()).id);
@@ -110,6 +117,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     @Override
     public long getItemId(int position) {
         return tasks.get(position).id;
+    }
+
+    public void setVisualScheduleTableManager(VisualScheduleTableManager visualScheduleTableManager) {
+        this.visualScheduleTableManager = visualScheduleTableManager;
     }
 
     public void setSelectionTracker(SelectionTracker<Long> selectionTracker) {
@@ -212,6 +223,17 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             view.setEnabled(false);
             remainingTime[0] = tasks.get(viewHolder.getAdapterPosition()).duration;
             isOngoing[0] = false;
+        });
+
+        viewHolder.getMarkAsDoneButton().setChecked(tasks.get(position).completed);
+        viewHolder.getMarkAsDoneButton().setOnClickListener(view -> {
+            boolean success = visualScheduleTableManager.update(tasks.get(viewHolder.getAdapterPosition()).id, viewHolder.getMarkAsDoneButton().isChecked()) > 0;
+            if (success) {
+                tasks.get(viewHolder.getAdapterPosition()).completed = viewHolder.getMarkAsDoneButton().isChecked();
+            }
+            else {
+                viewHolder.getMarkAsDoneButton().setChecked(!viewHolder.getMarkAsDoneButton().isChecked());
+            }
         });
 
         viewHolder.bind(selectionTracker.isSelected(tasks.get(position).id));

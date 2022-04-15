@@ -25,7 +25,9 @@ public class HelpCardTableManager {
     }
 
     public void close() {
-        helpCardTableHelper.close();
+        if (helpCardTableHelper != null) {
+            helpCardTableHelper.close();
+        }
     }
 
     public long insert(String name, byte[] image) {
@@ -56,6 +58,6 @@ public class HelpCardTableManager {
     }
 
     public void deleteTable() {
-        database.delete(helpCardTableHelper.TABLE_NAME, null, null);
+        database.execSQL("DROP TABLE IF EXISTS " + helpCardTableHelper.TABLE_NAME);
     }
 }

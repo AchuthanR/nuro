@@ -25,7 +25,9 @@ public class DeckTableManager {
     }
 
     public void close() {
-        deckTableHelper.close();
+        if (deckTableHelper != null) {
+            deckTableHelper.close();
+        }
     }
 
     public long insert(byte[] image, String caption, String answer) {
@@ -58,6 +60,6 @@ public class DeckTableManager {
     }
 
     public void deleteTable() {
-        database.delete(deckTableHelper.TABLE_NAME, null, null);
+        database.execSQL("DROP TABLE IF EXISTS " + deckTableHelper.TABLE_NAME);
     }
 }

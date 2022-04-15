@@ -36,11 +36,13 @@
     <string name="action_delete_activity_visual_schedule">Delete</string>
     <string name="fab_text_activity_visual_schedule">Add task</string>
     <string name="choose_day_text_view_text_activity_visual_schedule">Choose day</string>
+    <string name="mark_all_as_pending_task_button_text_activity_visual_schedule">Mark all as pending</string>
     <string name="start_task_button_text_activity_visual_schedule">Start task</string>
     <string name="pause_task_button_text_activity_visual_schedule">Pause task</string>
     <string name="continue_task_button_text_activity_visual_schedule">Continue task</string>
     <string name="completed_timer_text_view_text_activity_visual_schedule">Time\'s up!</string>
     <string name="reset_task_button_text_activity_visual_schedule">Reset</string>
+    <string name="mark_as_done_task_button_text_activity_visual_schedule">Done</string>
 
     <string name="page_title_fragment_add_task">Add task</string>
     <string name="name_edit_text_hint_fragment_add_task">Name of the task</string>

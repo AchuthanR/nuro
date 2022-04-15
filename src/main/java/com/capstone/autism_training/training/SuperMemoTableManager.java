@@ -25,7 +25,9 @@ public class SuperMemoTableManager {
     }
 
     public void close() {
-        superMemoTableHelper.close();
+        if (superMemoTableHelper != null) {
+            superMemoTableHelper.close();
+        }
     }
 
     public long insert(int repetitions, int interval, double easiness) {
@@ -58,6 +60,6 @@ public class SuperMemoTableManager {
     }
 
     public void deleteTable() {
-        database.delete(superMemoTableHelper.TABLE_NAME, null, null);
+        database.execSQL("DROP TABLE IF EXISTS " + superMemoTableHelper.TABLE_NAME);
     }
 }

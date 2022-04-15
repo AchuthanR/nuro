@@ -36,7 +36,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="60dp"
             android:nestedScrollingEnabled="false" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/markAllAsPendingButton"
+            style="@style/Widget.Material3.Button.ElevatedButton.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="60dp"
+            android:text="@string/mark_all_as_pending_task_button_text_activity_visual_schedule"
+            android:textAllCaps="true"
+            app:icon="@drawable/ic_round_pending_24" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
