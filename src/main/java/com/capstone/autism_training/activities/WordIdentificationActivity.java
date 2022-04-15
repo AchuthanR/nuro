@@ -1,7 +1,8 @@
 package com.capstone.autism_training.activities;
 
+import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -17,9 +18,11 @@ import com.capstone.autism_training.card.DeckTableHelper;
 import com.capstone.autism_training.card.DeckTableManager;
 import com.capstone.autism_training.deck.DeckInfoTableHelper;
 import com.capstone.autism_training.deck.DeckInfoTableManager;
+import com.capstone.autism_training.utilities.ImageHelper;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.button.MaterialButtonToggleGroup;
+import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 
@@ -29,6 +32,8 @@ import java.util.Random;
 
 public class WordIdentificationActivity extends AppCompatActivity {
 
+    private SharedPreferences sharedPreferences;
+    private MediaPlayer mediaPlayer;
     private DeckTableManager deckTableManager;
     private Cursor cursor;
     private ArrayList<Integer> cardPositions;
@@ -45,6 +50,16 @@ public class WordIdentificationActivity extends AppCompatActivity {
 
         MaterialToolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(view -> onBackPressed());
+
+        mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.cheer);
+        MaterialCheckBox checkBox = findViewById(R.id.playSoundCheckBox);
+        sharedPreferences = this.getSharedPreferences("activities", MODE_PRIVATE);
+        checkBox.setChecked(sharedPreferences.getBoolean("playSoundWordIdentification", true));
+        checkBox.setOnCheckedChangeListener((compoundButton, b) -> {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("playSoundWordIdentification", b);
+            editor.apply();
+        });
 
         DeckInfoTableManager deckInfoTableManager = new DeckInfoTableManager(getApplicationContext());
         deckInfoTableManager.open();
@@ -137,6 +152,9 @@ public class WordIdentificationActivity extends AppCompatActivity {
             if (correctAnswer) {
                 Snackbar.make(view, "Correct answer", Snackbar.LENGTH_LONG)
                         .setAction("OKAY", view1 -> {}).show();
+                if (sharedPreferences.getBoolean("playSoundWordIdentification", true)) {
+                    mediaPlayer.start();
+                }
             }
             else {
                 Snackbar.make(view, "Wrong answer", Snackbar.LENGTH_LONG)
@@ -145,6 +163,10 @@ public class WordIdentificationActivity extends AppCompatActivity {
         });
 
         nextButton.setOnClickListener(view -> {
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.pause();
+                mediaPlayer.seekTo(0);
+            }
             currentAnswerIndex++;
             if (currentAnswerIndex == cardPositions.size()) {
                 Snackbar.make(view, "You have come to the end of the deck", Snackbar.LENGTH_LONG).show();
@@ -183,7 +205,7 @@ public class WordIdentificationActivity extends AppCompatActivity {
         answers.add(correctOption, cursor.getString(answerColumnIndex));
         byte[] image = cursor.getBlob(imageColumnIndex);
         ImageView imageView = findViewById(R.id.imageView);
-        imageView.setImageBitmap(BitmapFactory.decodeByteArray(image, 0, image.length));
+        imageView.setImageBitmap(ImageHelper.toCompressedBitmap(image));
 
         MaterialButton option1 = findViewById(R.id.option1);
         option1.setText(answers.get(0));
@@ -203,5 +225,6 @@ public class WordIdentificationActivity extends AppCompatActivity {
         super.onDestroy();
 
         cursor.close();
+        mediaPlayer.stop();
     }
 }

@@ -32,6 +32,14 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/playSoundCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:text="@string/play_sound_check_box_text_activity_word_identification" />
+
         <LinearLayout
             android:id="@+id/activityLinearLayout"
             android:layout_width="match_parent"
@@ -50,10 +58,11 @@
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="350dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                android:adjustViewBounds="true" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -133,10 +142,14 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/nextButton"
-                android:layout_width="match_parent"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="50dp"
                 android:text="@string/next_button_text_activity_word_identification"
+                android:textAllCaps="true"
                 android:enabled="false" />
         </LinearLayout>
     </LinearLayout>

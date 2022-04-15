@@ -61,6 +61,7 @@
 
     <string name="page_title_activity_image_identification">Identification activity - Images</string>
     <string name="choose_deck_text_view_text_activity_image_identification">Choose deck</string>
+    <string name="play_sound_check_box_text_activity_image_identification">Play appreciation sounds for correct answers</string>
     <string name="identify_question_text_view_text_activity_image_identification">Identify %1$s</string>
     <string name="choose_answer_text_view_text_activity_image_identification">Choose your answer</string>
     <string name="first_chip_text_activity_image_identification">First image</string>
@@ -72,6 +73,7 @@
 
     <string name="page_title_activity_word_identification">Identification activity - Words</string>
     <string name="choose_deck_text_view_text_activity_word_identification">Choose deck</string>
+    <string name="play_sound_check_box_text_activity_word_identification">Play appreciation sounds for correct answers</string>
     <string name="identify_question_text_view_text_activity_word_identification">Identify the below image</string>
     <string name="choose_answer_text_view_text_activity_word_identification">Choose your answer</string>
     <string name="submit_button_text_activity_word_identification">Submit</string>
@@ -87,4 +89,6 @@
     <string name="select_image_button_text_fragment_add_help_card">Select image for the help card</string>
     <string name="image_view_content_description_fragment_add_help_card">Image for the new help card</string>
     <string name="add_help_card_button_text_fragment_add_help_card">Add</string>
+
+    <string name="page_title_activity_training">Training</string>
 </resources>

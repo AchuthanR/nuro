@@ -1,6 +1,5 @@
 package com.capstone.autism_training.card;
 
-import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +13,7 @@ import androidx.recyclerview.selection.SelectionTracker;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.capstone.autism_training.R;
+import com.capstone.autism_training.utilities.ImageHelper;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 
@@ -98,24 +98,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
-        BitmapFactory.Options options1 = new BitmapFactory.Options();
-        options1.inJustDecodeBounds = true;
-        BitmapFactory.decodeByteArray(cards.get(position).image, 0, cards.get(position).image.length, options1);
-
-        final int REQUIRED_SIZE = 300;
-
-        int width_tmp = options1.outWidth, height_tmp = options1.outHeight;
-        int scale = 1;
-        while (width_tmp / 2 >= REQUIRED_SIZE && height_tmp / 2 >= REQUIRED_SIZE) {
-            width_tmp /= 2;
-            height_tmp /= 2;
-            scale *= 2;
-        }
-
-        BitmapFactory.Options options2 = new BitmapFactory.Options();
-        options2.inSampleSize = scale;
-        options2.inJustDecodeBounds = false;
-        viewHolder.getImageView().setImageBitmap(BitmapFactory.decodeByteArray(cards.get(position).image, 0, cards.get(position).image.length, options2));
+        viewHolder.getImageView().setImageBitmap(ImageHelper.toCompressedBitmap(cards.get(position).image));
         viewHolder.getCaptionTextView().setText(cards.get(position).caption);
         viewHolder.getAnswerTextView().setText(cards.get(position).answer);
 

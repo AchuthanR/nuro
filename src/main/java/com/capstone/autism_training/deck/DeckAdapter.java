@@ -2,7 +2,6 @@ package com.capstone.autism_training.deck;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.capstone.autism_training.R;
 import com.capstone.autism_training.card.CardActivity;
+import com.capstone.autism_training.utilities.ImageHelper;
 import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
@@ -99,24 +99,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
-        BitmapFactory.Options options1 = new BitmapFactory.Options();
-        options1.inJustDecodeBounds = true;
-        BitmapFactory.decodeByteArray(decks.get(position).image, 0, decks.get(position).image.length, options1);
-
-        final int REQUIRED_SIZE = 300;
-
-        int width_tmp = options1.outWidth, height_tmp = options1.outHeight;
-        int scale = 1;
-        while (width_tmp / 2 >= REQUIRED_SIZE && height_tmp / 2 >= REQUIRED_SIZE) {
-            width_tmp /= 2;
-            height_tmp /= 2;
-            scale *= 2;
-        }
-
-        BitmapFactory.Options options2 = new BitmapFactory.Options();
-        options2.inSampleSize = scale;
-        options2.inJustDecodeBounds = false;
-        viewHolder.getImageView().setImageBitmap(BitmapFactory.decodeByteArray(decks.get(position).image, 0, decks.get(position).image.length, options2));
+        viewHolder.getImageView().setImageBitmap(ImageHelper.toCompressedBitmap(decks.get(position).image));
         viewHolder.getTitleTextView().setText(decks.get(position).name);
         viewHolder.getDescriptionTextView().setText(decks.get(position).description);
 

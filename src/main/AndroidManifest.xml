@@ -41,5 +41,8 @@
         <activity
             android:name=".help.HelpCardActivity"
             android:exported="false" />
+        <activity
+            android:name=".training.TrainingActivity"
+            android:exported="false" />
     </application>
 </manifest>
