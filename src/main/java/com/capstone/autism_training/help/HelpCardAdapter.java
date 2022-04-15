@@ -1,6 +1,7 @@
 package com.capstone.autism_training.help;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.selection.ItemDetailsLookup;
 import androidx.recyclerview.selection.SelectionTracker;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +24,7 @@ import java.util.ArrayList;
 public class HelpCardAdapter extends RecyclerView.Adapter<HelpCardAdapter.ViewHolder> {
 
     private final ArrayList<HelpCardModel> helpCards;
+    private final FragmentManager fragmentManager;
     private SelectionTracker<Long> selectionTracker;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -66,8 +70,9 @@ public class HelpCardAdapter extends RecyclerView.Adapter<HelpCardAdapter.ViewHo
         }
     }
 
-    public HelpCardAdapter() {
+    public HelpCardAdapter(FragmentManager fragmentManager) {
         helpCards = new ArrayList<>();
+        this.fragmentManager = fragmentManager;
         setHasStableIds(true);
     }
 
@@ -93,6 +98,18 @@ public class HelpCardAdapter extends RecyclerView.Adapter<HelpCardAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
         viewHolder.getImageView().setImageBitmap(ImageHelper.toCompressedBitmap(helpCards.get(position).image));
         viewHolder.getNameTextView().setText(helpCards.get(position).name);
+
+        viewHolder.getCardView().setOnClickListener(view -> {
+            ActiveHelpCardDialogFragment activeHelpCardDialogFragment = new ActiveHelpCardDialogFragment();
+            Bundle bundle = new Bundle();
+            bundle.putByteArray("image", helpCards.get(viewHolder.getAdapterPosition()).image);
+            bundle.putString("name", helpCards.get(viewHolder.getAdapterPosition()).name);
+            activeHelpCardDialogFragment.setArguments(bundle);
+
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            activeHelpCardDialogFragment.show(transaction, ActiveHelpCardDialogFragment.TAG);
+        });
 
         viewHolder.bind(selectionTracker.isSelected(helpCards.get(position).id));
     }

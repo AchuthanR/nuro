@@ -55,7 +55,7 @@ public class HelpCardActivity extends AppCompatActivity {
 
         mRecyclerView = findViewById(R.id.recyclerView);
         mLayoutManager = new LinearLayoutManager(this);
-        mAdapter = new HelpCardAdapter();
+        mAdapter = new HelpCardAdapter(getSupportFragmentManager());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 

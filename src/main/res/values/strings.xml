@@ -92,5 +92,7 @@
     <string name="image_view_content_description_fragment_add_help_card">Image for the new help card</string>
     <string name="add_help_card_button_text_fragment_add_help_card">Add</string>
 
+    <string name="close_button_text_fragment_active_help_card">Close</string>
+
     <string name="page_title_activity_training">Training</string>
 </resources>
