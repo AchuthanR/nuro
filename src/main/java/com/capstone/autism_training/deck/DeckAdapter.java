@@ -94,7 +94,15 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.layout_deck_item, viewGroup, false);
 
-        return new ViewHolder(view);
+        ViewHolder viewHolder = new ViewHolder(view);
+
+        viewHolder.getCardView().setOnClickListener(view1 -> {
+            Intent intent = new Intent(viewHolder.getContext(), CardActivity.class);
+            intent.putExtra("TABLE_NAME", decks.get(viewHolder.getAdapterPosition()).name);
+            viewHolder.getContext().startActivity(intent);
+        });
+
+        return viewHolder;
     }
 
     @Override
@@ -102,12 +110,6 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
         viewHolder.getImageView().setImageBitmap(ImageHelper.toCompressedBitmap(decks.get(position).image));
         viewHolder.getTitleTextView().setText(decks.get(position).name);
         viewHolder.getDescriptionTextView().setText(decks.get(position).description);
-
-        viewHolder.getCardView().setOnClickListener(view1 -> {
-            Intent intent = new Intent(viewHolder.getContext(), CardActivity.class);
-            intent.putExtra("TABLE_NAME", decks.get(viewHolder.getAdapterPosition()).name);
-            viewHolder.getContext().startActivity(intent);
-        });
 
         viewHolder.bind(selectionTracker.isSelected(decks.get(position).id));
     }

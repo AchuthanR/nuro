@@ -42,6 +42,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         private final MaterialButton resetButton;
         private final MaterialButton markAsDoneButton;
         private final TaskItemDetails taskItemDetails;
+        public boolean isOngoing = false;
+        public CountDownTimer countDownTimer;
+        public long remainingTime;
 
         public ViewHolder(View view) {
             super(view);
@@ -133,7 +136,83 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.layout_task_item, viewGroup, false);
 
-        return new ViewHolder(view);
+        ViewHolder viewHolder = new ViewHolder(view);
+
+        viewHolder.getTimerButton().setOnClickListener(view1 -> {
+            if (!viewHolder.isOngoing) {
+                viewHolder.getTimerButton().setText(R.string.pause_task_button_text_activity_visual_schedule);
+                viewHolder.getTimerButton().setIconResource(R.drawable.ic_round_pause_24);
+                viewHolder.countDownTimer = new CountDownTimer(viewHolder.remainingTime, 1000) {
+                    public void onTick(long millisUntilFinished) {
+                        viewHolder.remainingTime = millisUntilFinished;
+                        long hour = TimeUnit.MILLISECONDS.toHours(millisUntilFinished);
+                        long minute = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - hour * 60;
+                        long second = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - hour * 60 * 60 - minute * 60;
+                        if (hour != 0) {
+                            viewHolder.getTimerTextView().setText(String.format(Locale.getDefault(), "%d:%02d:%02d left", hour, minute, second));
+                        }
+                        else if (minute != 0) {
+                            viewHolder.getTimerTextView().setText(String.format(Locale.getDefault(), "%d:%02d left", minute, second));
+                        }
+                        else {
+                            viewHolder.getTimerTextView().setText(String.format(Locale.getDefault(), "%02d left", second));
+                        }
+                    }
+
+                    public void onFinish() {
+                        viewHolder.getTimerTextView().setText(R.string.completed_timer_text_view_text_activity_visual_schedule);
+                        viewHolder.getTimerButton().setText(R.string.start_task_button_text_activity_visual_schedule);
+                        viewHolder.getTimerButton().setIconResource(R.drawable.ic_round_play_arrow_24);
+                        viewHolder.remainingTime = tasks.get(viewHolder.getAdapterPosition()).duration;
+                        viewHolder.isOngoing = false;
+                    }
+                };
+                viewHolder.countDownTimer.start();
+                viewHolder.getTimerTextView().setVisibility(View.VISIBLE);
+                viewHolder.getResetButton().setEnabled(false);
+                viewHolder.isOngoing = true;
+            }
+            else {
+                viewHolder.getTimerButton().setText(R.string.continue_task_button_text_activity_visual_schedule);
+                viewHolder.getTimerButton().setIconResource(R.drawable.ic_round_play_arrow_24);
+                viewHolder.countDownTimer.cancel();
+                viewHolder.getResetButton().setEnabled(true);
+                viewHolder.isOngoing = false;
+            }
+        });
+
+        viewHolder.getResetButton().setOnClickListener(view1 -> {
+            viewHolder.getTimerButton().setText(R.string.start_task_button_text_activity_visual_schedule);
+            viewHolder.getTimerButton().setIconResource(R.drawable.ic_round_play_arrow_24);
+            if (TimeUnit.MILLISECONDS.toHours(tasks.get(viewHolder.getAdapterPosition()).duration) != 0) {
+                long hour = TimeUnit.MILLISECONDS.toHours(tasks.get(viewHolder.getAdapterPosition()).duration);
+                long minute = TimeUnit.MILLISECONDS.toMinutes(tasks.get(viewHolder.getAdapterPosition()).duration) - hour * 60;
+                if (minute != 0) {
+                    viewHolder.getTimerTextView().setText(String.format("Duration: %1$shr %2$smin", hour, minute));
+                }
+                else {
+                    viewHolder.getTimerTextView().setText(String.format("Duration: %1$shr", hour));
+                }
+            }
+            else {
+                viewHolder.getTimerTextView().setText(String.format("Duration: %1$smin", TimeUnit.MILLISECONDS.toMinutes(tasks.get(viewHolder.getAdapterPosition()).duration)));
+            }
+            view1.setEnabled(false);
+            viewHolder.remainingTime = tasks.get(viewHolder.getAdapterPosition()).duration;
+            viewHolder.isOngoing = false;
+        });
+
+        viewHolder.getMarkAsDoneButton().setOnClickListener(view1 -> {
+            boolean success = visualScheduleTableManager.update(tasks.get(viewHolder.getAdapterPosition()).id, viewHolder.getMarkAsDoneButton().isChecked()) > 0;
+            if (success) {
+                tasks.get(viewHolder.getAdapterPosition()).completed = viewHolder.getMarkAsDoneButton().isChecked();
+            }
+            else {
+                viewHolder.getMarkAsDoneButton().setChecked(!viewHolder.getMarkAsDoneButton().isChecked());
+            }
+        });
+
+        return viewHolder;
     }
 
     @Override
@@ -158,83 +237,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             viewHolder.getTimerTextView().setText(String.format("Duration: %1$smin", TimeUnit.MILLISECONDS.toMinutes(tasks.get(position).duration)));
         }
 
-        final boolean[] isOngoing = {false};
-        final CountDownTimer[] countDownTimer = new CountDownTimer[1];
-        final long[] remainingTime = {tasks.get(position).duration};
-        viewHolder.getTimerButton().setOnClickListener(view -> {
-            if (!isOngoing[0]) {
-                viewHolder.getTimerButton().setText(R.string.pause_task_button_text_activity_visual_schedule);
-                viewHolder.getTimerButton().setIconResource(R.drawable.ic_round_pause_24);
-                countDownTimer[0] = new CountDownTimer(remainingTime[0], 1000) {
-                    public void onTick(long millisUntilFinished) {
-                        remainingTime[0] = millisUntilFinished;
-                        long hour = TimeUnit.MILLISECONDS.toHours(millisUntilFinished);
-                        long minute = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - hour * 60;
-                        long second = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - hour * 60 * 60 - minute * 60;
-                        if (hour != 0) {
-                            viewHolder.getTimerTextView().setText(String.format(Locale.getDefault(), "%d:%02d:%02d left", hour, minute, second));
-                        }
-                        else if (minute != 0) {
-                            viewHolder.getTimerTextView().setText(String.format(Locale.getDefault(), "%d:%02d left", minute, second));
-                        }
-                        else {
-                            viewHolder.getTimerTextView().setText(String.format(Locale.getDefault(), "%02d left", second));
-                        }
-                    }
-
-                    public void onFinish() {
-                        viewHolder.getTimerTextView().setText(R.string.completed_timer_text_view_text_activity_visual_schedule);
-                        viewHolder.getTimerButton().setText(R.string.start_task_button_text_activity_visual_schedule);
-                        viewHolder.getTimerButton().setIconResource(R.drawable.ic_round_play_arrow_24);
-                        remainingTime[0] = tasks.get(viewHolder.getAdapterPosition()).duration;
-                        isOngoing[0] = false;
-                    }
-                };
-                countDownTimer[0].start();
-                viewHolder.getTimerTextView().setVisibility(View.VISIBLE);
-                viewHolder.getResetButton().setEnabled(false);
-                isOngoing[0] = true;
-            }
-            else {
-                viewHolder.getTimerButton().setText(R.string.continue_task_button_text_activity_visual_schedule);
-                viewHolder.getTimerButton().setIconResource(R.drawable.ic_round_play_arrow_24);
-                countDownTimer[0].cancel();
-                viewHolder.getResetButton().setEnabled(true);
-                isOngoing[0] = false;
-            }
-        });
-
-        viewHolder.getResetButton().setOnClickListener(view -> {
-            viewHolder.getTimerButton().setText(R.string.start_task_button_text_activity_visual_schedule);
-            viewHolder.getTimerButton().setIconResource(R.drawable.ic_round_play_arrow_24);
-            if (TimeUnit.MILLISECONDS.toHours(tasks.get(viewHolder.getAdapterPosition()).duration) != 0) {
-                long hour = TimeUnit.MILLISECONDS.toHours(tasks.get(viewHolder.getAdapterPosition()).duration);
-                long minute = TimeUnit.MILLISECONDS.toMinutes(tasks.get(viewHolder.getAdapterPosition()).duration) - hour * 60;
-                if (minute != 0) {
-                    viewHolder.getTimerTextView().setText(String.format("Duration: %1$shr %2$smin", hour, minute));
-                }
-                else {
-                    viewHolder.getTimerTextView().setText(String.format("Duration: %1$shr", hour));
-                }
-            }
-            else {
-                viewHolder.getTimerTextView().setText(String.format("Duration: %1$smin", TimeUnit.MILLISECONDS.toMinutes(tasks.get(viewHolder.getAdapterPosition()).duration)));
-            }
-            view.setEnabled(false);
-            remainingTime[0] = tasks.get(viewHolder.getAdapterPosition()).duration;
-            isOngoing[0] = false;
-        });
+        viewHolder.remainingTime = tasks.get(viewHolder.getAdapterPosition()).duration;
 
         viewHolder.getMarkAsDoneButton().setChecked(tasks.get(position).completed);
-        viewHolder.getMarkAsDoneButton().setOnClickListener(view -> {
-            boolean success = visualScheduleTableManager.update(tasks.get(viewHolder.getAdapterPosition()).id, viewHolder.getMarkAsDoneButton().isChecked()) > 0;
-            if (success) {
-                tasks.get(viewHolder.getAdapterPosition()).completed = viewHolder.getMarkAsDoneButton().isChecked();
-            }
-            else {
-                viewHolder.getMarkAsDoneButton().setChecked(!viewHolder.getMarkAsDoneButton().isChecked());
-            }
-        });
 
         viewHolder.bind(selectionTracker.isSelected(tasks.get(position).id));
     }
@@ -245,8 +250,20 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     }
 
     public void addItem(TaskModel taskModel) {
-        tasks.add(0, taskModel);
-        notifyItemInserted(0);
+        tasks.add(taskModel);
+        notifyItemInserted(tasks.size() - 1);
+    }
+
+    public void addItemAtRightPosition(TaskModel taskModel) {
+        for (int i=0; i<tasks.size(); i++) {
+            if (tasks.get(i).start_time > taskModel.start_time) {
+                tasks.add(i, taskModel);
+                notifyItemInserted(i);
+                return;
+            }
+        }
+        tasks.add(taskModel);
+        notifyItemInserted(tasks.size() - 1);
     }
 
     public void removeItem(int position) {

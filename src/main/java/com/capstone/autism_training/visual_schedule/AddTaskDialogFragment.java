@@ -133,7 +133,7 @@ public class AddTaskDialogFragment extends DialogFragment {
                 long rowNumber = visualScheduleActivity.visualScheduleTableManager.insert(nameEditText.getText().toString(), image, instructionEditText.getText().toString(), start_time, duration);
                 if (rowNumber != -1) {
                     TaskModel taskModel = new TaskModel(rowNumber, nameEditText.getText().toString(), image, instructionEditText.getText().toString(), start_time, duration, false);
-                    visualScheduleActivity.mAdapter.addItem(taskModel);
+                    visualScheduleActivity.mAdapter.addItemAtRightPosition(taskModel);
                     Toast.makeText(getContext(), "Successfully added the task", Toast.LENGTH_LONG).show();
                     this.dismiss();
                 }

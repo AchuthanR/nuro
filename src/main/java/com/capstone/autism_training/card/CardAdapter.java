@@ -93,14 +93,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.layout_card_item, viewGroup, false);
 
-        return new ViewHolder(view);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
-        viewHolder.getImageView().setImageBitmap(ImageHelper.toCompressedBitmap(cards.get(position).image));
-        viewHolder.getCaptionTextView().setText(cards.get(position).caption);
-        viewHolder.getAnswerTextView().setText(cards.get(position).answer);
+        ViewHolder viewHolder = new ViewHolder(view);
 
         viewHolder.getShowAnswerButton().setOnClickListener(view1 -> {
             if (viewHolder.answerTextView.getVisibility() == View.GONE) {
@@ -112,6 +105,15 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
                 viewHolder.getShowAnswerButton().setText(R.string.show_answer_button_text_activity_card);
             }
         });
+
+        return viewHolder;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
+        viewHolder.getImageView().setImageBitmap(ImageHelper.toCompressedBitmap(cards.get(position).image));
+        viewHolder.getCaptionTextView().setText(cards.get(position).caption);
+        viewHolder.getAnswerTextView().setText(cards.get(position).answer);
 
         viewHolder.bind(selectionTracker.isSelected(cards.get(position).id));
     }

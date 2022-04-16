@@ -91,15 +91,9 @@ public class HelpCardAdapter extends RecyclerView.Adapter<HelpCardAdapter.ViewHo
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.layout_help_card_item, viewGroup, false);
 
-        return new ViewHolder(view);
-    }
+        HelpCardAdapter.ViewHolder viewHolder = new HelpCardAdapter.ViewHolder(view);
 
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
-        viewHolder.getImageView().setImageBitmap(ImageHelper.toCompressedBitmap(helpCards.get(position).image));
-        viewHolder.getNameTextView().setText(helpCards.get(position).name);
-
-        viewHolder.getCardView().setOnClickListener(view -> {
+        viewHolder.getCardView().setOnClickListener(view1 -> {
             ActiveHelpCardDialogFragment activeHelpCardDialogFragment = new ActiveHelpCardDialogFragment();
             Bundle bundle = new Bundle();
             bundle.putByteArray("image", helpCards.get(viewHolder.getAdapterPosition()).image);
@@ -110,6 +104,14 @@ public class HelpCardAdapter extends RecyclerView.Adapter<HelpCardAdapter.ViewHo
             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             activeHelpCardDialogFragment.show(transaction, ActiveHelpCardDialogFragment.TAG);
         });
+
+        return viewHolder;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
+        viewHolder.getImageView().setImageBitmap(ImageHelper.toCompressedBitmap(helpCards.get(position).image));
+        viewHolder.getNameTextView().setText(helpCards.get(position).name);
 
         viewHolder.bind(selectionTracker.isSelected(helpCards.get(position).id));
     }

@@ -6,6 +6,7 @@ import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
@@ -38,6 +39,7 @@ public class VisualScheduleActivity extends AppCompatActivity {
     protected RecyclerView.LayoutManager mLayoutManager;
     public VisualScheduleTableManager visualScheduleTableManager;
     private SelectionTracker<Long> selectionTracker;
+    private RecyclerView.AdapterDataObserver adapterDataObserver;
     private ActionMode actionMode;
 
     @Override
@@ -154,6 +156,25 @@ public class VisualScheduleActivity extends AppCompatActivity {
             visualScheduleTableManager.markAllAsPending();
             daySelected(chooseDayAutoCompleteTextView.getText().toString());
         });
+
+        adapterDataObserver = new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                if (markAllAsPending.getVisibility() != View.VISIBLE) {
+                    markAllAsPending.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onItemRangeRemoved(int positionStart, int itemCount) {
+                super.onItemRangeRemoved(positionStart, itemCount);
+                if (mAdapter.getItemCount() == 0) {
+                    markAllAsPending.setVisibility(View.GONE);
+                }
+            }
+        };
+        mAdapter.registerAdapterDataObserver(adapterDataObserver);
     }
 
     private void daySelected(String day) {
@@ -182,5 +203,6 @@ public class VisualScheduleActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         visualScheduleTableManager.close();
+        mAdapter.unregisterAdapterDataObserver(adapterDataObserver);
     }
 }
