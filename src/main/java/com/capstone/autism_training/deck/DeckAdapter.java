@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.selection.ItemDetailsLookup;
@@ -17,6 +16,7 @@ import com.capstone.autism_training.R;
 import com.capstone.autism_training.card.CardActivity;
 import com.capstone.autism_training.utilities.ImageHelper;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
 
@@ -29,8 +29,8 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
         private final Context context;
         private final MaterialCardView cardView;
         private final ImageView imageView;
-        private final TextView titleTextView;
-        private final TextView descriptionTextView;
+        private final MaterialTextView titleTextView;
+        private final MaterialTextView descriptionTextView;
         private final DeckItemDetails deckItemDetails;
 
         public ViewHolder(View view) {
@@ -55,11 +55,11 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
             return imageView;
         }
 
-        public TextView getTitleTextView() {
+        public MaterialTextView getTitleTextView() {
             return titleTextView;
         }
 
-        public TextView getDescriptionTextView() {
+        public MaterialTextView getDescriptionTextView() {
             return descriptionTextView;
         }
 

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -19,6 +18,7 @@ import androidx.fragment.app.DialogFragment;
 import com.capstone.autism_training.R;
 import com.capstone.autism_training.utilities.ImageHelper;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.button.MaterialButton;
 
 import java.io.FileNotFoundException;
 
@@ -64,10 +64,10 @@ public class AddHelpCardDialogFragment extends DialogFragment {
                     }
                 });
 
-        Button selectImageButton = view.findViewById(R.id.selectImageButton);
+        MaterialButton selectImageButton = view.findViewById(R.id.selectImageButton);
         selectImageButton.setOnClickListener(view1 -> mGetContent.launch("image/*"));
 
-        Button addHelpCardButton = view.findViewById(R.id.addHelpCardButton);
+        MaterialButton addHelpCardButton = view.findViewById(R.id.addHelpCardButton);
         addHelpCardButton.setOnClickListener(view1 -> {
             EditText nameEditText = view.findViewById(R.id.nameEditText);
 

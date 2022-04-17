@@ -33,7 +33,7 @@
                 android:orientation="vertical"
                 android:paddingTop="16dp">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/nameTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -49,6 +49,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
         android:text="@string/close_button_text_fragment_active_help_card"
         app:icon="@drawable/ic_round_close_24" />
 </LinearLayout>

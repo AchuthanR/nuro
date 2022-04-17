@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -19,6 +18,7 @@ import androidx.fragment.app.DialogFragment;
 import com.capstone.autism_training.R;
 import com.capstone.autism_training.utilities.ImageHelper;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
@@ -71,7 +71,7 @@ public class AddTaskDialogFragment extends DialogFragment {
                     }
                 });
 
-        Button selectStartTimeButton = view.findViewById(R.id.selectStartTimeButton);
+        MaterialButton selectStartTimeButton = view.findViewById(R.id.selectStartTimeButton);
         selectStartTimeButton.setOnClickListener(view1 -> {
             int hour = 12;
             int minute = 0;
@@ -101,10 +101,10 @@ public class AddTaskDialogFragment extends DialogFragment {
             timePicker.show(getChildFragmentManager(), "timePicker");
         });
 
-        Button selectImageButton = view.findViewById(R.id.selectImageButton);
+        MaterialButton selectImageButton = view.findViewById(R.id.selectImageButton);
         selectImageButton.setOnClickListener(view1 -> mGetContent.launch("image/*"));
 
-        Button addTaskButton = view.findViewById(R.id.addTaskButton);
+        MaterialButton addTaskButton = view.findViewById(R.id.addTaskButton);
         addTaskButton.setOnClickListener(view1 -> {
             EditText nameEditText = view.findViewById(R.id.nameEditText);
             EditText instructionEditText = view.findViewById(R.id.instructionEditText);

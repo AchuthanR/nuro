@@ -28,10 +28,9 @@
                 android:hint="@string/name_edit_text_hint_fragment_add_help_card"
                 android:inputType="text"
                 android:textSize="20sp" />
-
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/selectImageButton"
             style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="match_parent"

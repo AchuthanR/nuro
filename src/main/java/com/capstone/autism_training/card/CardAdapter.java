@@ -3,9 +3,7 @@ package com.capstone.autism_training.card;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.selection.ItemDetailsLookup;
@@ -16,6 +14,7 @@ import com.capstone.autism_training.R;
 import com.capstone.autism_training.utilities.ImageHelper;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
 
@@ -27,9 +26,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final MaterialCardView cardView;
         private final ImageView imageView;
-        private final TextView captionTextView;
+        private final MaterialTextView captionTextView;
         private final MaterialButton showAnswerButton;
-        private final TextView answerTextView;
+        private final MaterialTextView answerTextView;
         private final CardItemDetails cardItemDetails;
 
         public ViewHolder(View view) {
@@ -50,15 +49,15 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
             return imageView;
         }
 
-        public TextView getCaptionTextView() {
+        public MaterialTextView getCaptionTextView() {
             return captionTextView;
         }
 
-        public Button getShowAnswerButton() {
+        public MaterialButton getShowAnswerButton() {
             return showAnswerButton;
         }
 
-        public TextView getAnswerTextView() {
+        public MaterialTextView getAnswerTextView() {
             return answerTextView;
         }
 

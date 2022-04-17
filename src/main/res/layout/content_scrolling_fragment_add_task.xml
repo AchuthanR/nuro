@@ -28,7 +28,6 @@
                 android:hint="@string/name_edit_text_hint_fragment_add_task"
                 android:inputType="text"
                 android:textSize="20sp" />
-
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -45,10 +44,9 @@
                 android:hint="@string/instruction_edit_text_hint_fragment_add_task"
                 android:inputType="text"
                 android:textSize="20sp" />
-
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/selectStartTimeButton"
             style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="match_parent"
@@ -56,7 +54,7 @@
             android:layout_marginTop="16dp"
             android:text="@string/select_start_time_button_text_fragment_add_task" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/startTimeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -64,7 +62,7 @@
             android:layout_gravity="center_horizontal"
             android:textAppearance="?attr/textAppearanceTitleMedium" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -80,7 +78,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
+                android:layout_weight="1"
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 app:endIconMode="clear_text">
 
@@ -91,14 +89,13 @@
                     android:hint="@string/duration_hour_edit_text_hint_fragment_add_task"
                     android:inputType="text"
                     android:textSize="20sp" />
-
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 app:endIconMode="clear_text">
 
@@ -109,11 +106,10 @@
                     android:hint="@string/duration_minute_edit_text_hint_fragment_add_task"
                     android:inputType="text"
                     android:textSize="20sp" />
-
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/selectImageButton"
             style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="match_parent"

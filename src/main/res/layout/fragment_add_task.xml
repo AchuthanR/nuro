@@ -20,7 +20,7 @@
             app:title="@string/page_title_fragment_add_task"
             app:navigationIcon="@drawable/ic_round_close_24">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/addTaskButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

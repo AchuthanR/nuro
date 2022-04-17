@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.selection.ItemDetailsLookup;
@@ -17,6 +16,7 @@ import com.capstone.autism_training.R;
 import com.capstone.autism_training.utilities.ImageHelper;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.textview.MaterialTextView;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -34,11 +34,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         private final Context context;
         private final MaterialCardView cardView;
         private final ImageView imageView;
-        private final TextView nameTextView;
-        private final TextView instructionTextView;
-        private final TextView startTimeTextView;
+        private final MaterialTextView nameTextView;
+        private final MaterialTextView instructionTextView;
+        private final MaterialTextView startTimeTextView;
         private final MaterialButton timerButton;
-        private final TextView timerTextView;
+        private final MaterialTextView timerTextView;
         private final MaterialButton resetButton;
         private final MaterialButton markAsDoneButton;
         private final TaskItemDetails taskItemDetails;
@@ -72,15 +72,15 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             return imageView;
         }
 
-        public TextView getNameTextView() {
+        public MaterialTextView getNameTextView() {
             return nameTextView;
         }
 
-        public TextView getInstructionTextView() {
+        public MaterialTextView getInstructionTextView() {
             return instructionTextView;
         }
 
-        public TextView getStartTimeTextView() {
+        public MaterialTextView getStartTimeTextView() {
             return startTimeTextView;
         }
 
@@ -88,7 +88,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             return timerButton;
         }
 
-        public TextView getTimerTextView() {
+        public MaterialTextView getTimerTextView() {
             return timerTextView;
         }
 

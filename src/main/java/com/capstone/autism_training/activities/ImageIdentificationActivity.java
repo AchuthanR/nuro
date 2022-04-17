@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +24,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
+import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -208,7 +208,7 @@ public class ImageIdentificationActivity extends AppCompatActivity {
         correctOption = random.nextInt(4);
         images.add(correctOption, cursor.getBlob(imageColumnIndex));
 
-        TextView textView = findViewById(R.id.questionTextView);
+        MaterialTextView textView = findViewById(R.id.questionTextView);
         textView.setText(String.format(getString(R.string.identify_question_text_view_text_activity_image_identification), cursor.getString(answerColumnIndex)));
 
         ImageView imageView1 = findViewById(R.id.imageView1);

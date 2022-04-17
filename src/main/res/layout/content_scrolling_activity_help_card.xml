@@ -28,15 +28,14 @@
                 android:hint="@string/choose_category_text_view_text_activity_help_card"
                 android:inputType="none"
                 android:textAppearance="?attr/textAppearanceTitleLarge" />
-
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="60dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="56dp"
             android:nestedScrollingEnabled="false" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

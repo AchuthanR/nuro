@@ -21,7 +21,6 @@
             style="@style/Widget.Material3.CardView.Elevated"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="20dp"
             android:clickable="true"
             android:focusable="true">
 
@@ -32,11 +31,11 @@
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="194dp"
+                    android:layout_height="192dp"
                     app:srcCompat="@drawable/deck"
                     android:scaleType="centerCrop" />
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/all_decks_module_title_activity_main"
@@ -50,7 +49,7 @@
             style="@style/Widget.Material3.CardView.Elevated"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="20dp"
+            android:layout_marginTop="16dp"
             android:clickable="true"
             android:focusable="true">
 
@@ -61,11 +60,11 @@
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="194dp"
+                    android:layout_height="192dp"
                     app:srcCompat="@drawable/visual_schedule"
                     android:scaleType="centerCrop" />
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/visual_scheduling_module_title_activity_main"
@@ -79,7 +78,7 @@
             style="@style/Widget.Material3.CardView.Elevated"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="20dp"
+            android:layout_marginTop="16dp"
             android:clickable="true"
             android:focusable="true">
 
@@ -90,11 +89,11 @@
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="194dp"
+                    android:layout_height="192dp"
                     app:srcCompat="@drawable/activities"
                     android:scaleType="centerCrop" />
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/activities_module_title_activity_main"
@@ -108,7 +107,7 @@
             style="@style/Widget.Material3.CardView.Elevated"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="20dp"
+            android:layout_marginTop="16dp"
             android:clickable="true"
             android:focusable="true">
 
@@ -119,11 +118,11 @@
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="194dp"
+                    android:layout_height="192dp"
                     app:srcCompat="@drawable/help"
                     android:scaleType="centerCrop" />
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/help_card_module_title_activity_main"
@@ -137,7 +136,7 @@
             style="@style/Widget.Material3.CardView.Elevated"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="20dp"
+            android:layout_marginTop="16dp"
             android:clickable="true"
             android:focusable="true">
 
@@ -148,11 +147,11 @@
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="194dp"
+                    android:layout_height="192dp"
                     app:srcCompat="@drawable/training"
                     android:scaleType="centerCrop" />
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/training_module_title_activity_main"
