@@ -22,7 +22,6 @@ import com.capstone.autism_training.utilities.ImageHelper;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.button.MaterialButtonToggleGroup;
-import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 
@@ -52,13 +51,17 @@ public class WordIdentificationActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(view -> onBackPressed());
 
         mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.cheer);
-        MaterialCheckBox checkBox = findViewById(R.id.playSoundCheckBox);
         sharedPreferences = this.getSharedPreferences("activities", MODE_PRIVATE);
-        checkBox.setChecked(sharedPreferences.getBoolean("playSoundWordIdentification", true));
-        checkBox.setOnCheckedChangeListener((compoundButton, b) -> {
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putBoolean("playSoundWordIdentification", b);
-            editor.apply();
+        toolbar.getMenu().findItem(R.id.action_play_sound).setChecked(sharedPreferences.getBoolean("playSoundWordIdentification", true));
+        toolbar.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == R.id.action_play_sound) {
+                item.setChecked(!item.isChecked());
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("playSoundWordIdentification", item.isChecked());
+                editor.apply();
+                return true;
+            }
+            return false;
         });
 
         DeckInfoTableManager deckInfoTableManager = new DeckInfoTableManager(getApplicationContext());

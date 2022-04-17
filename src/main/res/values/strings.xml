@@ -63,6 +63,7 @@
     <string name="word_identification_activity_description_activity_activities">Find the correct word among four options that is associated with the given image</string>
 
     <string name="page_title_activity_image_identification">Identification activity - Images</string>
+    <string name="action_play_sound_activity_image_identification">Play appreciation sounds</string>
     <string name="choose_deck_text_view_text_activity_image_identification">Choose deck</string>
     <string name="play_sound_check_box_text_activity_image_identification">Play appreciation sounds for correct answers</string>
     <string name="identify_question_text_view_text_activity_image_identification">Identify %1$s</string>
@@ -75,6 +76,7 @@
     <string name="next_button_text_activity_image_identification">Next</string>
 
     <string name="page_title_activity_word_identification">Identification activity - Words</string>
+    <string name="action_play_sound_activity_word_identification">Play appreciation sounds</string>
     <string name="choose_deck_text_view_text_activity_word_identification">Choose deck</string>
     <string name="play_sound_check_box_text_activity_word_identification">Play appreciation sounds for correct answers</string>
     <string name="identify_question_text_view_text_activity_word_identification">Identify the below image</string>

@@ -18,6 +18,7 @@
             android:layout_height="wrap_content"
             android:elevation="0dp"
             app:title="@string/page_title_activity_word_identification"
+            app:menu="@menu/menu_word_identification"
             app:navigationIcon="@drawable/ic_round_arrow_back_24" />
     </com.google.android.material.appbar.AppBarLayout>
 

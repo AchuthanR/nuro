@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.capstone.autism_training.activities.WordIdentificationActivity">
+    <item
+        android:id="@+id/action_play_sound"
+        android:title="@string/action_play_sound_activity_image_identification"
+        android:icon="@drawable/ic_round_music_note_24"
+        android:checkable="true"
+        app:showAsAction="collapseActionView" />
+</menu>

@@ -32,14 +32,6 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.checkbox.MaterialCheckBox
-            android:id="@+id/playSoundCheckBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:text="@string/play_sound_check_box_text_activity_image_identification" />
-
         <LinearLayout
             android:id="@+id/activityLinearLayout"
             android:layout_width="match_parent"
