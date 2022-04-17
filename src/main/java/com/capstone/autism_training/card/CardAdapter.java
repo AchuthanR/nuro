@@ -67,10 +67,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
             cardItemDetails.setSelectionKey(cards.get(getAdapterPosition()).id);
             return cardItemDetails;
         }
-
-        public final void bind(boolean isActive) {
-            cardView.setChecked(isActive);
-        }
     }
 
     public CardAdapter() {
@@ -115,7 +111,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         viewHolder.getCaptionTextView().setText(cards.get(position).caption);
         viewHolder.getAnswerTextView().setText(cards.get(position).answer);
 
-        viewHolder.bind(selectionTracker.isSelected(cards.get(position).id));
+        viewHolder.getCardView().setChecked(selectionTracker.isSelected(cards.get(position).id));
     }
 
     @Override

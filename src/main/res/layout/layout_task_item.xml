@@ -94,7 +94,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
                     android:layout_marginTop="8dp"
-                    android:text="@string/mark_as_done_task_button_text_activity_visual_schedule"
+                    android:text="@string/unchecked_mark_as_done_task_button_text_activity_visual_schedule"
                     android:textAllCaps="true"
                     android:checkable="true"
                     app:icon="@drawable/ic_round_check_24" />

@@ -68,10 +68,6 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
             deckItemDetails.setSelectionKey(decks.get(getAdapterPosition()).id);
             return deckItemDetails;
         }
-
-        public final void bind(boolean isActive) {
-            cardView.setChecked(isActive);
-        }
     }
 
     public DeckAdapter() {
@@ -111,7 +107,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
         viewHolder.getTitleTextView().setText(decks.get(position).name);
         viewHolder.getDescriptionTextView().setText(decks.get(position).description);
 
-        viewHolder.bind(selectionTracker.isSelected(decks.get(position).id));
+        viewHolder.getCardView().setChecked(selectionTracker.isSelected(decks.get(position).id));
     }
 
     @Override

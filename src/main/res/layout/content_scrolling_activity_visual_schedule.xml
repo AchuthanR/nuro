@@ -47,6 +47,7 @@
             android:layout_marginBottom="60dp"
             android:text="@string/mark_all_as_pending_task_button_text_activity_visual_schedule"
             android:textAllCaps="true"
-            app:icon="@drawable/ic_round_pending_24" />
+            app:icon="@drawable/ic_round_pending_24"
+            android:visibility="gone" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

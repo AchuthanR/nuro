@@ -38,11 +38,12 @@ public class VisualScheduleTableManager {
         contentValues.put(VisualScheduleTableHelper.START_TIME, start_time);
         contentValues.put(VisualScheduleTableHelper.DURATION, duration);
         contentValues.put(VisualScheduleTableHelper.COMPLETED, false);
+        contentValues.put(VisualScheduleTableHelper.CURRENT_END_TIME, -1);
         return database.insert(visualScheduleTableHelper.TABLE_NAME, null, contentValues);
     }
 
     public Cursor fetch() {
-        String[] columns = new String[] { VisualScheduleTableHelper.ID, VisualScheduleTableHelper.NAME, VisualScheduleTableHelper.IMAGE, VisualScheduleTableHelper.INSTRUCTION, VisualScheduleTableHelper.START_TIME, VisualScheduleTableHelper.DURATION, VisualScheduleTableHelper.COMPLETED };
+        String[] columns = new String[] { VisualScheduleTableHelper.ID, VisualScheduleTableHelper.NAME, VisualScheduleTableHelper.IMAGE, VisualScheduleTableHelper.INSTRUCTION, VisualScheduleTableHelper.START_TIME, VisualScheduleTableHelper.DURATION, VisualScheduleTableHelper.COMPLETED, VisualScheduleTableHelper.CURRENT_END_TIME };
         Cursor cursor = database.query(visualScheduleTableHelper.TABLE_NAME, columns, null, null, null, null, VisualScheduleTableHelper.START_TIME);
         if (cursor != null) {
             cursor.moveToFirst();
@@ -63,6 +64,12 @@ public class VisualScheduleTableManager {
     public int update(long id, boolean completed) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(VisualScheduleTableHelper.COMPLETED, completed);
+        return database.update(visualScheduleTableHelper.TABLE_NAME, contentValues, VisualScheduleTableHelper.ID + " = " + id, null);
+    }
+
+    public int update(long id, long current_end_time) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(VisualScheduleTableHelper.CURRENT_END_TIME, current_end_time);
         return database.update(visualScheduleTableHelper.TABLE_NAME, contentValues, VisualScheduleTableHelper.ID + " = " + id, null);
     }
 

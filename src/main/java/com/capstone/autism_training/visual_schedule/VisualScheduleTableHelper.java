@@ -15,6 +15,7 @@ public class VisualScheduleTableHelper extends SQLiteOpenHelper {
     public static final String START_TIME = "start_time";
     public static final String DURATION = "duration";
     public static final String COMPLETED = "completed";
+    public static final String CURRENT_END_TIME = "current_end_time";
 
     static final String DB_NAME = "database";
 
@@ -32,7 +33,8 @@ public class VisualScheduleTableHelper extends SQLiteOpenHelper {
                 + INSTRUCTION + " TEXT NOT NULL, "
                 + START_TIME + " INTEGER NOT NULL, "
                 + DURATION + " INTEGER NOT NULL, "
-                + COMPLETED + " BOOLEAN NOT NULL);";
+                + COMPLETED + " BOOLEAN NOT NULL, "
+                + CURRENT_END_TIME + " INTEGER NOT NULL);";
     }
 
     @Override

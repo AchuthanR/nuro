@@ -149,7 +149,6 @@ public class VisualScheduleActivity extends AppCompatActivity {
 
         visualScheduleTableManager = new VisualScheduleTableManager(getApplicationContext());
         mAdapter.setVisualScheduleTableManager(visualScheduleTableManager);
-        daySelected(day);
 
         MaterialButton markAllAsPending = findViewById(R.id.markAllAsPendingButton);
         markAllAsPending.setOnClickListener(view -> {
@@ -175,6 +174,8 @@ public class VisualScheduleActivity extends AppCompatActivity {
             }
         };
         mAdapter.registerAdapterDataObserver(adapterDataObserver);
+
+        daySelected(day);
     }
 
     private void daySelected(String day) {
@@ -191,8 +192,9 @@ public class VisualScheduleActivity extends AppCompatActivity {
         int startTimeIndex = cursor.getColumnIndex(VisualScheduleTableHelper.START_TIME);
         int durationIndex = cursor.getColumnIndex(VisualScheduleTableHelper.DURATION);
         int completedIndex = cursor.getColumnIndex(VisualScheduleTableHelper.COMPLETED);
+        int currentEndTimeIndex = cursor.getColumnIndex(VisualScheduleTableHelper.CURRENT_END_TIME);
         while (!cursor.isAfterLast() || cursor.isFirst()) {
-            TaskModel taskModel = new TaskModel(cursor.getInt(idIndex), cursor.getString(nameIndex), cursor.getBlob(imageIndex), cursor.getString(instructionIndex), cursor.getLong(startTimeIndex), cursor.getLong(durationIndex), cursor.getInt(completedIndex) > 0);
+            TaskModel taskModel = new TaskModel(cursor.getInt(idIndex), cursor.getString(nameIndex), cursor.getBlob(imageIndex), cursor.getString(instructionIndex), cursor.getLong(startTimeIndex), cursor.getLong(durationIndex), cursor.getInt(completedIndex) > 0, cursor.getLong(currentEndTimeIndex));
             mAdapter.addItem(taskModel);
             cursor.moveToNext();
         }

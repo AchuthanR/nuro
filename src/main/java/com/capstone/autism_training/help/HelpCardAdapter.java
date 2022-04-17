@@ -64,10 +64,6 @@ public class HelpCardAdapter extends RecyclerView.Adapter<HelpCardAdapter.ViewHo
             helpCardItemDetails.setSelectionKey(helpCards.get(getAdapterPosition()).id);
             return helpCardItemDetails;
         }
-
-        public final void bind(boolean isActive) {
-            cardView.setChecked(isActive);
-        }
     }
 
     public HelpCardAdapter(FragmentManager fragmentManager) {
@@ -113,7 +109,7 @@ public class HelpCardAdapter extends RecyclerView.Adapter<HelpCardAdapter.ViewHo
         viewHolder.getImageView().setImageBitmap(ImageHelper.toCompressedBitmap(helpCards.get(position).image));
         viewHolder.getNameTextView().setText(helpCards.get(position).name);
 
-        viewHolder.bind(selectionTracker.isSelected(helpCards.get(position).id));
+        viewHolder.getCardView().setChecked(selectionTracker.isSelected(helpCards.get(position).id));
     }
 
     @Override
