@@ -11,6 +11,8 @@ import com.google.android.material.card.MaterialCardView;
 
 public class ActivitiesActivity extends AppCompatActivity {
 
+    public static final String TAG = ActivitiesActivity.class.getSimpleName();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

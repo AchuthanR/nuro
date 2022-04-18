@@ -24,7 +24,7 @@ import java.io.FileNotFoundException;
 
 public class AddDeckDialogFragment extends DialogFragment {
 
-    public static final String TAG = "AddDeckDialog";
+    public static final String TAG = AddDeckDialogFragment.class.getSimpleName();
 
     private ActivityResultLauncher<String> mGetContent;
     private DeckActivity deckActivity;

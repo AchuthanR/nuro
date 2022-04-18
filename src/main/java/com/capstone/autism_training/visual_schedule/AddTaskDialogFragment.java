@@ -30,7 +30,7 @@ import java.util.concurrent.TimeUnit;
 
 public class AddTaskDialogFragment extends DialogFragment {
 
-    public static final String TAG = "AddTaskDialog";
+    public static final String TAG = AddTaskDialogFragment.class.getSimpleName();
 
     public VisualScheduleActivity visualScheduleActivity;
     private ActivityResultLauncher<String> mGetContent;

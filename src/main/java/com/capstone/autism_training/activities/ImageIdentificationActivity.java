@@ -32,6 +32,8 @@ import java.util.Random;
 
 public class ImageIdentificationActivity extends AppCompatActivity {
 
+    public static final String TAG = ImageIdentificationActivity.class.getSimpleName();
+
     private SharedPreferences sharedPreferences;
     private MediaPlayer mediaPlayer;
     private DeckTableManager deckTableManager;

@@ -9,7 +9,6 @@
     <string name="help_card_module_title_activity_main">Help cards</string>
 
     <string name="page_title_activity_deck">All decks</string>
-    <string name="action_delete_activity_deck">Delete</string>
     <string name="fab_text_activity_deck">Add deck</string>
 
     <string name="page_title_fragment_add_deck">Add deck</string>
@@ -20,7 +19,6 @@
     <string name="add_deck_button_text_fragment_add_deck">Add</string>
 
     <string name="page_title_activity_card">Flash cards</string>
-    <string name="action_delete_activity_card">Delete</string>
     <string name="fab_text_activity_card">Add card</string>
     <string name="show_answer_button_text_activity_card">Show answer</string>
     <string name="hide_answer_button_text_activity_card">Hide answer</string>
@@ -33,7 +31,6 @@
     <string name="add_card_button_text_fragment_add_card">Add</string>
 
     <string name="page_title_activity_visual_schedule">Visual Scheduling</string>
-    <string name="action_delete_activity_visual_schedule">Delete</string>
     <string name="fab_text_activity_visual_schedule">Add task</string>
     <string name="choose_day_text_view_text_activity_visual_schedule">Choose day</string>
     <string name="mark_all_as_pending_task_button_text_activity_visual_schedule">Mark all as pending</string>
@@ -84,7 +81,6 @@
     <string name="next_button_text_activity_word_identification">Next</string>
 
     <string name="page_title_activity_help_card">Help cards</string>
-    <string name="action_delete_activity_help_card">Delete</string>
     <string name="fab_text_activity_help_card">Add help card</string>
     <string name="choose_category_text_view_text_activity_help_card">Choose category</string>
 
@@ -97,4 +93,8 @@
     <string name="close_button_text_fragment_active_help_card">Close</string>
 
     <string name="page_title_activity_training">Training</string>
+
+    <!-- Common strings -->
+    <string name="action_delete_text">Delete</string>
+    <string name="action_cancel_text">Cancel</string>
 </resources>

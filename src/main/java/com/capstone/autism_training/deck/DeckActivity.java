@@ -2,10 +2,6 @@ package com.capstone.autism_training.deck;
 
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.ActionMode;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -19,17 +15,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.capstone.autism_training.R;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.android.material.textview.MaterialTextView;
 
 public class DeckActivity extends AppCompatActivity {
+
+    public static final String TAG = DeckActivity.class.getSimpleName();
 
     protected RecyclerView mRecyclerView;
     protected DeckAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
     public DeckInfoTableManager deckInfoTableManager;
     private SelectionTracker<Long> selectionTracker;
-    private ActionMode actionMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,58 +62,44 @@ public class DeckActivity extends AppCompatActivity {
                 .withSelectionPredicate(SelectionPredicates.createSelectSingleAnything())
                 .build();
 
-        ActionMode.Callback actionModeCallback = new ActionMode.Callback() {
-            @Override
-            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-                MenuInflater inflater = mode.getMenuInflater();
-                inflater.inflate(R.menu.menu_deck, menu);
-                return true;
-            }
-
-            @Override
-            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-                return false;
-            }
-
-            @Override
-            public boolean onActionItemClicked(ActionMode mode, MenuItem menuItem) {
-                if (menuItem.getItemId() == R.id.action_delete) {
-                    new MaterialAlertDialogBuilder(DeckActivity.this, com.google.android.material.R.style.ThemeOverlay_Material3_MaterialAlertDialog_Centered)
-                            .setIcon(R.drawable.ic_round_delete_24)
-                            .setTitle("Delete deck?")
-                            .setMessage("The selected deck and the flash cards inside it will be deleted permanently.")
-                            .setPositiveButton("Delete", (dialogInterface, i) -> {
-                                if (selectionTracker.hasSelection()) {
-                                    long id = selectionTracker.getSelection().iterator().next();
-                                    selectionTracker.clearSelection();
-                                    deckInfoTableManager.deleteRow(id);
-                                    mAdapter.removeItem(mRecyclerView.findViewHolderForItemId(id).getAdapterPosition());
-                                    Toast.makeText(DeckActivity.this, "Deleted the deck", Toast.LENGTH_LONG).show();
-                                }
-                            })
-                            .setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.cancel())
-                            .setOnDismissListener(dialogInterface -> mode.finish())
-                            .show();
-                }
-                return true;
-            }
-
-            @Override
-            public void onDestroyActionMode(ActionMode mode) {
-                actionMode = null;
-                selectionTracker.clearSelection();
-            }
-        };
-
         selectionTracker.addObserver(new SelectionTracker.SelectionObserver<Long>() {
             @Override
             public void onSelectionChanged() {
                 super.onSelectionChanged();
-                if (!selectionTracker.getSelection().isEmpty() && actionMode == null) {
-                    actionMode = toolbar.startActionMode(actionModeCallback);
-                }
-                else if (selectionTracker.getSelection().isEmpty() && actionMode != null) {
-                    actionMode.finish();
+                if (!selectionTracker.getSelection().isEmpty()) {
+                    BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(DeckActivity.this);
+                    bottomSheetDialog.setContentView(R.layout.fragment_bottom_sheet_dialog);
+                    bottomSheetDialog.setOnCancelListener(dialogInterface -> selectionTracker.clearSelection());
+
+                    MaterialTextView deleteTextView = bottomSheetDialog.findViewById(R.id.action_delete);
+                    if (deleteTextView != null) {
+                        deleteTextView.setOnClickListener(view -> {
+                            bottomSheetDialog.dismiss();
+                            new MaterialAlertDialogBuilder(DeckActivity.this, com.google.android.material.R.style.ThemeOverlay_Material3_MaterialAlertDialog_Centered)
+                                    .setIcon(R.drawable.ic_round_delete_24)
+                                    .setTitle("Delete deck?")
+                                    .setMessage("The selected deck and the flash cards inside it will be deleted permanently.")
+                                    .setPositiveButton("Delete", (dialogInterface, i) -> {
+                                        if (selectionTracker.hasSelection()) {
+                                            long id = selectionTracker.getSelection().iterator().next();
+                                            selectionTracker.clearSelection();
+                                            deckInfoTableManager.deleteRow(id);
+                                            mAdapter.removeItem(mRecyclerView.findViewHolderForItemId(id).getAdapterPosition());
+                                            Toast.makeText(DeckActivity.this, "Deleted the deck", Toast.LENGTH_LONG).show();
+                                        }
+                                    })
+                                    .setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.cancel())
+                                    .setOnCancelListener(dialogInterface -> selectionTracker.clearSelection())
+                                    .show();
+                        });
+                    }
+
+                    MaterialTextView cancelTextView = bottomSheetDialog.findViewById(R.id.action_cancel);
+                    if (cancelTextView != null) {
+                        cancelTextView.setOnClickListener(view -> bottomSheetDialog.cancel());
+                    }
+
+                    bottomSheetDialog.show();
                 }
             }
         });

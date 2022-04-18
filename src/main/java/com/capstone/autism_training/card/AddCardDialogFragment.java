@@ -24,7 +24,7 @@ import java.io.FileNotFoundException;
 
 public class AddCardDialogFragment extends DialogFragment {
 
-    public static final String TAG = "AddCardDialog";
+    public static final String TAG = AddCardDialogFragment.class.getSimpleName();
 
     private ActivityResultLauncher<String> mGetContent;
     private CardActivity cardActivity;

@@ -9,6 +9,8 @@ import com.google.android.material.appbar.MaterialToolbar;
 
 public class TrainingActivity extends AppCompatActivity {
 
+    public static final String TAG = TrainingActivity.class.getSimpleName();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

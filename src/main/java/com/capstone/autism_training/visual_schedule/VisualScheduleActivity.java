@@ -2,10 +2,6 @@ package com.capstone.autism_training.visual_schedule;
 
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.ActionMode;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
@@ -21,10 +17,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.capstone.autism_training.R;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
+import com.google.android.material.textview.MaterialTextView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -34,13 +32,14 @@ import java.util.Locale;
 
 public class VisualScheduleActivity extends AppCompatActivity {
 
+    public static final String TAG = VisualScheduleActivity.class.getSimpleName();
+
     protected RecyclerView mRecyclerView;
     protected TaskAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
     public VisualScheduleTableManager visualScheduleTableManager;
     private SelectionTracker<Long> selectionTracker;
     private RecyclerView.AdapterDataObserver adapterDataObserver;
-    private ActionMode actionMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,58 +73,44 @@ public class VisualScheduleActivity extends AppCompatActivity {
                 .withSelectionPredicate(SelectionPredicates.createSelectSingleAnything())
                 .build();
 
-        ActionMode.Callback actionModeCallback = new ActionMode.Callback() {
-            @Override
-            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-                MenuInflater inflater = mode.getMenuInflater();
-                inflater.inflate(R.menu.menu_task, menu);
-                return true;
-            }
-
-            @Override
-            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-                return false;
-            }
-
-            @Override
-            public boolean onActionItemClicked(ActionMode mode, MenuItem menuItem) {
-                if (menuItem.getItemId() == R.id.action_delete) {
-                    new MaterialAlertDialogBuilder(VisualScheduleActivity.this, com.google.android.material.R.style.ThemeOverlay_Material3_MaterialAlertDialog_Centered)
-                            .setIcon(R.drawable.ic_round_delete_24)
-                            .setTitle("Delete task?")
-                            .setMessage("The selected task will be deleted permanently.")
-                            .setPositiveButton("Delete", (dialogInterface, i) -> {
-                                if (selectionTracker.hasSelection()) {
-                                    long id = selectionTracker.getSelection().iterator().next();
-                                    selectionTracker.clearSelection();
-                                    visualScheduleTableManager.deleteRow(id);
-                                    mAdapter.removeItem(mRecyclerView.findViewHolderForItemId(id).getAdapterPosition());
-                                    Toast.makeText(VisualScheduleActivity.this, "Deleted the task", Toast.LENGTH_LONG).show();
-                                }
-                            })
-                            .setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.cancel())
-                            .setOnDismissListener(dialogInterface -> mode.finish())
-                            .show();
-                }
-                return true;
-            }
-
-            @Override
-            public void onDestroyActionMode(ActionMode mode) {
-                actionMode = null;
-                selectionTracker.clearSelection();
-            }
-        };
-
         selectionTracker.addObserver(new SelectionTracker.SelectionObserver<Long>() {
             @Override
             public void onSelectionChanged() {
                 super.onSelectionChanged();
-                if (!selectionTracker.getSelection().isEmpty() && actionMode == null) {
-                    actionMode = toolbar.startActionMode(actionModeCallback);
-                }
-                else if (selectionTracker.getSelection().isEmpty() && actionMode != null) {
-                    actionMode.finish();
+                if (!selectionTracker.getSelection().isEmpty()) {
+                    BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(VisualScheduleActivity.this);
+                    bottomSheetDialog.setContentView(R.layout.fragment_bottom_sheet_dialog);
+                    bottomSheetDialog.setOnCancelListener(dialogInterface -> selectionTracker.clearSelection());
+
+                    MaterialTextView deleteTextView = bottomSheetDialog.findViewById(R.id.action_delete);
+                    if (deleteTextView != null) {
+                        deleteTextView.setOnClickListener(view -> {
+                            bottomSheetDialog.dismiss();
+                            new MaterialAlertDialogBuilder(VisualScheduleActivity.this, com.google.android.material.R.style.ThemeOverlay_Material3_MaterialAlertDialog_Centered)
+                                    .setIcon(R.drawable.ic_round_delete_24)
+                                    .setTitle("Delete task?")
+                                    .setMessage("The selected task will be deleted permanently.")
+                                    .setPositiveButton("Delete", (dialogInterface, i) -> {
+                                        if (selectionTracker.hasSelection()) {
+                                            long id = selectionTracker.getSelection().iterator().next();
+                                            selectionTracker.clearSelection();
+                                            visualScheduleTableManager.deleteRow(id);
+                                            mAdapter.removeItem(mRecyclerView.findViewHolderForItemId(id).getAdapterPosition());
+                                            Toast.makeText(VisualScheduleActivity.this, "Deleted the task", Toast.LENGTH_LONG).show();
+                                        }
+                                    })
+                                    .setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.cancel())
+                                    .setOnCancelListener(dialogInterface -> selectionTracker.clearSelection())
+                                    .show();
+                        });
+                    }
+
+                    MaterialTextView cancelTextView = bottomSheetDialog.findViewById(R.id.action_cancel);
+                    if (cancelTextView != null) {
+                        cancelTextView.setOnClickListener(view -> bottomSheetDialog.cancel());
+                    }
+
+                    bottomSheetDialog.show();
                 }
             }
         });

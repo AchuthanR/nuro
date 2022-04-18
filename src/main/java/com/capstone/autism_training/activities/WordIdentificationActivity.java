@@ -31,6 +31,8 @@ import java.util.Random;
 
 public class WordIdentificationActivity extends AppCompatActivity {
 
+    public static final String TAG = WordIdentificationActivity.class.getSimpleName();
+
     private SharedPreferences sharedPreferences;
     private MediaPlayer mediaPlayer;
     private DeckTableManager deckTableManager;

@@ -17,7 +17,7 @@ import com.google.android.material.textview.MaterialTextView;
 
 public class ActiveHelpCardDialogFragment extends DialogFragment {
 
-    public static final String TAG = "ActiveHelpCardDialog";
+    public static final String TAG = ActiveHelpCardDialogFragment.class.getSimpleName();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
