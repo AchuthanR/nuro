@@ -35,25 +35,25 @@
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/nameTextView"
+                    style="@style/TextAppearance.Material3.TitleLarge"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?attr/textAppearanceHeadline6" />
+                    android:layout_height="wrap_content" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/instructionTextView"
+                    style="@style/TextAppearance.Material3.BodyMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:textAppearance="?attr/textAppearanceBody2"
                     android:textColor="?android:attr/textColorSecondary" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/startTimeTextView"
+                    style="@style/TextAppearance.Material3.TitleLarge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
-                    android:layout_marginTop="8dp"
-                    android:textAppearance="?attr/textAppearanceHeadline6" />
+                    android:layout_marginTop="8dp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -82,22 +82,19 @@
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/timerTextView"
+                    style="@style/TextAppearance.Material3.TitleLarge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:textAppearance="?attr/textAppearanceHeadline6" />
+                    android:textColor="?android:attr/textColorSecondary" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/markAsDoneButton"
-                    style="@style/Widget.Material3.Button.TextButton.Icon"
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/markAsDoneCheckBox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
                     android:layout_marginTop="8dp"
-                    android:text="@string/unchecked_mark_as_done_task_button_text_activity_visual_schedule"
-                    android:textAllCaps="true"
-                    android:checkable="true"
-                    app:icon="@drawable/ic_round_check_24" />
+                    android:text="@string/mark_as_done_check_box_text_activity_visual_schedule" />
             </LinearLayout>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

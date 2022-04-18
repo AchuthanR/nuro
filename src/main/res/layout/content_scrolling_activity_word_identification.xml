@@ -24,11 +24,11 @@
 
             <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/chooseDeckAutoCompleteTextView"
+                style="@style/TextAppearance.Material3.TitleLarge"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/choose_deck_text_view_text_activity_word_identification"
-                android:inputType="none"
-                android:textAppearance="?attr/textAppearanceTitleLarge" />
+                android:inputType="none" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
@@ -53,19 +53,20 @@
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/questionTextView"
+                        style="@style/TextAppearance.Material3.TitleLarge"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/identify_question_text_view_text_activity_word_identification"
-                        android:textAppearance="?attr/textAppearanceHeadline5"
                         android:textAlignment="center" />
 
-                    <ImageView
+                    <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/imageView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:layout_gravity="center_horizontal"
-                        android:adjustViewBounds="true" />
+                        android:adjustViewBounds="true"
+                        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.ShapeableImageView" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -83,11 +84,11 @@
                     android:paddingVertical="24dp">
 
                     <com.google.android.material.textview.MaterialTextView
+                        style="@style/TextAppearance.Material3.TitleLarge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:text="@string/choose_answer_text_view_text_activity_word_identification"
-                        android:textAppearance="?attr/textAppearanceTitleLarge"
                         android:labelFor="@id/buttonToggleGroup" />
 
                     <com.google.android.material.button.MaterialButtonToggleGroup

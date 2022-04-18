@@ -71,7 +71,7 @@ public class AddHelpCardDialogFragment extends DialogFragment {
         addHelpCardButton.setOnClickListener(view1 -> {
             EditText nameEditText = view.findViewById(R.id.nameEditText);
 
-            if (image != null && !nameEditText.getText().toString().equals("")) {
+            if (image != null && !nameEditText.getText().toString().isEmpty()) {
                 long rowNumber = helpCardActivity.helpCardTableManager.insert(nameEditText.getText().toString(), image);
                 if (rowNumber != -1) {
                     HelpCardModel helpCardModel = new HelpCardModel(rowNumber, nameEditText.getText().toString(), image);

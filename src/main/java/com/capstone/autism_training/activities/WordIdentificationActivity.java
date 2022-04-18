@@ -6,7 +6,6 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -22,6 +21,7 @@ import com.capstone.autism_training.utilities.ImageHelper;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.button.MaterialButtonToggleGroup;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 
@@ -207,7 +207,7 @@ public class WordIdentificationActivity extends AppCompatActivity {
         correctOption = random.nextInt(4);
         answers.add(correctOption, cursor.getString(answerColumnIndex));
         byte[] image = cursor.getBlob(imageColumnIndex);
-        ImageView imageView = findViewById(R.id.imageView);
+        ShapeableImageView imageView = findViewById(R.id.imageView);
         imageView.setImageBitmap(ImageHelper.toCompressedBitmap(image));
 
         MaterialButton option1 = findViewById(R.id.option1);

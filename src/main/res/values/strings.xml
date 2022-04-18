@@ -42,8 +42,7 @@
     <string name="continue_task_button_text_activity_visual_schedule">Continue task</string>
     <string name="completed_timer_text_view_text_activity_visual_schedule">Time\'s up!</string>
     <string name="reset_task_button_text_activity_visual_schedule">Reset</string>
-    <string name="unchecked_mark_as_done_task_button_text_activity_visual_schedule">Mark as done</string>
-    <string name="checked_mark_as_done_task_button_text_activity_visual_schedule">Done</string>
+    <string name="mark_as_done_check_box_text_activity_visual_schedule">Mark as done</string>
 
     <string name="page_title_fragment_add_task">Add task</string>
     <string name="name_edit_text_hint_fragment_add_task">Name of the task</string>

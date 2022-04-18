@@ -83,7 +83,7 @@ public class AddTaskDialogFragment extends DialogFragment {
                     .setTimeFormat(TimeFormat.CLOCK_12H)
                     .setHour(hour)
                     .setMinute(minute)
-                    .setTitleText("Select start time")
+                    .setTitleText("SELECT START TIME")
                     .setPositiveButtonText("OK")
                     .setNegativeButtonText("Cancel")
                     .build();
@@ -111,7 +111,7 @@ public class AddTaskDialogFragment extends DialogFragment {
             EditText durationHourEditText = view.findViewById(R.id.durationHourEditText);
             EditText durationMinuteEditText = view.findViewById(R.id.durationMinuteEditText);
 
-            if (image != null && start_time != -1 && !nameEditText.getText().toString().equals("") && !instructionEditText.getText().toString().equals("") && !durationHourEditText.getText().toString().equals("") && !durationMinuteEditText.getText().toString().equals("")) {
+            if (image != null && start_time != -1 && !nameEditText.getText().toString().isEmpty() && !instructionEditText.getText().toString().isEmpty() && !durationHourEditText.getText().toString().isEmpty() && !durationMinuteEditText.getText().toString().isEmpty()) {
                 try {
                     long hour = Long.parseLong(durationHourEditText.getText().toString());
                     long minute = Long.parseLong(durationMinuteEditText.getText().toString());

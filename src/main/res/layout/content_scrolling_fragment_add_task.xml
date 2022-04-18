@@ -23,11 +23,11 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/nameEditText"
+                style="@style/TextAppearance.Material3.TitleLarge"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/name_edit_text_hint_fragment_add_task"
-                android:inputType="text"
-                android:textSize="20sp" />
+                android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -39,11 +39,11 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/instructionEditText"
+                style="@style/TextAppearance.Material3.TitleLarge"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/instruction_edit_text_hint_fragment_add_task"
-                android:inputType="text"
-                android:textSize="20sp" />
+                android:inputType="textMultiLine" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
@@ -56,18 +56,18 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/startTimeTextView"
+            style="@style/TextAppearance.Material3.TitleMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_gravity="center_horizontal"
-            android:textAppearance="?attr/textAppearanceTitleMedium" />
+            android:layout_gravity="center_horizontal" />
 
         <com.google.android.material.textview.MaterialTextView
+            style="@style/TextAppearance.Material3.TitleLarge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/duration_text_view_text_fragment_add_task"
-            android:textAppearance="?attr/textAppearanceTitleLarge" />
+            android:text="@string/duration_text_view_text_fragment_add_task" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -84,11 +84,11 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/durationHourEditText"
+                    style="@style/TextAppearance.Material3.TitleLarge"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="@string/duration_hour_edit_text_hint_fragment_add_task"
-                    android:inputType="text"
-                    android:textSize="20sp" />
+                    android:inputType="number" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -101,11 +101,11 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/durationMinuteEditText"
+                    style="@style/TextAppearance.Material3.TitleLarge"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="@string/duration_minute_edit_text_hint_fragment_add_task"
-                    android:inputType="text"
-                    android:textSize="20sp" />
+                    android:inputType="number" />
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 

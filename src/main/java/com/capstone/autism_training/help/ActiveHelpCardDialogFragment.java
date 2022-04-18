@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,6 +12,7 @@ import androidx.fragment.app.DialogFragment;
 import com.capstone.autism_training.R;
 import com.capstone.autism_training.utilities.ImageHelper;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textview.MaterialTextView;
 
 public class ActiveHelpCardDialogFragment extends DialogFragment {
@@ -37,7 +37,7 @@ public class ActiveHelpCardDialogFragment extends DialogFragment {
         if (getArguments() != null) {
             byte[] image = getArguments().getByteArray("image");
             String name = getArguments().getString("name");
-            ImageView imageView = view.findViewById(R.id.imageView);
+            ShapeableImageView imageView = view.findViewById(R.id.imageView);
             MaterialTextView textView = view.findViewById(R.id.nameTextView);
             imageView.setImageBitmap(ImageHelper.toCompressedBitmap(image));
             textView.setText(name);

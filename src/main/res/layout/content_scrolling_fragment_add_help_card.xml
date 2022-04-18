@@ -23,11 +23,11 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/nameEditText"
+                style="@style/TextAppearance.Material3.TitleLarge"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/name_edit_text_hint_fragment_add_help_card"
-                android:inputType="text"
-                android:textSize="20sp" />
+                android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton

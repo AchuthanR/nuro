@@ -72,7 +72,7 @@ public class AddDeckDialogFragment extends DialogFragment {
             EditText nameEditText = view.findViewById(R.id.nameEditText);
             EditText descriptionEditText = view.findViewById(R.id.descriptionEditText);
 
-            if (image != null && !nameEditText.getText().toString().equals("") && !descriptionEditText.getText().toString().equals("")) {
+            if (image != null && !nameEditText.getText().toString().isEmpty() && !descriptionEditText.getText().toString().isEmpty()) {
                 long rowNumber = deckActivity.deckInfoTableManager.insert(nameEditText.getText().toString(), image, descriptionEditText.getText().toString());
                 if (rowNumber != -1) {
                     DeckModel deckModel = new DeckModel(rowNumber, image, nameEditText.getText().toString(), descriptionEditText.getText().toString());

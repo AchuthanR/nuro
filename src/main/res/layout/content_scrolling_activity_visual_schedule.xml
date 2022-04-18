@@ -23,11 +23,11 @@
 
             <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/chooseDayAutoCompleteTextView"
+                style="@style/TextAppearance.Material3.TitleLarge"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/choose_day_text_view_text_activity_visual_schedule"
-                android:inputType="none"
-                android:textAppearance="?attr/textAppearanceTitleLarge" />
+                android:inputType="none" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.recyclerview.widget.RecyclerView

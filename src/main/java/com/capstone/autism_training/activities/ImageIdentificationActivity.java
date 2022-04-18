@@ -6,7 +6,6 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -22,6 +21,7 @@ import com.capstone.autism_training.utilities.ImageHelper;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.button.MaterialButtonToggleGroup;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textview.MaterialTextView;
@@ -211,16 +211,16 @@ public class ImageIdentificationActivity extends AppCompatActivity {
         MaterialTextView textView = findViewById(R.id.questionTextView);
         textView.setText(String.format(getString(R.string.identify_question_text_view_text_activity_image_identification), cursor.getString(answerColumnIndex)));
 
-        ImageView imageView1 = findViewById(R.id.imageView1);
+        ShapeableImageView imageView1 = findViewById(R.id.imageView1);
         imageView1.setImageBitmap(ImageHelper.toCompressedBitmap(images.get(0)));
 
-        ImageView imageView2 = findViewById(R.id.imageView2);
+        ShapeableImageView imageView2 = findViewById(R.id.imageView2);
         imageView2.setImageBitmap(ImageHelper.toCompressedBitmap(images.get(1)));
 
-        ImageView imageView3 = findViewById(R.id.imageView3);
+        ShapeableImageView imageView3 = findViewById(R.id.imageView3);
         imageView3.setImageBitmap(ImageHelper.toCompressedBitmap(images.get(2)));
 
-        ImageView imageView4 = findViewById(R.id.imageView4);
+        ShapeableImageView imageView4 = findViewById(R.id.imageView4);
         imageView4.setImageBitmap(ImageHelper.toCompressedBitmap(images.get(3)));
     }
 

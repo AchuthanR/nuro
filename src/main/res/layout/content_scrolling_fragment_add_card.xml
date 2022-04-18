@@ -23,11 +23,11 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/captionEditText"
+                style="@style/TextAppearance.Material3.TitleLarge"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/caption_edit_text_hint_fragment_add_card"
-                android:inputType="text"
-                android:textSize="20sp" />
+                android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -39,11 +39,11 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/answerEditText"
+                style="@style/TextAppearance.Material3.TitleLarge"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/answer_edit_text_hint_fragment_add_card"
-                android:inputType="text"
-                android:textSize="20sp" />
+                android:inputType="textMultiLine" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton

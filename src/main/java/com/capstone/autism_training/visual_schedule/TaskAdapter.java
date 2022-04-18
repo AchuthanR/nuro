@@ -16,6 +16,7 @@ import com.capstone.autism_training.R;
 import com.capstone.autism_training.utilities.ImageHelper;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.text.DateFormat;
@@ -40,7 +41,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         private final MaterialButton timerButton;
         private final MaterialTextView timerTextView;
         private final MaterialButton resetButton;
-        private final MaterialButton markAsDoneButton;
+        private final MaterialCheckBox markAsDoneCheckBox;
         private final TaskItemDetails taskItemDetails;
         public CountDownTimer countDownTimer;
         public long remainingTime;
@@ -56,7 +57,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             timerButton = view.findViewById(R.id.timerButton);
             timerTextView = view.findViewById(R.id.timerTextView);
             resetButton = view.findViewById(R.id.resetButton);
-            markAsDoneButton = view.findViewById(R.id.markAsDoneButton);
+            markAsDoneCheckBox = view.findViewById(R.id.markAsDoneCheckBox);
             taskItemDetails = new TaskItemDetails();
         }
 
@@ -96,8 +97,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             return resetButton;
         }
 
-        public MaterialButton getMarkAsDoneButton() {
-            return markAsDoneButton;
+        public MaterialCheckBox getMarkAsDoneCheckBox() {
+            return markAsDoneCheckBox;
         }
 
         public ItemDetailsLookup.ItemDetails<Long> getItemDetails() {
@@ -200,20 +201,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             viewHolder.remainingTime = tasks.get(viewHolder.getAdapterPosition()).duration;
         });
 
-        viewHolder.getMarkAsDoneButton().setOnClickListener(view1 -> {
-            boolean success = visualScheduleTableManager.update(tasks.get(viewHolder.getAdapterPosition()).id, viewHolder.getMarkAsDoneButton().isChecked()) > 0;
+        viewHolder.getMarkAsDoneCheckBox().setOnCheckedChangeListener((compoundButton, b) -> {
+            boolean success = visualScheduleTableManager.update(tasks.get(viewHolder.getAdapterPosition()).id, b) > 0;
             if (success) {
-                if (viewHolder.getMarkAsDoneButton().isChecked()) {
-                    tasks.get(viewHolder.getAdapterPosition()).completed = true;
-                    viewHolder.getMarkAsDoneButton().setText(R.string.checked_mark_as_done_task_button_text_activity_visual_schedule);
-                }
-                else {
-                    tasks.get(viewHolder.getAdapterPosition()).completed = false;
-                    viewHolder.getMarkAsDoneButton().setText(R.string.unchecked_mark_as_done_task_button_text_activity_visual_schedule);
-                }
+                tasks.get(viewHolder.getAdapterPosition()).completed = b;
             }
             else {
-                viewHolder.getMarkAsDoneButton().setChecked(!viewHolder.getMarkAsDoneButton().isChecked());
+                viewHolder.getMarkAsDoneCheckBox().setChecked(!b);
             }
         });
 
@@ -261,14 +255,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             visualScheduleTableManager.update(tasks.get(position).id, -1);
         }
 
-        if (tasks.get(position).completed) {
-            viewHolder.getMarkAsDoneButton().setText(R.string.checked_mark_as_done_task_button_text_activity_visual_schedule);
-            viewHolder.getMarkAsDoneButton().setChecked(true);
-        }
-        else {
-            viewHolder.getMarkAsDoneButton().setText(R.string.unchecked_mark_as_done_task_button_text_activity_visual_schedule);
-            viewHolder.getMarkAsDoneButton().setChecked(false);
-        }
+        viewHolder.getMarkAsDoneCheckBox().setChecked(tasks.get(position).completed);
 
         viewHolder.getCardView().setChecked(selectionTracker.isSelected(tasks.get(position).id));
     }

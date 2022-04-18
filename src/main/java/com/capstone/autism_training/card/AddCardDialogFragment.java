@@ -72,7 +72,7 @@ public class AddCardDialogFragment extends DialogFragment {
             EditText captionEditText = view.findViewById(R.id.captionEditText);
             EditText answerEditText = view.findViewById(R.id.answerEditText);
 
-            if (image != null && !captionEditText.getText().toString().equals("") && !answerEditText.getText().toString().equals("")) {
+            if (image != null && !captionEditText.getText().toString().isEmpty() && !answerEditText.getText().toString().isEmpty()) {
                 long rowNumber = cardActivity.deckTableManager.insert(image, captionEditText.getText().toString(), answerEditText.getText().toString());
                 if (rowNumber != -1) {
                     CardModel cardModel = new CardModel(rowNumber, image, captionEditText.getText().toString(), answerEditText.getText().toString());

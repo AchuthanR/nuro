@@ -36,11 +36,11 @@
                     android:scaleType="centerCrop" />
 
                 <com.google.android.material.textview.MaterialTextView
+                    style="@style/TextAppearance.Material3.TitleLarge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/all_decks_module_title_activity_main"
-                    android:layout_margin="16dp"
-                    android:textAppearance="?attr/textAppearanceHeadline6" />
+                    android:layout_margin="16dp" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -65,11 +65,11 @@
                     android:scaleType="centerCrop" />
 
                 <com.google.android.material.textview.MaterialTextView
+                    style="@style/TextAppearance.Material3.TitleLarge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/visual_scheduling_module_title_activity_main"
-                    android:layout_margin="16dp"
-                    android:textAppearance="?attr/textAppearanceHeadline6" />
+                    android:layout_margin="16dp" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -94,11 +94,11 @@
                     android:scaleType="centerCrop" />
 
                 <com.google.android.material.textview.MaterialTextView
+                    style="@style/TextAppearance.Material3.TitleLarge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/activities_module_title_activity_main"
-                    android:layout_margin="16dp"
-                    android:textAppearance="?attr/textAppearanceHeadline6" />
+                    android:layout_margin="16dp" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -123,11 +123,11 @@
                     android:scaleType="centerCrop" />
 
                 <com.google.android.material.textview.MaterialTextView
+                    style="@style/TextAppearance.Material3.TitleLarge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/help_card_module_title_activity_main"
-                    android:layout_margin="16dp"
-                    android:textAppearance="?attr/textAppearanceHeadline6" />
+                    android:layout_margin="16dp" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -152,11 +152,11 @@
                     android:scaleType="centerCrop" />
 
                 <com.google.android.material.textview.MaterialTextView
+                    style="@style/TextAppearance.Material3.TitleLarge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/training_module_title_activity_main"
-                    android:layout_margin="16dp"
-                    android:textAppearance="?attr/textAppearanceHeadline6" />
+                    android:layout_margin="16dp" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
