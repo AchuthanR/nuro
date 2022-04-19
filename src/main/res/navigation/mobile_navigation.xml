@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_deck">
+
+    <fragment
+        android:id="@+id/navigation_deck"
+        android:name="com.capstone.autism_training.ui.deck.DeckFragment"
+        android:label="@string/page_title_fragment_deck"
+        tools:layout="@layout/fragment_deck" />
+
+    <fragment
+        android:id="@+id/navigation_schedule"
+        android:name="com.capstone.autism_training.ui.schedule.ScheduleFragment"
+        android:label="@string/page_title_fragment_schedule"
+        tools:layout="@layout/fragment_schedule" />
+
+    <fragment
+        android:id="@+id/navigation_activity"
+        android:name="com.capstone.autism_training.ui.activity.ActivityFragment"
+        android:label="@string/page_title_fragment_activity"
+        tools:layout="@layout/fragment_activity" />
+
+    <fragment
+        android:id="@+id/navigation_help"
+        android:name="com.capstone.autism_training.ui.help.HelpFragment"
+        android:label="@string/page_title_fragment_help"
+        tools:layout="@layout/fragment_help" />
+
+    <fragment
+        android:id="@+id/navigation_training"
+        android:name="com.capstone.autism_training.ui.training.TrainingFragment"
+        android:label="@string/page_title_fragment_training"
+        tools:layout="@layout/fragment_training" />
+</navigation>

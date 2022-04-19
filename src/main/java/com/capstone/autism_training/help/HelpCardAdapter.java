@@ -15,6 +15,7 @@ import androidx.recyclerview.selection.SelectionTracker;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.capstone.autism_training.R;
+import com.capstone.autism_training.ui.help.ActiveHelpCardDialogFragment;
 import com.capstone.autism_training.utilities.ImageHelper;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textview.MaterialTextView;

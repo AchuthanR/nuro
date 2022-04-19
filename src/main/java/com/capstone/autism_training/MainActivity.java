@@ -1,39 +1,38 @@
 package com.capstone.autism_training;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
-import com.capstone.autism_training.activities.ActivitiesActivity;
-import com.capstone.autism_training.deck.DeckActivity;
-import com.capstone.autism_training.help.HelpCardActivity;
-import com.capstone.autism_training.training.TrainingActivity;
-import com.capstone.autism_training.visual_schedule.VisualScheduleActivity;
-import com.google.android.material.card.MaterialCardView;
+import com.capstone.autism_training.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = MainActivity.class.getSimpleName();
 
+    private ActivityMainBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        MaterialCardView materialCardView = findViewById(R.id.allDecksCardView);
-        materialCardView.setOnClickListener(view -> startActivity(new Intent(this, DeckActivity.class)) );
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        MaterialCardView materialCardView1 = findViewById(R.id.visualScheduleCardView);
-        materialCardView1.setOnClickListener(view -> startActivity(new Intent(this, VisualScheduleActivity.class)) );
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.navigation_deck, R.id.navigation_schedule, R.id.navigation_activity, R.id.navigation_help, R.id.navigation_training)
+                .build();
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
+        NavigationUI.setupWithNavController(binding.navView, navController);
+    }
 
-        MaterialCardView materialCardView2 = findViewById(R.id.activitiesCardView);
-        materialCardView2.setOnClickListener(view -> startActivity(new Intent(this, ActivitiesActivity.class)) );
-
-        MaterialCardView materialCardView3 = findViewById(R.id.helpCardCardView);
-        materialCardView3.setOnClickListener(view -> startActivity(new Intent(this, HelpCardActivity.class)) );
-
-        MaterialCardView materialCardView4 = findViewById(R.id.trainingCardView);
-        materialCardView4.setOnClickListener(view -> startActivity(new Intent(this, TrainingActivity.class)) );
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        binding = null;
     }
 }

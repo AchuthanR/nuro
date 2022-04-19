@@ -4,7 +4,7 @@
     tools:context="com.capstone.autism_training.activities.WordIdentificationActivity">
     <item
         android:id="@+id/action_play_sound"
-        android:title="@string/action_play_sound_activity_image_identification"
+        android:title="@string/action_play_sound_fragment_image_identification"
         android:icon="@drawable/ic_round_music_note_24"
         android:checkable="true"
         app:showAsAction="collapseActionView" />

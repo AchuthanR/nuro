@@ -20,29 +20,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".deck.DeckActivity"
-            android:exported="false" />
-        <activity
-            android:name=".card.CardActivity"
-            android:exported="false" />
-        <activity
-            android:name=".visual_schedule.VisualScheduleActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.ActivitiesActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.ImageIdentificationActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.WordIdentificationActivity"
-            android:exported="false" />
-        <activity
-            android:name=".help.HelpCardActivity"
-            android:exported="false" />
-        <activity
-            android:name=".training.TrainingActivity"
-            android:exported="false" />
     </application>
+
 </manifest>

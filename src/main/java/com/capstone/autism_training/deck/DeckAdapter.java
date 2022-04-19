@@ -1,19 +1,20 @@
 package com.capstone.autism_training.deck;
 
 import android.content.Context;
-import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.selection.ItemDetailsLookup;
 import androidx.recyclerview.selection.SelectionTracker;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.capstone.autism_training.R;
-import com.capstone.autism_training.card.CardActivity;
+import com.capstone.autism_training.ui.deck.CardFragment;
 import com.capstone.autism_training.utilities.ImageHelper;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textview.MaterialTextView;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
 
     private final ArrayList<DeckModel> decks;
+    private final FragmentManager fragmentManager;
     private SelectionTracker<Long> selectionTracker;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -70,8 +72,9 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
         }
     }
 
-    public DeckAdapter() {
+    public DeckAdapter(FragmentManager fragmentManager) {
         decks = new ArrayList<>();
+        this.fragmentManager = fragmentManager;
         setHasStableIds(true);
     }
 
@@ -93,9 +96,16 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
         ViewHolder viewHolder = new ViewHolder(view);
 
         viewHolder.getCardView().setOnClickListener(view1 -> {
-            Intent intent = new Intent(viewHolder.getContext(), CardActivity.class);
-            intent.putExtra("TABLE_NAME", decks.get(viewHolder.getAdapterPosition()).name);
-            viewHolder.getContext().startActivity(intent);
+            CardFragment cardFragment = new CardFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("TABLE_NAME", decks.get(viewHolder.getAdapterPosition()).name);
+            cardFragment.setArguments(bundle);
+
+            fragmentManager.beginTransaction()
+                    .replace(R.id.nav_host_fragment_activity_main, cardFragment, CardFragment.TAG)
+                    .addToBackStack(null)
+                    .setReorderingAllowed(true)
+                    .commit();
         });
 
         return viewHolder;

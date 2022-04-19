@@ -66,7 +66,7 @@
                         style="@style/Widget.Material3.Button.TextButton.Icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/reset_task_button_text_activity_visual_schedule"
+                        android:text="@string/reset_task_button_text_fragment_schedule"
                         android:enabled="false"
                         app:icon="@drawable/ic_round_restart_alt_24" />
 
@@ -76,7 +76,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:text="@string/start_task_button_text_activity_visual_schedule"
+                        android:text="@string/start_task_button_text_fragment_schedule"
                         app:icon="@drawable/ic_round_play_arrow_24" />
                 </LinearLayout>
 
@@ -94,7 +94,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
                     android:layout_marginTop="8dp"
-                    android:text="@string/mark_as_done_check_box_text_activity_visual_schedule" />
+                    android:text="@string/mark_as_done_check_box_text_fragment_schedule" />
             </LinearLayout>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

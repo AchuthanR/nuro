@@ -93,11 +93,11 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         viewHolder.getShowAnswerButton().setOnClickListener(view1 -> {
             if (viewHolder.answerTextView.getVisibility() == View.GONE) {
                 viewHolder.answerTextView.setVisibility(View.VISIBLE);
-                viewHolder.getShowAnswerButton().setText(R.string.hide_answer_button_text_activity_card);
+                viewHolder.getShowAnswerButton().setText(R.string.hide_answer_button_text_fragment_card);
             }
             else {
                 viewHolder.answerTextView.setVisibility(View.GONE);
-                viewHolder.getShowAnswerButton().setText(R.string.show_answer_button_text_activity_card);
+                viewHolder.getShowAnswerButton().setText(R.string.show_answer_button_text_fragment_card);
             }
         });
 

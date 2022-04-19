@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_deck"
+        android:icon="@drawable/ic_round_view_module_24"
+        android:title="@string/title_decks" />
+
+    <item
+        android:id="@+id/navigation_schedule"
+        android:icon="@drawable/ic_round_calendar_month_24"
+        android:title="@string/title_schedule" />
+
+    <item
+        android:id="@+id/navigation_activity"
+        android:icon="@drawable/ic_round_category_24"
+        android:title="@string/title_activity" />
+
+    <item
+        android:id="@+id/navigation_help"
+        android:icon="@drawable/ic_round_help_outline_24"
+        android:title="@string/title_help" />
+
+    <item
+        android:id="@+id/navigation_training"
+        android:icon="@drawable/ic_round_leaderboard_24"
+        android:title="@string/title_training" />
+</menu>
