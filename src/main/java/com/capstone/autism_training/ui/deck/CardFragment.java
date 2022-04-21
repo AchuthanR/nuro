@@ -29,11 +29,14 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textview.MaterialTextView;
 
+import java.util.ArrayList;
+
 public class CardFragment extends Fragment {
 
     public static final String TAG = CardFragment.class.getSimpleName();
 
     private String TABLE_NAME = "";
+    private final ArrayList<String> tableNameBackStack = new ArrayList<>();
 
     protected RecyclerView mRecyclerView;
     protected CardAdapter mAdapter;
@@ -49,7 +52,9 @@ public class CardFragment extends Fragment {
 
         if (getArguments() != null) {
             TABLE_NAME = getArguments().getString("TABLE_NAME").replace(" ", "_");
-            binding.toolbar.setTitle(getArguments().getString("TABLE_NAME") + " deck");
+            binding.toolbarLayout.setTitle(getArguments().getString("TABLE_NAME") + " deck");
+            tableNameBackStack.add(getArguments().getString("TABLE_NAME"));
+            setArguments(null);
         }
 
         return binding.getRoot();
@@ -132,6 +137,32 @@ public class CardFragment extends Fragment {
         mAdapter.setSelectionTracker(selectionTracker);
 
         deckTableManager = new DeckTableManager(getContext());
+        fetchFromTable();
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            if (getArguments() != null) {
+                TABLE_NAME = getArguments().getString("TABLE_NAME").replace(" ", "_");
+                binding.toolbarLayout.setTitle(getArguments().getString("TABLE_NAME") + " deck");
+                tableNameBackStack.add(getArguments().getString("TABLE_NAME"));
+                setArguments(null);
+            }
+            else {
+                String table_name = tableNameBackStack.remove(tableNameBackStack.size() - 1);
+                TABLE_NAME = table_name.replace(" ", "_");
+                binding.toolbarLayout.setTitle(table_name + " deck");
+            }
+
+            fetchFromTable();
+        }
+    }
+
+    private void fetchFromTable() {
+        deckTableManager.close();
+        mAdapter.clearAll();
         deckTableManager.open(TABLE_NAME);
         Cursor cursor = deckTableManager.fetch();
 

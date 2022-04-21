@@ -35,6 +35,8 @@ import java.util.Arrays;
 
 public class HelpFragment extends Fragment {
 
+    public static final String TAG = HelpFragment.class.getSimpleName();
+
     protected RecyclerView mRecyclerView;
     protected HelpCardAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;

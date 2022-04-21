@@ -12,6 +12,8 @@ import com.capstone.autism_training.databinding.FragmentTrainingBinding;
 
 public class TrainingFragment extends Fragment {
 
+    public static final String TAG = TrainingFragment.class.getSimpleName();
+
     private FragmentTrainingBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,

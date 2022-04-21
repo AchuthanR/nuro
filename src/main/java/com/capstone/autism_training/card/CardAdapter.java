@@ -127,4 +127,10 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         cards.remove(position);
         notifyItemRemoved(position);
     }
+
+    public void clearAll() {
+        int size = cards.size();
+        cards.clear();
+        notifyItemRangeRemoved(0, size);
+    }
 }

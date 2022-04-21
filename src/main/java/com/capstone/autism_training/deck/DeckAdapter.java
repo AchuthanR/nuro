@@ -8,13 +8,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.selection.ItemDetailsLookup;
 import androidx.recyclerview.selection.SelectionTracker;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.capstone.autism_training.R;
 import com.capstone.autism_training.ui.deck.CardFragment;
+import com.capstone.autism_training.ui.deck.DeckFragment;
 import com.capstone.autism_training.utilities.ImageHelper;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textview.MaterialTextView;
@@ -96,16 +99,33 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
         ViewHolder viewHolder = new ViewHolder(view);
 
         viewHolder.getCardView().setOnClickListener(view1 -> {
-            CardFragment cardFragment = new CardFragment();
+            CardFragment cardFragment = null;
             Bundle bundle = new Bundle();
             bundle.putString("TABLE_NAME", decks.get(viewHolder.getAdapterPosition()).name);
-            cardFragment.setArguments(bundle);
 
-            fragmentManager.beginTransaction()
-                    .replace(R.id.nav_host_fragment_activity_main, cardFragment, CardFragment.TAG)
-                    .addToBackStack(null)
-                    .setReorderingAllowed(true)
-                    .commit();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            for (Fragment fragment : fragmentManager.getFragments()) {
+                if (fragment.isVisible()) {
+                    transaction.hide(fragment);
+                }
+                if (CardFragment.TAG.equals(fragment.getTag()) && fragment.isAdded()) {
+                    cardFragment = (CardFragment) fragment;
+                    cardFragment.setArguments(bundle);
+                }
+            }
+
+            if (cardFragment != null) {
+                transaction.show(cardFragment).addToBackStack(DeckFragment.TAG).setReorderingAllowed(true);
+            }
+            else {
+                cardFragment = new CardFragment();
+                cardFragment.setArguments(bundle);
+                transaction
+                        .add(R.id.nav_host_fragment_activity_main, cardFragment, CardFragment.TAG)
+                        .addToBackStack(DeckFragment.TAG)
+                        .setReorderingAllowed(true);
+            }
+            transaction.commit();
         });
 
         return viewHolder;
