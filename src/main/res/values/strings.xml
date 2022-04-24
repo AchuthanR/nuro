@@ -53,12 +53,12 @@
     <string name="add_task_button_text_fragment_add_task">Add</string>
 
     <string name="page_title_fragment_activity">Activities</string>
-    <string name="image_identification_activity_title_fragment_activity">Identification activity - Images</string>
+    <string name="image_identification_activity_title_fragment_activity">Image identification activity</string>
     <string name="image_identification_activity_description_fragment_activity">Find the correct image among four options that is associated with the given word</string>
-    <string name="word_identification_activity_title_fragment_activity">Identification activity - Words</string>
+    <string name="word_identification_activity_title_fragment_activity">Word identification activity</string>
     <string name="word_identification_activity_description_fragment_activity">Find the correct word among four options that is associated with the given image</string>
 
-    <string name="page_title_fragment_image_identification">Identification activity - Images</string>
+    <string name="page_title_fragment_image_identification">Image identification</string>
     <string name="action_play_sound_fragment_image_identification">Play appreciation sounds</string>
     <string name="choose_deck_text_view_text_fragment_image_identification">Choose deck</string>
     <string name="play_sound_check_box_text_fragment_image_identification">Play appreciation sounds for correct answers</string>
@@ -71,7 +71,7 @@
     <string name="submit_button_text_fragment_image_identification">Submit</string>
     <string name="next_button_text_fragment_image_identification">Next</string>
 
-    <string name="page_title_fragment_word_identification">Identification activity - Words</string>
+    <string name="page_title_fragment_word_identification">Word identification</string>
     <string name="action_play_sound_fragment_word_identification">Play appreciation sounds</string>
     <string name="choose_deck_text_view_text_fragment_word_identification">Choose deck</string>
     <string name="play_sound_check_box_text_fragment_word_identification">Play appreciation sounds for correct answers</string>

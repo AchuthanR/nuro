@@ -11,10 +11,14 @@
         android:layout_height="@dimen/app_bar_height">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
-            style="@style/Widget.Material3.CollapsingToolbar.Large"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:title="@string/page_title_fragment_schedule"
+            app:titleCollapseMode="scale"
+            app:expandedTitleMarginBottom="32dp"
+            app:expandedTitleTextAppearance="@style/TextAppearance.App.CollapsingToolbar.Expanded"
+            app:collapsedTitleTextAppearance="@style/TextAppearance.App.CollapsingToolbar.Collapsed"
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
             app:toolbarId="@+id/toolbar">
 
             <com.google.android.material.appbar.MaterialToolbar
@@ -22,7 +26,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:elevation="0dp"
-                app:title="@string/page_title_fragment_schedule"
                 app:layout_collapseMode="pin" />
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
@@ -47,11 +50,11 @@
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:id="@+id/chooseDayAutoCompleteTextView"
-                    style="@style/TextAppearance.Material3.TitleLarge"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="@string/choose_day_text_view_text_fragment_schedule"
-                    android:inputType="none" />
+                    android:inputType="none"
+                    android:textAppearance="?attr/textAppearanceTitleLarge" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -69,7 +72,6 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="64dp"
                 android:text="@string/mark_all_as_pending_task_button_text_fragment_schedule"
-                android:textAllCaps="true"
                 app:icon="@drawable/ic_round_pending_24"
                 android:visibility="gone" />
         </LinearLayout>

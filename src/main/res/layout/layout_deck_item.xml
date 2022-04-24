@@ -35,16 +35,16 @@
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/titleTextView"
-                    style="@style/TextAppearance.Material3.TitleLarge"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?attr/textAppearanceTitleLarge" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/descriptionTextView"
-                    style="@style/TextAppearance.Material3.BodyMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:textAppearance="?attr/textAppearanceBodyMedium"
                     android:textColor="?android:attr/textColorSecondary" />
             </LinearLayout>
         </LinearLayout>

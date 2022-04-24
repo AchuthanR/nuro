@@ -8,11 +8,11 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/action_delete"
-        style="@style/TextAppearance.Material3.TitleLarge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:text="@string/action_delete_text"
+        android:textAppearance="?attr/textAppearanceTitleLarge"
         android:background="?attr/selectableItemBackground"
         android:drawableStart="@drawable/ic_round_delete_24"
         android:drawablePadding="24dp"
@@ -21,11 +21,11 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/action_cancel"
-        style="@style/TextAppearance.Material3.TitleLarge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:text="@string/action_cancel_text"
+        android:textAppearance="?attr/textAppearanceTitleLarge"
         android:background="?attr/selectableItemBackground"
         android:drawableStart="@drawable/ic_round_close_24"
         android:drawablePadding="24dp"

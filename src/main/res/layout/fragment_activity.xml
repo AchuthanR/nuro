@@ -11,10 +11,14 @@
         android:layout_height="@dimen/app_bar_height">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
-            style="@style/Widget.Material3.CollapsingToolbar.Large"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:title="@string/page_title_fragment_activity"
+            app:titleCollapseMode="scale"
+            app:expandedTitleMarginBottom="32dp"
+            app:expandedTitleTextAppearance="@style/TextAppearance.App.CollapsingToolbar.Expanded"
+            app:collapsedTitleTextAppearance="@style/TextAppearance.App.CollapsingToolbar.Collapsed"
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
             app:toolbarId="@+id/toolbar">
 
             <com.google.android.material.appbar.MaterialToolbar
@@ -22,7 +26,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:elevation="0dp"
-                app:title="@string/page_title_fragment_activity"
                 app:layout_collapseMode="pin" />
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
@@ -65,17 +68,17 @@
                         android:padding="16dp">
 
                         <com.google.android.material.textview.MaterialTextView
-                            style="@style/TextAppearance.Material3.TitleLarge"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/image_identification_activity_title_fragment_activity" />
+                            android:text="@string/image_identification_activity_title_fragment_activity"
+                            android:textAppearance="?attr/textAppearanceTitleLarge" />
 
                         <com.google.android.material.textview.MaterialTextView
-                            style="@style/TextAppearance.Material3.BodyMedium"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:text="@string/image_identification_activity_description_fragment_activity"
+                            android:textAppearance="?attr/textAppearanceBodyMedium"
                             android:textColor="?android:attr/textColorSecondary" />
                     </LinearLayout>
                 </LinearLayout>
@@ -108,17 +111,17 @@
                         android:padding="16dp">
 
                         <com.google.android.material.textview.MaterialTextView
-                            style="@style/TextAppearance.Material3.TitleLarge"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/word_identification_activity_title_fragment_activity" />
+                            android:text="@string/word_identification_activity_title_fragment_activity"
+                            android:textAppearance="?attr/textAppearanceTitleLarge" />
 
                         <com.google.android.material.textview.MaterialTextView
-                            style="@style/TextAppearance.Material3.BodyMedium"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:text="@string/word_identification_activity_description_fragment_activity"
+                            android:textAppearance="?attr/textAppearanceBodyMedium"
                             android:textColor="?android:attr/textColorSecondary" />
                     </LinearLayout>
                 </LinearLayout>

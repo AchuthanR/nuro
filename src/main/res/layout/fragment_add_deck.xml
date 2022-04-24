@@ -50,11 +50,11 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/nameEditText"
-                    style="@style/TextAppearance.Material3.TitleLarge"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="@string/name_edit_text_hint_fragment_add_deck"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:textAppearance="?attr/textAppearanceTitleLarge" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -66,11 +66,11 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/descriptionEditText"
-                    style="@style/TextAppearance.Material3.TitleLarge"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="@string/description_edit_text_hint_fragment_add_deck"
-                    android:inputType="textMultiLine" />
+                    android:inputType="textMultiLine"
+                    android:textAppearance="?attr/textAppearanceTitleLarge" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
@@ -90,5 +90,4 @@
                 tools:src="@drawable/media" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

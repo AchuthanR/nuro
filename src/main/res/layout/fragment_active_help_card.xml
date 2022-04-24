@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:fitsSystemWindows="true"
-    tools:context=".help.HelpCardActivity">
+    android:fitsSystemWindows="true">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardView"
@@ -36,10 +35,10 @@
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/nameTextView"
-                    style="@style/TextAppearance.Material3.TitleLarge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal" />
+                    android:layout_gravity="center_horizontal"
+                    android:textAppearance="?attr/textAppearanceTitleLarge" />
             </LinearLayout>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
