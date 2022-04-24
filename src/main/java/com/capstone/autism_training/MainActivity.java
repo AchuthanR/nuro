@@ -5,12 +5,10 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavController;
-import androidx.navigation.NavGraph;
-import androidx.navigation.Navigation;
 
 import com.capstone.autism_training.databinding.ActivityMainBinding;
 import com.capstone.autism_training.ui.activity.ActivityFragment;
+import com.capstone.autism_training.ui.deck.CardFragment;
 import com.capstone.autism_training.ui.deck.DeckFragment;
 import com.capstone.autism_training.ui.help.HelpFragment;
 import com.capstone.autism_training.ui.schedule.ScheduleFragment;
@@ -36,8 +34,6 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
-
         navHostFragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_main);
 
         deckFragment = new DeckFragment();
@@ -46,9 +42,6 @@ public class MainActivity extends AppCompatActivity {
         helpFragment = new HelpFragment();
         trainingFragment = new TrainingFragment();
 
-        NavGraph navGraph = navController.getNavInflater().inflate(R.navigation.mobile_navigation);
-        navGraph.setStartDestination(R.id.navigation_deck);
-        navController.setGraph(navGraph);
         navHostFragment.getChildFragmentManager().beginTransaction()
                 .replace(R.id.nav_host_fragment_activity_main, deckFragment, DeckFragment.TAG)
                 .addToBackStack(DeckFragment.TAG)
@@ -57,68 +50,71 @@ public class MainActivity extends AppCompatActivity {
 
         binding.navView.setOnItemSelectedListener(item -> {
             FragmentTransaction transaction = navHostFragment.getChildFragmentManager().beginTransaction();
-            for (Fragment fragment : navHostFragment.getChildFragmentManager().getFragments()) {
-                if (fragment.isVisible()) {
-                    transaction.hide(fragment);
-                }
-            }
 
             if (item.getItemId() == R.id.navigation_deck) {
-                if (deckFragment.isAdded()) {
-                    transaction.show(deckFragment).addToBackStack(DeckFragment.TAG).setReorderingAllowed(true);
-                }
-                else {
+                if (!deckFragment.isAdded()) {
                     transaction
                             .add(R.id.nav_host_fragment_activity_main, deckFragment, DeckFragment.TAG)
                             .addToBackStack(DeckFragment.TAG)
                             .setReorderingAllowed(true);
                 }
+                else if (!deckFragment.isVisible()) {
+                    transaction.show(deckFragment).addToBackStack(DeckFragment.TAG).setReorderingAllowed(true);
+                }
             }
             else if (item.getItemId() == R.id.navigation_schedule) {
-                if (scheduleFragment.isAdded()) {
-                    transaction.show(scheduleFragment).addToBackStack(ScheduleFragment.TAG).setReorderingAllowed(true);
-                }
-                else {
+                if (!scheduleFragment.isAdded()) {
                     transaction
                             .add(R.id.nav_host_fragment_activity_main, scheduleFragment, ScheduleFragment.TAG)
                             .addToBackStack(ScheduleFragment.TAG)
                             .setReorderingAllowed(true);
                 }
+                else if (!scheduleFragment.isVisible()) {
+                    transaction.show(scheduleFragment).addToBackStack(ScheduleFragment.TAG).setReorderingAllowed(true);
+                }
             }
             else if (item.getItemId() == R.id.navigation_activity) {
-                if (activityFragment.isAdded()) {
-                    transaction.show(activityFragment).addToBackStack(ActivityFragment.TAG).setReorderingAllowed(true);
-                }
-                else {
+                if (!activityFragment.isAdded()) {
                     transaction
                             .add(R.id.nav_host_fragment_activity_main, activityFragment, ActivityFragment.TAG)
                             .addToBackStack(ActivityFragment.TAG)
                             .setReorderingAllowed(true);
                 }
+                else if (!activityFragment.isVisible()) {
+                    transaction.show(activityFragment).addToBackStack(ActivityFragment.TAG).setReorderingAllowed(true);
+                }
             }
             else if (item.getItemId() == R.id.navigation_help) {
-                if (helpFragment.isAdded()) {
-                    transaction.show(helpFragment).addToBackStack(HelpFragment.TAG).setReorderingAllowed(true);
-                }
-                else {
+                if (!helpFragment.isAdded()) {
                     transaction
                             .add(R.id.nav_host_fragment_activity_main, helpFragment, HelpFragment.TAG)
                             .addToBackStack(HelpFragment.TAG)
                             .setReorderingAllowed(true);
                 }
+                else if (!helpFragment.isVisible()) {
+                    transaction.show(helpFragment).addToBackStack(HelpFragment.TAG).setReorderingAllowed(true);
+                }
             }
             else if (item.getItemId() == R.id.navigation_training) {
-                if (trainingFragment.isAdded()) {
-                    transaction.show(trainingFragment).addToBackStack(TrainingFragment.TAG).setReorderingAllowed(true);
-                }
-                else {
+                if (!trainingFragment.isAdded()) {
                     transaction
                             .add(R.id.nav_host_fragment_activity_main, trainingFragment, TrainingFragment.TAG)
                             .addToBackStack(TrainingFragment.TAG)
                             .setReorderingAllowed(true);
                 }
+                else if (!trainingFragment.isVisible()) {
+                    transaction.show(trainingFragment).addToBackStack(TrainingFragment.TAG).setReorderingAllowed(true);
+                }
             }
-            transaction.commit();
+
+            if (!transaction.isEmpty()) {
+                for (Fragment fragment : navHostFragment.getChildFragmentManager().getFragments()) {
+                    if (fragment.isVisible()) {
+                        transaction.hide(fragment);
+                    }
+                }
+                transaction.commit();
+            }
             return true;
         });
     }
@@ -126,6 +122,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (navHostFragment != null) {
+            if (DeckFragment.TAG.equals(navHostFragment.getChildFragmentManager().getBackStackEntryAt(navHostFragment.getChildFragmentManager().getBackStackEntryCount() - 1).getName())) {
+                Fragment fragment = navHostFragment.getChildFragmentManager().findFragmentByTag(CardFragment.TAG);
+                if (fragment != null && fragment.isVisible()) {
+                    if (fragment.getArguments() == null) {
+                        fragment.setArguments(new Bundle());
+                    }
+                    fragment.getArguments().putBoolean("ON_BACK_PRESSED", true);
+                }
+            }
+
             navHostFragment.getChildFragmentManager().popBackStackImmediate();
             int size = navHostFragment.getChildFragmentManager().getBackStackEntryCount();
             if (size == 0) {

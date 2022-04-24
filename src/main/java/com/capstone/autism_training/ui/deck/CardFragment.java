@@ -36,7 +36,7 @@ public class CardFragment extends Fragment {
     public static final String TAG = CardFragment.class.getSimpleName();
 
     private String TABLE_NAME = "";
-    private final ArrayList<String> tableNameBackStack = new ArrayList<>();
+    public final ArrayList<String> tableNameBackStack = new ArrayList<>();
 
     protected RecyclerView mRecyclerView;
     protected CardAdapter mAdapter;
@@ -145,18 +145,37 @@ public class CardFragment extends Fragment {
         super.onHiddenChanged(hidden);
         if (!hidden) {
             if (getArguments() != null) {
-                TABLE_NAME = getArguments().getString("TABLE_NAME").replace(" ", "_");
-                binding.toolbarLayout.setTitle(getArguments().getString("TABLE_NAME") + " deck");
-                tableNameBackStack.add(getArguments().getString("TABLE_NAME"));
-                setArguments(null);
-            }
-            else {
-                String table_name = tableNameBackStack.remove(tableNameBackStack.size() - 1);
-                TABLE_NAME = table_name.replace(" ", "_");
-                binding.toolbarLayout.setTitle(table_name + " deck");
-            }
+                if (getArguments().containsKey("TABLE_NAME")) {
+                    TABLE_NAME = getArguments().getString("TABLE_NAME").replace(" ", "_");
+                    binding.toolbarLayout.setTitle(getArguments().getString("TABLE_NAME") + " deck");
+                    tableNameBackStack.add(getArguments().getString("TABLE_NAME"));
+                    getArguments().remove("TABLE_NAME");
 
-            fetchFromTable();
+                    fetchFromTable();
+                }
+                else if (getArguments().containsKey("BACK_STACK_TABLE_NAME")) {
+                    TABLE_NAME = getArguments().getString("BACK_STACK_TABLE_NAME").replace(" ", "_");
+                    binding.toolbarLayout.setTitle(getArguments().getString("BACK_STACK_TABLE_NAME") + " deck");
+                    getArguments().remove("BACK_STACK_TABLE_NAME");
+
+                    fetchFromTable();
+                }
+            }
+        }
+        else {
+            if (getArguments() != null) {
+                if (getArguments().containsKey("ON_BACK_PRESSED")) {
+                    if (tableNameBackStack.size() > 0) {
+                        tableNameBackStack.remove(tableNameBackStack.size() - 1);
+                    }
+
+                    if (tableNameBackStack.size() > 0) {
+                        getArguments().putString("BACK_STACK_TABLE_NAME", tableNameBackStack.get(tableNameBackStack.size() - 1));
+                    }
+
+                    getArguments().remove("ON_BACK_PRESSED");
+                }
+            }
         }
     }
 
