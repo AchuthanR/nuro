@@ -6,53 +6,20 @@ public class CardModel {
     public byte[] image;
     public String caption;
     public String answer;
-    public long nextPracticeTime;
     public int repetitions;
     public int interval;
     public double easiness;
+    public long nextPracticeTime;
 
-    public CardModel(long id, byte[] image, String caption, String answer, long nextPracticeTime, int repetitions, int interval, double easiness) {
+    public CardModel(long id, byte[] image, String caption, String answer, int repetitions, int interval, double easiness, long nextPracticeTime) {
         this.id = id;
         this.image = image;
         this.caption = caption;
         this.answer = answer;
-        this.nextPracticeTime = nextPracticeTime;
         this.repetitions = repetitions;
         this.interval = interval;
         this.easiness = easiness;
-    }
-
-    public CardModel(long id, byte[] image, String caption, String answer, long nextPracticeTime, int repetitions, int interval) {
-        this.id = id;
-        this.image = image;
-        this.caption = caption;
-        this.answer = answer;
         this.nextPracticeTime = nextPracticeTime;
-        this.repetitions = repetitions;
-        this.interval = interval;
-        this.easiness = 2.5;
-    }
-
-    public CardModel(long id, byte[] image, String caption, String answer, long nextPracticeTime, int repetitions) {
-        this.id = id;
-        this.image = image;
-        this.caption = caption;
-        this.answer = answer;
-        this.nextPracticeTime = nextPracticeTime;
-        this.repetitions = repetitions;
-        this.interval = 1;
-        this.easiness = 2.5;
-    }
-
-    public CardModel(long id, byte[] image, String caption, String answer, long nextPracticeTime) {
-        this.id = id;
-        this.image = image;
-        this.caption = caption;
-        this.answer = answer;
-        this.nextPracticeTime = nextPracticeTime;
-        this.repetitions = 0;
-        this.interval = 1;
-        this.easiness = 2.5;
     }
 
     public CardModel(long id, byte[] image, String caption, String answer) {
@@ -60,10 +27,10 @@ public class CardModel {
         this.image = image;
         this.caption = caption;
         this.answer = answer;
-        this.nextPracticeTime = System.currentTimeMillis();
         this.repetitions = 0;
-        this.interval = 1;
+        this.interval = 0;
         this.easiness = 2.5;
+        this.nextPracticeTime = System.currentTimeMillis();
     }
 
     public void update(int quality) {
@@ -71,7 +38,11 @@ public class CardModel {
             return ;
         }
 
-        if (quality < 3) {
+        if (quality == 0) {
+            repetitions = 0;
+            interval = 0;
+        }
+        else if (quality < 3) {
             repetitions = 0;
             interval = 1;
         }

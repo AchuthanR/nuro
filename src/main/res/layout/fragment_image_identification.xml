@@ -48,7 +48,6 @@
                     android:hint="@string/choose_deck_text_view_text_fragment_image_identification"
                     android:inputType="none"
                     android:textAppearance="?attr/textAppearanceTitleLarge" />
-
             </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
@@ -157,7 +156,7 @@
                                 style="@style/Widget.Material3.Button.OutlinedButton.Icon"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/first_chip_text_fragment_image_identification"
+                                android:text="@string/first_button_text_fragment_image_identification"
                                 android:textSize="22sp"
                                 android:insetTop="0dp"
                                 android:insetBottom="0dp"
@@ -170,7 +169,7 @@
                                 style="@style/Widget.Material3.Button.OutlinedButton.Icon"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/second_chip_text_fragment_image_identification"
+                                android:text="@string/second_button_text_fragment_image_identification"
                                 android:textSize="22sp"
                                 android:insetTop="0dp"
                                 android:insetBottom="0dp"
@@ -183,7 +182,7 @@
                                 style="@style/Widget.Material3.Button.OutlinedButton.Icon"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/third_chip_text_fragment_image_identification"
+                                android:text="@string/third_button_text_fragment_image_identification"
                                 android:textSize="22sp"
                                 android:insetTop="0dp"
                                 android:insetBottom="0dp"
@@ -196,7 +195,7 @@
                                 style="@style/Widget.Material3.Button.OutlinedButton.Icon"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/fourth_chip_text_fragment_image_identification"
+                                android:text="@string/fourth_button_text_fragment_image_identification"
                                 android:textSize="22sp"
                                 android:insetTop="0dp"
                                 android:insetBottom="0dp"

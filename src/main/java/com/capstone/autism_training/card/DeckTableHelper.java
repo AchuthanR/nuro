@@ -22,7 +22,11 @@ public class DeckTableHelper extends SQLiteOpenHelper {
     public DeckTableHelper(Context context, String table_name) {
         super(context, DB_NAME, null, DB_VERSION);
         TABLE_NAME = table_name;
-        CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
+        CREATE_TABLE = createTableQuery(TABLE_NAME);
+    }
+
+    public static String createTableQuery(String TABLE_NAME) {
+        return "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
                 + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + IMAGE + " BLOB NOT NULL, "
                 + CAPTION + " TEXT NOT NULL, "

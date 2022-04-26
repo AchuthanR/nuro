@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.capstone.autism_training.card.DeckTableHelper;
+
 public class SuperMemoTableManager {
 
     private SuperMemoTableHelper superMemoTableHelper;
@@ -30,36 +32,29 @@ public class SuperMemoTableManager {
         }
     }
 
-    public long insert(int repetitions, int interval, double easiness) {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(SuperMemoTableHelper.REPETITIONS, repetitions);
-        contentValues.put(SuperMemoTableHelper.INTERVAL, interval);
-        contentValues.put(SuperMemoTableHelper.EASINESS, easiness);
-        return database.insert(superMemoTableHelper.TABLE_NAME, null, contentValues);
-    }
-
     public Cursor fetch() {
-        String[] columns = new String[] { SuperMemoTableHelper.ID, SuperMemoTableHelper.REPETITIONS, SuperMemoTableHelper.INTERVAL, SuperMemoTableHelper.EASINESS };
-        Cursor cursor = database.query(superMemoTableHelper.TABLE_NAME, columns, null, null, null, null, null);
+        String query = "SELECT a." + DeckTableHelper.ID + ", " + DeckTableHelper.IMAGE + ", "
+                + DeckTableHelper.CAPTION + ", " + DeckTableHelper.ANSWER + ", "
+                + SuperMemoTableHelper.REPETITIONS + ", " + SuperMemoTableHelper.INTERVAL + ", "
+                + SuperMemoTableHelper.EASINESS + ", " + SuperMemoTableHelper.NEXT_PRACTICE_TIME
+                + " FROM " + superMemoTableHelper.TABLE_NAME.substring(SuperMemoTableHelper.TABLE_NAME_PREFIX.length()) + " a"
+                + " INNER JOIN " + superMemoTableHelper.TABLE_NAME + " b"
+                + " ON a." + DeckTableHelper.ID + "=b." + SuperMemoTableHelper.ID
+                + " WHERE " + SuperMemoTableHelper.NEXT_PRACTICE_TIME + "<" + System.currentTimeMillis();
+        Cursor cursor = database.rawQuery(query, null);
+
         if (cursor != null) {
             cursor.moveToFirst();
         }
         return cursor;
     }
 
-    public int update(long id, int repetitions, int interval, double easiness) {
+    public int update(long id, int repetitions, int interval, double easiness, long next_practice_time) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(SuperMemoTableHelper.REPETITIONS, repetitions);
         contentValues.put(SuperMemoTableHelper.INTERVAL, interval);
         contentValues.put(SuperMemoTableHelper.EASINESS, easiness);
+        contentValues.put(SuperMemoTableHelper.NEXT_PRACTICE_TIME, next_practice_time);
         return database.update(superMemoTableHelper.TABLE_NAME, contentValues, SuperMemoTableHelper.ID + " = " + id, null);
-    }
-
-    public void deleteRow(long id) {
-        database.delete(superMemoTableHelper.TABLE_NAME, SuperMemoTableHelper.ID + "=" + id, null);
-    }
-
-    public void deleteTable() {
-        database.execSQL("DROP TABLE IF EXISTS " + superMemoTableHelper.TABLE_NAME);
     }
 }

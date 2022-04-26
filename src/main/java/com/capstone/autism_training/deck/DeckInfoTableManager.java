@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.capstone.autism_training.card.DeckTableHelper;
 import com.capstone.autism_training.card.DeckTableManager;
 
 public class DeckInfoTableManager {
@@ -37,7 +38,13 @@ public class DeckInfoTableManager {
         contentValues.put(DeckInfoTableHelper.NAME, name);
         contentValues.put(DeckInfoTableHelper.IMAGE, image);
         contentValues.put(DeckInfoTableHelper.DESCRIPTION, description);
-        return database.insert(DeckInfoTableHelper.TABLE_NAME, null, contentValues);
+        long rowNumber = database.insert(DeckInfoTableHelper.TABLE_NAME, null, contentValues);
+
+        if (rowNumber != -1) {
+            database.execSQL(DeckTableHelper.createTableQuery(name.replace(" ", "_")));
+        }
+
+        return rowNumber;
     }
 
     public Cursor fetch() {

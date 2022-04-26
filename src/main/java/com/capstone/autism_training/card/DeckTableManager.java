@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.capstone.autism_training.training.SuperMemoTableHelper;
+
 public class DeckTableManager {
 
     private DeckTableHelper deckTableHelper;
@@ -22,6 +24,8 @@ public class DeckTableManager {
         deckTableHelper = new DeckTableHelper(context, table_name);
         database = deckTableHelper.getWritableDatabase();
         database.execSQL(deckTableHelper.CREATE_TABLE);
+
+        database.execSQL(SuperMemoTableHelper.createTableQuery(SuperMemoTableHelper.TABLE_NAME_PREFIX + table_name));
     }
 
     public void close() {
@@ -35,7 +39,19 @@ public class DeckTableManager {
         contentValues.put(DeckTableHelper.IMAGE, image);
         contentValues.put(DeckTableHelper.CAPTION, caption);
         contentValues.put(DeckTableHelper.ANSWER, answer);
-        return database.insert(deckTableHelper.TABLE_NAME, null, contentValues);
+        long rowNumber = database.insert(deckTableHelper.TABLE_NAME, null, contentValues);
+
+        if (rowNumber != -1) {
+            contentValues = new ContentValues();
+            contentValues.put(SuperMemoTableHelper.ID, rowNumber);
+            contentValues.put(SuperMemoTableHelper.REPETITIONS, 0);
+            contentValues.put(SuperMemoTableHelper.INTERVAL, 0);
+            contentValues.put(SuperMemoTableHelper.EASINESS, 2.5);
+            contentValues.put(SuperMemoTableHelper.NEXT_PRACTICE_TIME, System.currentTimeMillis());
+            database.insert(SuperMemoTableHelper.TABLE_NAME_PREFIX + deckTableHelper.TABLE_NAME, null, contentValues);
+        }
+
+        return rowNumber;
     }
 
     public Cursor fetch() {
@@ -52,14 +68,27 @@ public class DeckTableManager {
         contentValues.put(DeckTableHelper.IMAGE, image);
         contentValues.put(DeckTableHelper.CAPTION, caption);
         contentValues.put(DeckTableHelper.ANSWER, answer);
-        return database.update(deckTableHelper.TABLE_NAME, contentValues, DeckTableHelper.ID + " = " + id, null);
+        int rowsAffected = database.update(deckTableHelper.TABLE_NAME, contentValues, DeckTableHelper.ID + " = " + id, null);
+
+        if (rowsAffected > 0) {
+            contentValues = new ContentValues();
+            contentValues.put(SuperMemoTableHelper.REPETITIONS, 0);
+            contentValues.put(SuperMemoTableHelper.INTERVAL, 0);
+            contentValues.put(SuperMemoTableHelper.EASINESS, 2.5);
+            contentValues.put(SuperMemoTableHelper.NEXT_PRACTICE_TIME, System.currentTimeMillis());
+            database.update(SuperMemoTableHelper.TABLE_NAME_PREFIX + deckTableHelper.TABLE_NAME, contentValues, SuperMemoTableHelper.ID + "=" + id, null);
+        }
+
+        return rowsAffected;
     }
 
     public void deleteRow(long id) {
         database.delete(deckTableHelper.TABLE_NAME, DeckTableHelper.ID + "=" + id, null);
+        database.delete(SuperMemoTableHelper.TABLE_NAME_PREFIX + deckTableHelper.TABLE_NAME, SuperMemoTableHelper.ID + "=" + id, null);
     }
 
     public void deleteTable() {
         database.execSQL("DROP TABLE IF EXISTS " + deckTableHelper.TABLE_NAME);
+        database.execSQL("DROP TABLE IF EXISTS " + SuperMemoTableHelper.TABLE_NAME_PREFIX + deckTableHelper.TABLE_NAME);
     }
 }
