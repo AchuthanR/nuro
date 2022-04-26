@@ -19,8 +19,8 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = MainActivity.class.getSimpleName();
 
     private Fragment navHostFragment;
-    private DeckFragment deckFragment;
     private ScheduleFragment scheduleFragment;
+    private DeckFragment deckFragment;
     private ActivityFragment activityFragment;
     private HelpFragment helpFragment;
     private TrainingFragment trainingFragment;
@@ -36,33 +36,22 @@ public class MainActivity extends AppCompatActivity {
 
         navHostFragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_main);
 
-        deckFragment = new DeckFragment();
         scheduleFragment = new ScheduleFragment();
+        deckFragment = new DeckFragment();
         activityFragment = new ActivityFragment();
         helpFragment = new HelpFragment();
         trainingFragment = new TrainingFragment();
 
         navHostFragment.getChildFragmentManager().beginTransaction()
-                .replace(R.id.nav_host_fragment_activity_main, deckFragment, DeckFragment.TAG)
-                .addToBackStack(DeckFragment.TAG)
+                .replace(R.id.nav_host_fragment_activity_main, scheduleFragment, ScheduleFragment.TAG)
+                .addToBackStack(ScheduleFragment.TAG)
                 .setReorderingAllowed(true)
                 .commit();
 
         binding.navView.setOnItemSelectedListener(item -> {
             FragmentTransaction transaction = navHostFragment.getChildFragmentManager().beginTransaction();
 
-            if (item.getItemId() == R.id.navigation_deck) {
-                if (!deckFragment.isAdded()) {
-                    transaction
-                            .add(R.id.nav_host_fragment_activity_main, deckFragment, DeckFragment.TAG)
-                            .addToBackStack(DeckFragment.TAG)
-                            .setReorderingAllowed(true);
-                }
-                else if (!deckFragment.isVisible()) {
-                    transaction.show(deckFragment).addToBackStack(DeckFragment.TAG).setReorderingAllowed(true);
-                }
-            }
-            else if (item.getItemId() == R.id.navigation_schedule) {
+            if (item.getItemId() == R.id.navigation_schedule) {
                 if (!scheduleFragment.isAdded()) {
                     transaction
                             .add(R.id.nav_host_fragment_activity_main, scheduleFragment, ScheduleFragment.TAG)
@@ -71,6 +60,17 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else if (!scheduleFragment.isVisible()) {
                     transaction.show(scheduleFragment).addToBackStack(ScheduleFragment.TAG).setReorderingAllowed(true);
+                }
+            }
+            else if (item.getItemId() == R.id.navigation_deck) {
+                if (!deckFragment.isAdded()) {
+                    transaction
+                            .add(R.id.nav_host_fragment_activity_main, deckFragment, DeckFragment.TAG)
+                            .addToBackStack(DeckFragment.TAG)
+                            .setReorderingAllowed(true);
+                }
+                else if (!deckFragment.isVisible()) {
+                    transaction.show(deckFragment).addToBackStack(DeckFragment.TAG).setReorderingAllowed(true);
                 }
             }
             else if (item.getItemId() == R.id.navigation_activity) {
@@ -140,11 +140,11 @@ public class MainActivity extends AppCompatActivity {
             }
 
             String tag = navHostFragment.getChildFragmentManager().getBackStackEntryAt(size - 1).getName();
-            if (DeckFragment.TAG.equals(tag)) {
-                binding.navView.getMenu().findItem(R.id.navigation_deck).setChecked(true);
-            }
-            else if (ScheduleFragment.TAG.equals(tag)) {
+            if (ScheduleFragment.TAG.equals(tag)) {
                 binding.navView.getMenu().findItem(R.id.navigation_schedule).setChecked(true);
+            }
+            else if (DeckFragment.TAG.equals(tag)) {
+                binding.navView.getMenu().findItem(R.id.navigation_deck).setChecked(true);
             }
             else if (ActivityFragment.TAG.equals(tag)) {
                 binding.navView.getMenu().findItem(R.id.navigation_activity).setChecked(true);

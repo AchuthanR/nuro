@@ -2,33 +2,11 @@
     <string name="app_name">Autism training</string>
 
     <!-- Bottom navigation menu -->
-    <string name="title_decks">Decks</string>
     <string name="title_schedule">Schedule</string>
+    <string name="title_decks">Decks</string>
     <string name="title_activity">Activities</string>
     <string name="title_help">Help</string>
     <string name="title_training">Train</string>
-
-    <string name="page_title_fragment_deck">Decks</string>
-    <string name="fab_text_fragment_deck">Add deck</string>
-
-    <string name="page_title_fragment_add_deck">Add deck</string>
-    <string name="name_edit_text_hint_fragment_add_deck">Name of the deck</string>
-    <string name="description_edit_text_hint_fragment_add_deck">Description</string>
-    <string name="select_image_button_text_fragment_add_deck">Select cover image for the deck</string>
-    <string name="image_view_content_description_fragment_add_deck">Cover image for the new deck</string>
-    <string name="add_deck_button_text_fragment_add_deck">Add</string>
-
-    <string name="page_title_fragment_card">Flash cards</string>
-    <string name="fab_text_fragment_card">Add card</string>
-    <string name="show_answer_button_text_fragment_card">Show answer</string>
-    <string name="hide_answer_button_text_fragment_card">Hide answer</string>
-
-    <string name="page_title_fragment_add_card">Add card</string>
-    <string name="select_image_button_text_fragment_add_card">Select image for the flash card</string>
-    <string name="image_view_content_description_fragment_add_card">Image for the new flash card</string>
-    <string name="caption_edit_text_hint_fragment_add_card">Caption of the flash card</string>
-    <string name="answer_edit_text_hint_fragment_add_card">Answer of the flash card</string>
-    <string name="add_card_button_text_fragment_add_card">Add</string>
 
     <string name="page_title_fragment_schedule">Visual Scheduling</string>
     <string name="fab_text_fragment_schedule">Add task</string>
@@ -51,6 +29,28 @@
     <string name="select_image_button_text_fragment_add_task">Select image for the task</string>
     <string name="image_view_content_description_fragment_add_task">Image for the new task</string>
     <string name="add_task_button_text_fragment_add_task">Add</string>
+
+    <string name="page_title_fragment_deck">Decks</string>
+    <string name="fab_text_fragment_deck">Add deck</string>
+
+    <string name="page_title_fragment_add_deck">Add deck</string>
+    <string name="name_edit_text_hint_fragment_add_deck">Name of the deck</string>
+    <string name="description_edit_text_hint_fragment_add_deck">Description</string>
+    <string name="select_image_button_text_fragment_add_deck">Select cover image for the deck</string>
+    <string name="image_view_content_description_fragment_add_deck">Cover image for the new deck</string>
+    <string name="add_deck_button_text_fragment_add_deck">Add</string>
+
+    <string name="page_title_fragment_card">Flash cards</string>
+    <string name="fab_text_fragment_card">Add card</string>
+    <string name="show_answer_button_text_fragment_card">Show answer</string>
+    <string name="hide_answer_button_text_fragment_card">Hide answer</string>
+
+    <string name="page_title_fragment_add_card">Add card</string>
+    <string name="select_image_button_text_fragment_add_card">Select image for the flash card</string>
+    <string name="image_view_content_description_fragment_add_card">Image for the new flash card</string>
+    <string name="caption_edit_text_hint_fragment_add_card">Caption of the flash card</string>
+    <string name="answer_edit_text_hint_fragment_add_card">Answer of the flash card</string>
+    <string name="add_card_button_text_fragment_add_card">Add</string>
 
     <string name="page_title_fragment_activity">Activities</string>
     <string name="image_identification_activity_title_fragment_activity">Image identification activity</string>
