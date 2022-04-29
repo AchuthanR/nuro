@@ -18,7 +18,6 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = MainActivity.class.getSimpleName();
 
-    private Fragment navHostFragment;
     private ScheduleFragment scheduleFragment;
     private DeckFragment deckFragment;
     private ActivityFragment activityFragment;
@@ -34,22 +33,20 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        navHostFragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_main);
-
         scheduleFragment = new ScheduleFragment();
         deckFragment = new DeckFragment();
         activityFragment = new ActivityFragment();
         helpFragment = new HelpFragment();
         trainingFragment = new TrainingFragment();
 
-        navHostFragment.getChildFragmentManager().beginTransaction()
-                .replace(R.id.nav_host_fragment_activity_main, scheduleFragment, ScheduleFragment.TAG)
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.nav_host_fragment_activity_main, scheduleFragment, ScheduleFragment.TAG)
                 .addToBackStack(ScheduleFragment.TAG)
                 .setReorderingAllowed(true)
                 .commit();
 
         binding.navView.setOnItemSelectedListener(item -> {
-            FragmentTransaction transaction = navHostFragment.getChildFragmentManager().beginTransaction();
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
             if (item.getItemId() == R.id.navigation_schedule) {
                 if (!scheduleFragment.isAdded()) {
@@ -108,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             if (!transaction.isEmpty()) {
-                for (Fragment fragment : navHostFragment.getChildFragmentManager().getFragments()) {
+                for (Fragment fragment : getSupportFragmentManager().getFragments()) {
                     if (fragment.isVisible()) {
                         transaction.hide(fragment);
                     }
@@ -121,40 +118,38 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (navHostFragment != null) {
-            if (DeckFragment.TAG.equals(navHostFragment.getChildFragmentManager().getBackStackEntryAt(navHostFragment.getChildFragmentManager().getBackStackEntryCount() - 1).getName())) {
-                Fragment fragment = navHostFragment.getChildFragmentManager().findFragmentByTag(CardFragment.TAG);
-                if (fragment != null && fragment.isVisible()) {
-                    if (fragment.getArguments() == null) {
-                        fragment.setArguments(new Bundle());
-                    }
-                    fragment.getArguments().putBoolean("ON_BACK_PRESSED", true);
+        if (DeckFragment.TAG.equals(getSupportFragmentManager().getBackStackEntryAt(getSupportFragmentManager().getBackStackEntryCount() - 1).getName())) {
+            Fragment fragment = getSupportFragmentManager().findFragmentByTag(CardFragment.TAG);
+            if (fragment != null && fragment.isVisible()) {
+                if (fragment.getArguments() == null) {
+                    fragment.setArguments(new Bundle());
                 }
+                fragment.getArguments().putBoolean("ON_BACK_PRESSED", true);
             }
+        }
 
-            navHostFragment.getChildFragmentManager().popBackStackImmediate();
-            int size = navHostFragment.getChildFragmentManager().getBackStackEntryCount();
-            if (size == 0) {
-                super.onBackPressed();
-                return;
-            }
+        getSupportFragmentManager().popBackStackImmediate();
+        int size = getSupportFragmentManager().getBackStackEntryCount();
+        if (size == 0) {
+            super.onBackPressed();
+            return;
+        }
 
-            String tag = navHostFragment.getChildFragmentManager().getBackStackEntryAt(size - 1).getName();
-            if (ScheduleFragment.TAG.equals(tag)) {
-                binding.navView.getMenu().findItem(R.id.navigation_schedule).setChecked(true);
-            }
-            else if (DeckFragment.TAG.equals(tag)) {
-                binding.navView.getMenu().findItem(R.id.navigation_deck).setChecked(true);
-            }
-            else if (ActivityFragment.TAG.equals(tag)) {
-                binding.navView.getMenu().findItem(R.id.navigation_activity).setChecked(true);
-            }
-            else if (HelpFragment.TAG.equals(tag)) {
-                binding.navView.getMenu().findItem(R.id.navigation_help).setChecked(true);
-            }
-            else if (TrainingFragment.TAG.equals(tag)) {
-                binding.navView.getMenu().findItem(R.id.navigation_training).setChecked(true);
-            }
+        String tag = getSupportFragmentManager().getBackStackEntryAt(size - 1).getName();
+        if (ScheduleFragment.TAG.equals(tag)) {
+            binding.navView.getMenu().findItem(R.id.navigation_schedule).setChecked(true);
+        }
+        else if (DeckFragment.TAG.equals(tag)) {
+            binding.navView.getMenu().findItem(R.id.navigation_deck).setChecked(true);
+        }
+        else if (ActivityFragment.TAG.equals(tag)) {
+            binding.navView.getMenu().findItem(R.id.navigation_activity).setChecked(true);
+        }
+        else if (HelpFragment.TAG.equals(tag)) {
+            binding.navView.getMenu().findItem(R.id.navigation_help).setChecked(true);
+        }
+        else if (TrainingFragment.TAG.equals(tag)) {
+            binding.navView.getMenu().findItem(R.id.navigation_training).setChecked(true);
         }
     }
 
