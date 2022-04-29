@@ -200,7 +200,7 @@ public class ScheduleFragment extends Fragment {
         mAdapter.clearAll();
 
         scheduleTableManager.close();
-        scheduleTableManager.open(day.toUpperCase().replace(" ", "_"));
+        scheduleTableManager.open(day);
         Cursor cursor = scheduleTableManager.fetch();
 
         int idIndex = cursor.getColumnIndex(ScheduleTableHelper.ID);

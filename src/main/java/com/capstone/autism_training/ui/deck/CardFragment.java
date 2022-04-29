@@ -51,7 +51,7 @@ public class CardFragment extends Fragment {
         binding = FragmentCardBinding.inflate(inflater, container, false);
 
         if (getArguments() != null) {
-            TABLE_NAME = getArguments().getString("TABLE_NAME").replace(" ", "_");
+            TABLE_NAME = getArguments().getString("TABLE_NAME");
             binding.toolbarLayout.setTitle(getArguments().getString("TABLE_NAME") + " deck");
             tableNameBackStack.add(getArguments().getString("TABLE_NAME"));
             setArguments(null);
@@ -170,7 +170,7 @@ public class CardFragment extends Fragment {
         if (!hidden) {
             if (getArguments() != null) {
                 if (getArguments().containsKey("TABLE_NAME")) {
-                    TABLE_NAME = getArguments().getString("TABLE_NAME").replace(" ", "_");
+                    TABLE_NAME = getArguments().getString("TABLE_NAME");
                     binding.toolbarLayout.setTitle(getArguments().getString("TABLE_NAME") + " deck");
                     tableNameBackStack.add(getArguments().getString("TABLE_NAME"));
                     getArguments().remove("TABLE_NAME");
@@ -178,7 +178,7 @@ public class CardFragment extends Fragment {
                     fetchFromTable();
                 }
                 else if (getArguments().containsKey("BACK_STACK_TABLE_NAME")) {
-                    TABLE_NAME = getArguments().getString("BACK_STACK_TABLE_NAME").replace(" ", "_");
+                    TABLE_NAME = getArguments().getString("BACK_STACK_TABLE_NAME");
                     binding.toolbarLayout.setTitle(getArguments().getString("BACK_STACK_TABLE_NAME") + " deck");
                     getArguments().remove("BACK_STACK_TABLE_NAME");
 

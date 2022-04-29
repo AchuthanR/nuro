@@ -8,6 +8,7 @@ public class SuperMemoTableHelper extends SQLiteOpenHelper {
 
     public static final String TABLE_NAME_PREFIX = "TRAIN_";
     public String TABLE_NAME;
+    public String DECK_TABLE_NAME;
 
     public static final String ID = "id";
     public static final String REPETITIONS = "repetitions";
@@ -23,12 +24,13 @@ public class SuperMemoTableHelper extends SQLiteOpenHelper {
 
     public SuperMemoTableHelper(Context context, String table_name) {
         super(context, DB_NAME, null, DB_VERSION);
-        TABLE_NAME = TABLE_NAME_PREFIX + table_name;
-        CREATE_TABLE = createTableQuery(TABLE_NAME);
+        DECK_TABLE_NAME = "\"" + table_name.toUpperCase().replace(" ", "_") + "\"";
+        TABLE_NAME = "\"" + TABLE_NAME_PREFIX + table_name.toUpperCase().replace(" ", "_") + "\"";
+        CREATE_TABLE = createTableQuery(table_name);
     }
 
-    public static String createTableQuery(String TABLE_NAME) {
-        return "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
+    public static String createTableQuery(String table_name) {
+        return "CREATE TABLE IF NOT EXISTS " + "\"" + SuperMemoTableHelper.TABLE_NAME_PREFIX + table_name.toUpperCase().replace(" ", "_") + "\"" + "("
                 + ID + " INTEGER PRIMARY KEY, "
                 + REPETITIONS + " INTEGER NOT NULL, "
                 + INTERVAL + " INTEGER NOT NULL, "

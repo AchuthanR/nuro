@@ -25,7 +25,7 @@ public class ScheduleTableHelper extends SQLiteOpenHelper {
 
     public ScheduleTableHelper(Context context, String table_name) {
         super(context, DB_NAME, null, DB_VERSION);
-        TABLE_NAME = table_name;
+        TABLE_NAME = "\"" + table_name.toUpperCase().replace(" ", "_") + "\"";
         CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
                 + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + NAME + " TEXT NOT NULL, "

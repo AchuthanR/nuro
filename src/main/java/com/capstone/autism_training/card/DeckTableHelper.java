@@ -4,9 +4,12 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.capstone.autism_training.training.SuperMemoTableHelper;
+
 public class DeckTableHelper extends SQLiteOpenHelper {
 
     public String TABLE_NAME;
+    public String SUPERMEMO_TABLE_NAME;
 
     public static final String ID = "id";
     public static final String IMAGE = "image";
@@ -21,12 +24,13 @@ public class DeckTableHelper extends SQLiteOpenHelper {
 
     public DeckTableHelper(Context context, String table_name) {
         super(context, DB_NAME, null, DB_VERSION);
-        TABLE_NAME = table_name;
-        CREATE_TABLE = createTableQuery(TABLE_NAME);
+        TABLE_NAME = "\"" + table_name.toUpperCase().replace(" ", "_") + "\"";
+        SUPERMEMO_TABLE_NAME = "\"" + SuperMemoTableHelper.TABLE_NAME_PREFIX + table_name.toUpperCase().replace(" ", "_") + "\"";
+        CREATE_TABLE = createTableQuery(table_name);
     }
 
-    public static String createTableQuery(String TABLE_NAME) {
-        return "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
+    public static String createTableQuery(String table_name) {
+        return "CREATE TABLE IF NOT EXISTS " + "\"" + table_name.toUpperCase().replace(" ", "_") + "\"" + "("
                 + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + IMAGE + " BLOB NOT NULL, "
                 + CAPTION + " TEXT NOT NULL, "

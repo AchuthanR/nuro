@@ -37,7 +37,7 @@ public class SuperMemoTableManager {
                 + DeckTableHelper.CAPTION + ", " + DeckTableHelper.ANSWER + ", "
                 + SuperMemoTableHelper.REPETITIONS + ", " + SuperMemoTableHelper.INTERVAL + ", "
                 + SuperMemoTableHelper.EASINESS + ", " + SuperMemoTableHelper.NEXT_PRACTICE_TIME
-                + " FROM " + superMemoTableHelper.TABLE_NAME.substring(SuperMemoTableHelper.TABLE_NAME_PREFIX.length()) + " a"
+                + " FROM " + superMemoTableHelper.DECK_TABLE_NAME + " a"
                 + " INNER JOIN " + superMemoTableHelper.TABLE_NAME + " b"
                 + " ON a." + DeckTableHelper.ID + "=b." + SuperMemoTableHelper.ID
                 + " WHERE " + SuperMemoTableHelper.NEXT_PRACTICE_TIME + "<" + System.currentTimeMillis();

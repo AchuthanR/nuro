@@ -25,7 +25,7 @@ public class DeckTableManager {
         database = deckTableHelper.getWritableDatabase();
         database.execSQL(deckTableHelper.CREATE_TABLE);
 
-        database.execSQL(SuperMemoTableHelper.createTableQuery(SuperMemoTableHelper.TABLE_NAME_PREFIX + table_name));
+        database.execSQL(SuperMemoTableHelper.createTableQuery(table_name));
     }
 
     public void close() {
@@ -48,7 +48,7 @@ public class DeckTableManager {
             contentValues.put(SuperMemoTableHelper.INTERVAL, 0);
             contentValues.put(SuperMemoTableHelper.EASINESS, 2.5);
             contentValues.put(SuperMemoTableHelper.NEXT_PRACTICE_TIME, System.currentTimeMillis());
-            database.insert(SuperMemoTableHelper.TABLE_NAME_PREFIX + deckTableHelper.TABLE_NAME, null, contentValues);
+            database.insert(deckTableHelper.SUPERMEMO_TABLE_NAME, null, contentValues);
         }
 
         return rowNumber;
@@ -76,7 +76,7 @@ public class DeckTableManager {
             contentValues.put(SuperMemoTableHelper.INTERVAL, 0);
             contentValues.put(SuperMemoTableHelper.EASINESS, 2.5);
             contentValues.put(SuperMemoTableHelper.NEXT_PRACTICE_TIME, System.currentTimeMillis());
-            database.update(SuperMemoTableHelper.TABLE_NAME_PREFIX + deckTableHelper.TABLE_NAME, contentValues, SuperMemoTableHelper.ID + "=" + id, null);
+            database.update(deckTableHelper.SUPERMEMO_TABLE_NAME, contentValues, SuperMemoTableHelper.ID + "=" + id, null);
         }
 
         return rowsAffected;
@@ -84,11 +84,11 @@ public class DeckTableManager {
 
     public void deleteRow(long id) {
         database.delete(deckTableHelper.TABLE_NAME, DeckTableHelper.ID + "=" + id, null);
-        database.delete(SuperMemoTableHelper.TABLE_NAME_PREFIX + deckTableHelper.TABLE_NAME, SuperMemoTableHelper.ID + "=" + id, null);
+        database.delete(deckTableHelper.SUPERMEMO_TABLE_NAME, SuperMemoTableHelper.ID + "=" + id, null);
     }
 
     public void deleteTable() {
         database.execSQL("DROP TABLE IF EXISTS " + deckTableHelper.TABLE_NAME);
-        database.execSQL("DROP TABLE IF EXISTS " + SuperMemoTableHelper.TABLE_NAME_PREFIX + deckTableHelper.TABLE_NAME);
+        database.execSQL("DROP TABLE IF EXISTS " + deckTableHelper.SUPERMEMO_TABLE_NAME);
     }
 }

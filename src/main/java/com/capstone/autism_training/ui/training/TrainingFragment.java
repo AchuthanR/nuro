@@ -62,7 +62,7 @@ public class TrainingFragment extends Fragment {
                 android.R.layout.simple_list_item_1, decks);
         binding.chooseDeckAutoCompleteTextView.setAdapter(adapter);
         binding.chooseDeckAutoCompleteTextView.setOnItemClickListener((adapterView, view1, i, l) -> {
-            deckSelected(adapterView.getItemAtPosition(i).toString().replace(" ", "_"));
+            deckSelected(adapterView.getItemAtPosition(i).toString());
 
             if (trainingDeck.getSize() == 0) {
                 if (binding.activityLinearLayout.getVisibility() != View.GONE) {

@@ -92,7 +92,7 @@ public class WordIdentificationFragment extends Fragment {
                 android.R.layout.simple_list_item_1, decks);
         binding.chooseDeckAutoCompleteTextView.setAdapter(adapter);
         binding.chooseDeckAutoCompleteTextView.setOnItemClickListener((adapterView, view1, i, l) -> {
-            deckTableManager.open(adapterView.getItemAtPosition(i).toString().replace(" ", "_"));
+            deckTableManager.open(adapterView.getItemAtPosition(i).toString());
             if (!cursor.isClosed()) {
                 cursor.close();
             }

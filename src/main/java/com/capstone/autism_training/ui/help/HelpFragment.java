@@ -167,7 +167,7 @@ public class HelpFragment extends Fragment {
         mAdapter.clearAll();
 
         helpCardTableManager = new HelpCardTableManager(getContext());
-        helpCardTableManager.open(deck.toUpperCase().replace(" ", "_"));
+        helpCardTableManager.open(deck);
         Cursor cursor = helpCardTableManager.fetch();
 
         int idIndex = cursor.getColumnIndex(HelpCardTableHelper.ID);
