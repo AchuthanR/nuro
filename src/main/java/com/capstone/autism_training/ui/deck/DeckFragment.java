@@ -83,6 +83,30 @@ public class DeckFragment extends Fragment {
                     bottomSheetDialog.setContentView(R.layout.fragment_bottom_sheet_dialog);
                     bottomSheetDialog.setOnCancelListener(dialogInterface -> selectionTracker.clearSelection());
 
+                    MaterialTextView editTextView = bottomSheetDialog.findViewById(R.id.action_edit);
+                    if (editTextView != null) {
+                        editTextView.setOnClickListener(view -> {
+                            bottomSheetDialog.dismiss();
+                            if (!selectionTracker.hasSelection()) {
+                                return;
+                            }
+                            long id = selectionTracker.getSelection().iterator().next();
+                            selectionTracker.clearSelection();
+                            RecyclerView.ViewHolder viewHolder = mRecyclerView.findViewHolderForItemId(id);
+                            if (viewHolder != null) {
+                                DeckModel deckModel = mAdapter.getItem(viewHolder.getAdapterPosition());
+
+                                EditDeckDialogFragment editDeckDialogFragment = new EditDeckDialogFragment();
+                                editDeckDialogFragment.setDeckModel(deckModel);
+                                editDeckDialogFragment.setAdapterPosition(viewHolder.getAdapterPosition());
+
+                                FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+                                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                                editDeckDialogFragment.show(transaction, EditDeckDialogFragment.TAG);
+                            }
+                        });
+                    }
+
                     MaterialTextView deleteTextView = bottomSheetDialog.findViewById(R.id.action_delete);
                     if (deleteTextView != null) {
                         deleteTextView.setOnClickListener(view -> {

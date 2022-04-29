@@ -7,6 +7,19 @@
     android:paddingVertical="8dp">
 
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/action_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="@string/action_edit_text"
+        android:textAppearance="?attr/textAppearanceTitleLarge"
+        android:background="?attr/selectableItemBackground"
+        android:drawableStart="@drawable/ic_round_edit_24"
+        android:drawablePadding="24dp"
+        android:clickable="true"
+        android:focusable="true" />
+
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/action_delete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

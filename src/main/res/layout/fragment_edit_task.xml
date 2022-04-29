@@ -16,16 +16,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:elevation="0dp"
-            app:title="@string/page_title_fragment_add_task"
+            app:title="@string/page_title_fragment_edit_task"
             app:navigationIcon="@drawable/ic_round_close_24">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/addTaskButton"
+                android:id="@+id/editTaskButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:layout_gravity="end"
-                android:text="@string/add_task_button_text_fragment_add_task" />
+                android:text="@string/edit_task_button_text_fragment_edit_task" />
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -51,7 +51,7 @@
                     android:id="@+id/nameEditText"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="@string/name_edit_text_hint_fragment_add_task"
+                    android:hint="@string/name_edit_text_hint_fragment_edit_task"
                     android:inputType="text"
                     android:textAppearance="?attr/textAppearanceTitleLarge" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -67,7 +67,7 @@
                     android:id="@+id/instructionEditText"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="@string/instruction_edit_text_hint_fragment_add_task"
+                    android:hint="@string/instruction_edit_text_hint_fragment_edit_task"
                     android:inputType="textMultiLine"
                     android:textAppearance="?attr/textAppearanceTitleLarge" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -78,7 +78,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/select_start_time_button_text_fragment_add_task" />
+                android:text="@string/select_start_time_button_text_fragment_edit_task" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/startTimeTextView"
@@ -92,7 +92,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/duration_text_view_text_fragment_add_task"
+                android:text="@string/duration_text_view_text_fragment_edit_task"
                 android:textAppearance="?attr/textAppearanceTitleLarge" />
 
             <LinearLayout
@@ -112,7 +112,7 @@
                         android:id="@+id/durationHourEditText"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:hint="@string/duration_hour_edit_text_hint_fragment_add_task"
+                        android:hint="@string/duration_hour_edit_text_hint_fragment_edit_task"
                         android:inputType="number"
                         android:textAppearance="?attr/textAppearanceTitleLarge" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -129,7 +129,7 @@
                         android:id="@+id/durationMinuteEditText"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:hint="@string/duration_minute_edit_text_hint_fragment_add_task"
+                        android:hint="@string/duration_minute_edit_text_hint_fragment_edit_task"
                         android:inputType="number"
                         android:textAppearance="?attr/textAppearanceTitleLarge" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -141,14 +141,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/select_image_button_text_fragment_add_task" />
+                android:text="@string/select_image_button_text_fragment_edit_task" />
 
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:contentDescription="@string/image_view_content_description_fragment_add_task"
+                android:contentDescription="@string/image_view_content_description_fragment_edit_task"
                 tools:src="@drawable/media" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

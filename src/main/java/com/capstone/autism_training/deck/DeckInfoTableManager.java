@@ -56,12 +56,18 @@ public class DeckInfoTableManager {
         return cursor;
     }
 
-    public int update(long id, String name, byte[] image, String description) {
+    public int update(long id, String oldName, String name, byte[] image, String description) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DeckInfoTableHelper.NAME, name);
         contentValues.put(DeckInfoTableHelper.IMAGE, image);
         contentValues.put(DeckInfoTableHelper.DESCRIPTION, description);
-        return database.update(DeckInfoTableHelper.TABLE_NAME, contentValues, DeckInfoTableHelper.ID + " = " + id, null);
+        int rowsAffected = database.update(DeckInfoTableHelper.TABLE_NAME, contentValues, DeckInfoTableHelper.ID + " = " + id, null);
+
+        if (!oldName.replace(" ", "_").equals(name.replace(" ", "_"))) {
+            database.execSQL("ALTER TABLE " + oldName.replace(" ", "_") + " RENAME TO " + name.replace(" ", "_"));
+        }
+
+        return rowsAffected;
     }
 
     public void deleteRow(long id) {

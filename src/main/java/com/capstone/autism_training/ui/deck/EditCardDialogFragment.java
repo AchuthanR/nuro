@@ -16,20 +16,22 @@ import androidx.fragment.app.DialogFragment;
 
 import com.capstone.autism_training.R;
 import com.capstone.autism_training.card.CardModel;
-import com.capstone.autism_training.databinding.FragmentAddCardBinding;
+import com.capstone.autism_training.databinding.FragmentEditCardBinding;
 import com.capstone.autism_training.utilities.ImageHelper;
 
 import java.io.FileNotFoundException;
 
-public class AddCardDialogFragment extends DialogFragment {
+public class EditCardDialogFragment extends DialogFragment {
 
-    public static final String TAG = AddCardDialogFragment.class.getSimpleName();
+    public static final String TAG = EditCardDialogFragment.class.getSimpleName();
 
     private ActivityResultLauncher<String> mGetContent;
     private CardFragment cardFragment;
+    private CardModel cardModel;
     private byte[] image = null;
+    private int adapterPosition = -1;
 
-    private FragmentAddCardBinding binding;
+    private FragmentEditCardBinding binding;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,7 +42,7 @@ public class AddCardDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentAddCardBinding.inflate(inflater, container, false);
+        binding = FragmentEditCardBinding.inflate(inflater, container, false);
 
         cardFragment = (CardFragment) getParentFragment();
         return binding.getRoot();
@@ -51,6 +53,10 @@ public class AddCardDialogFragment extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
 
         binding.toolbar.setNavigationOnClickListener(view1 -> this.dismiss());
+
+        binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(cardModel.image));
+        binding.captionEditText.setText(cardModel.caption);
+        binding.answerEditText.setText(cardModel.answer);
 
         mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
                 uri -> {
@@ -67,26 +73,35 @@ public class AddCardDialogFragment extends DialogFragment {
 
         binding.selectImageButton.setOnClickListener(view1 -> mGetContent.launch("image/*"));
 
-        binding.addCardButton.setOnClickListener(view1 -> {
+        binding.editCardButton.setOnClickListener(view1 -> {
             EditText captionEditText = binding.captionEditText;
             EditText answerEditText = binding.answerEditText;
 
             if (image != null && !captionEditText.getText().toString().isEmpty() && !answerEditText.getText().toString().isEmpty()) {
-                long rowNumber = cardFragment.deckTableManager.insert(image, captionEditText.getText().toString(), answerEditText.getText().toString());
-                if (rowNumber != -1) {
-                    CardModel cardModel = new CardModel(rowNumber, image, captionEditText.getText().toString(), answerEditText.getText().toString());
-                    cardFragment.mAdapter.addItem(cardModel);
-                    Toast.makeText(getContext(), "Successfully added the card", Toast.LENGTH_LONG).show();
+                long rowsAffected = cardFragment.deckTableManager.update(cardModel.id, image, captionEditText.getText().toString(), answerEditText.getText().toString());
+                if (rowsAffected > 0) {
+                    CardModel newCardModel = new CardModel(cardModel.id, image, captionEditText.getText().toString(), answerEditText.getText().toString());
+                    cardFragment.mAdapter.changeItem(adapterPosition, newCardModel);
+                    Toast.makeText(getContext(), "Successfully edited the card", Toast.LENGTH_LONG).show();
                     this.dismiss();
                 }
                 else {
-                    Toast.makeText(getContext(), "Error while adding the card", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Error while editing the card", Toast.LENGTH_LONG).show();
                 }
             }
             else {
                 Toast.makeText(getContext(), "All fields are necessary", Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    public void setCardModel(CardModel cardModel) {
+        this.cardModel = cardModel;
+        this.image = cardModel.image;
+    }
+
+    public void setAdapterPosition(int adapterPosition) {
+        this.adapterPosition = adapterPosition;
     }
 
     @Override

@@ -15,7 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.capstone.autism_training.R;
-import com.capstone.autism_training.databinding.FragmentAddTaskBinding;
+import com.capstone.autism_training.databinding.FragmentEditTaskBinding;
 import com.capstone.autism_training.schedule.TaskModel;
 import com.capstone.autism_training.utilities.ImageHelper;
 import com.google.android.material.timepicker.MaterialTimePicker;
@@ -26,16 +26,18 @@ import java.text.DateFormat;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
-public class AddTaskDialogFragment extends DialogFragment {
+public class EditTaskDialogFragment extends DialogFragment {
 
-    public static final String TAG = AddTaskDialogFragment.class.getSimpleName();
+    public static final String TAG = EditTaskDialogFragment.class.getSimpleName();
 
     public ScheduleFragment scheduleFragment;
     private ActivityResultLauncher<String> mGetContent;
+    private TaskModel taskModel;
     private byte[] image = null;
     private long start_time = -1;
+    private int adapterPosition = -1;
 
-    private FragmentAddTaskBinding binding;
+    private FragmentEditTaskBinding binding;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,7 +48,7 @@ public class AddTaskDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentAddTaskBinding.inflate(inflater, container, false);
+        binding = FragmentEditTaskBinding.inflate(inflater, container, false);
 
         scheduleFragment = (ScheduleFragment) getParentFragment();
         return binding.getRoot();
@@ -57,6 +59,17 @@ public class AddTaskDialogFragment extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
 
         binding.toolbar.setNavigationOnClickListener(view1 -> this.dismiss());
+
+        binding.nameEditText.setText(taskModel.name);
+        binding.instructionEditText.setText(taskModel.instruction);
+        DateFormat dateFormat1 = DateFormat.getTimeInstance(DateFormat.SHORT);
+        dateFormat1.setTimeZone(TimeZone.getTimeZone("UTC"));
+        binding.startTimeTextView.setText(String.format("Selected start time: %1$s", dateFormat1.format(start_time)));
+        long hours = TimeUnit.MILLISECONDS.toHours(taskModel.duration);
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(taskModel.duration) - hours * 60;
+        binding.durationHourEditText.setText(String.valueOf(hours));
+        binding.durationMinuteEditText.setText(String.valueOf(minutes));
+        binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(taskModel.image));
 
         mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
                 uri -> {
@@ -99,7 +112,7 @@ public class AddTaskDialogFragment extends DialogFragment {
 
         binding.selectImageButton.setOnClickListener(view1 -> mGetContent.launch("image/*"));
 
-        binding.addTaskButton.setOnClickListener(view1 -> {
+        binding.editTaskButton.setOnClickListener(view1 -> {
             EditText nameEditText = binding.nameEditText;
             EditText instructionEditText = binding.instructionEditText;
             EditText durationHourEditText = binding.durationHourEditText;
@@ -124,21 +137,31 @@ public class AddTaskDialogFragment extends DialogFragment {
                 }
 
                 long duration = TimeUnit.HOURS.toMillis(Long.parseLong(durationHourEditText.getText().toString())) + TimeUnit.MINUTES.toMillis(Long.parseLong(durationMinuteEditText.getText().toString()));
-                long rowNumber = scheduleFragment.scheduleTableManager.insert(nameEditText.getText().toString(), image, instructionEditText.getText().toString(), start_time, duration);
-                if (rowNumber != -1) {
-                    TaskModel taskModel = new TaskModel(rowNumber, nameEditText.getText().toString(), image, instructionEditText.getText().toString(), start_time, duration, false, -1);
-                    scheduleFragment.mAdapter.addItemAtRightPosition(taskModel);
-                    Toast.makeText(getContext(), "Successfully added the task", Toast.LENGTH_LONG).show();
+                long rowsAffected = scheduleFragment.scheduleTableManager.update(taskModel.id, nameEditText.getText().toString(), image, instructionEditText.getText().toString(), start_time, duration);
+                if (rowsAffected > 0) {
+                    TaskModel newTaskModel = new TaskModel(taskModel.id, nameEditText.getText().toString(), image, instructionEditText.getText().toString(), start_time, duration, taskModel.completed, taskModel.current_end_time);
+                    scheduleFragment.mAdapter.changeItem(adapterPosition, newTaskModel);
+                    Toast.makeText(getContext(), "Successfully edited the task", Toast.LENGTH_LONG).show();
                     this.dismiss();
                 }
                 else {
-                    Toast.makeText(getContext(), "Error while adding the task", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Error while editing the task", Toast.LENGTH_LONG).show();
                 }
             }
             else {
                 Toast.makeText(getContext(), "All fields are necessary", Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    public void setTaskModel(TaskModel taskModel) {
+        this.taskModel = taskModel;
+        this.image = taskModel.image;
+        this.start_time = taskModel.start_time;
+    }
+
+    public void setAdapterPosition(int adapterPosition) {
+        this.adapterPosition = adapterPosition;
     }
 
     @Override

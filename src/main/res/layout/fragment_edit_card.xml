@@ -16,16 +16,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:elevation="0dp"
-            app:title="@string/page_title_fragment_add_deck"
+            app:title="@string/page_title_fragment_edit_card"
             app:navigationIcon="@drawable/ic_round_close_24">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/addDeckButton"
+                android:id="@+id/editCardButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:layout_gravity="end"
-                android:text="@string/add_deck_button_text_fragment_add_deck" />
+                android:text="@string/edit_card_button_text_fragment_edit_card" />
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -48,10 +48,10 @@
                 app:endIconMode="clear_text">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/nameEditText"
+                    android:id="@+id/captionEditText"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="@string/name_edit_text_hint_fragment_add_deck"
+                    android:hint="@string/caption_edit_text_hint_fragment_edit_card"
                     android:inputType="text"
                     android:textAppearance="?attr/textAppearanceTitleLarge" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -64,10 +64,10 @@
                 app:endIconMode="clear_text">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/descriptionEditText"
+                    android:id="@+id/answerEditText"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="@string/description_edit_text_hint_fragment_add_deck"
+                    android:hint="@string/answer_edit_text_hint_fragment_edit_card"
                     android:inputType="textMultiLine"
                     android:textAppearance="?attr/textAppearanceTitleLarge" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -78,14 +78,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/select_image_button_text_fragment_add_deck" />
+                android:text="@string/select_image_button_text_fragment_edit_card" />
 
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:contentDescription="@string/image_view_content_description_fragment_add_deck"
                 tools:src="@drawable/media" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

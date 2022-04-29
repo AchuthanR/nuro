@@ -125,7 +125,9 @@ public class TrainingFragment extends Fragment {
 
     private void nextCard() {
         if (currentCard != null) {
-            trainingDeck.removeCard(currentCard);
+            if (binding.buttonToggleGroup.getCheckedButtonId() != R.id.option2) {
+                trainingDeck.removeCard(currentCard);
+            }
             int quality = -1;
             if (binding.buttonToggleGroup.getCheckedButtonId() == R.id.option2) {
                 quality = 0;

@@ -91,6 +91,30 @@ public class ScheduleFragment extends Fragment {
                     bottomSheetDialog.setContentView(R.layout.fragment_bottom_sheet_dialog);
                     bottomSheetDialog.setOnCancelListener(dialogInterface -> selectionTracker.clearSelection());
 
+                    MaterialTextView editTextView = bottomSheetDialog.findViewById(R.id.action_edit);
+                    if (editTextView != null) {
+                        editTextView.setOnClickListener(view -> {
+                            bottomSheetDialog.dismiss();
+                            if (!selectionTracker.hasSelection()) {
+                                return;
+                            }
+                            long id = selectionTracker.getSelection().iterator().next();
+                            selectionTracker.clearSelection();
+                            RecyclerView.ViewHolder viewHolder = mRecyclerView.findViewHolderForItemId(id);
+                            if (viewHolder != null) {
+                                TaskModel taskModel = mAdapter.getItem(viewHolder.getAdapterPosition());
+
+                                EditTaskDialogFragment editTaskDialogFragment = new EditTaskDialogFragment();
+                                editTaskDialogFragment.setTaskModel(taskModel);
+                                editTaskDialogFragment.setAdapterPosition(viewHolder.getAdapterPosition());
+
+                                FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+                                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                                editTaskDialogFragment.show(transaction, EditTaskDialogFragment.TAG);
+                            }
+                        });
+                    }
+
                     MaterialTextView deleteTextView = bottomSheetDialog.findViewById(R.id.action_delete);
                     if (deleteTextView != null) {
                         deleteTextView.setOnClickListener(view -> {

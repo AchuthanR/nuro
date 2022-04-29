@@ -118,9 +118,18 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         return cards.size();
     }
 
+    public CardModel getItem(int position) {
+        return cards.get(position);
+    }
+
     public void addItem(CardModel cardModel) {
         cards.add(0, cardModel);
         notifyItemInserted(0);
+    }
+
+    public void changeItem(int position, CardModel newCardModel) {
+        cards.set(position, newCardModel);
+        notifyItemChanged(position);
     }
 
     public void removeItem(int position) {

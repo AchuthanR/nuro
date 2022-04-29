@@ -118,9 +118,18 @@ public class HelpCardAdapter extends RecyclerView.Adapter<HelpCardAdapter.ViewHo
         return helpCards.size();
     }
 
+    public HelpCardModel getItem(int position) {
+        return helpCards.get(position);
+    }
+
     public void addItem(HelpCardModel helpCardModel) {
         helpCards.add(0, helpCardModel);
         notifyItemInserted(0);
+    }
+
+    public void changeItem(int position, HelpCardModel newHelpCardModel) {
+        helpCards.set(position, newHelpCardModel);
+        notifyItemChanged(position);
     }
 
     public void removeItem(int position) {

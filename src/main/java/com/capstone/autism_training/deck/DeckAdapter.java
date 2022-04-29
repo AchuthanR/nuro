@@ -145,9 +145,18 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
         return decks.size();
     }
 
+    public DeckModel getItem(int position) {
+        return decks.get(position);
+    }
+
     public void addItem(DeckModel deckModel) {
         decks.add(0, deckModel);
         notifyItemInserted(0);
+    }
+
+    public void changeItem(int position, DeckModel newDeckModel) {
+        decks.set(position, newDeckModel);
+        notifyItemChanged(position);
     }
 
     public void removeItem(int position) {

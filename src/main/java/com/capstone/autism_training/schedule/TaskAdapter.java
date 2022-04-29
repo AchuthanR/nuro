@@ -265,6 +265,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         return tasks.size();
     }
 
+    public TaskModel getItem(int position) {
+        return tasks.get(position);
+    }
+
     public void addItem(TaskModel taskModel) {
         tasks.add(taskModel);
         notifyItemInserted(tasks.size() - 1);
@@ -280,6 +284,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         }
         tasks.add(taskModel);
         notifyItemInserted(tasks.size() - 1);
+    }
+
+    public void changeItem(int position, TaskModel newTaskModel) {
+        tasks.set(position, newTaskModel);
+        notifyItemChanged(position);
     }
 
     public void removeItem(int position) {

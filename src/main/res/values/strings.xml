@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Autism training</string>
+    <string name="app_name">Nuro</string>
 
     <!-- Bottom navigation menu -->
     <string name="title_schedule">Schedule</string>
@@ -30,6 +30,17 @@
     <string name="image_view_content_description_fragment_add_task">Image for the new task</string>
     <string name="add_task_button_text_fragment_add_task">Add</string>
 
+    <string name="page_title_fragment_edit_task">Edit task</string>
+    <string name="name_edit_text_hint_fragment_edit_task">Name of the task</string>
+    <string name="instruction_edit_text_hint_fragment_edit_task">Instruction for the task</string>
+    <string name="select_start_time_button_text_fragment_edit_task">Select start time of the task</string>
+    <string name="duration_text_view_text_fragment_edit_task">Enter the duration of the task</string>
+    <string name="duration_hour_edit_text_hint_fragment_edit_task">No. of hours</string>
+    <string name="duration_minute_edit_text_hint_fragment_edit_task">No. of minutes</string>
+    <string name="select_image_button_text_fragment_edit_task">Select image for the task</string>
+    <string name="image_view_content_description_fragment_edit_task">Image for the task</string>
+    <string name="edit_task_button_text_fragment_edit_task">Edit</string>
+
     <string name="page_title_fragment_deck">Decks</string>
     <string name="fab_text_fragment_deck">Add deck</string>
 
@@ -39,6 +50,13 @@
     <string name="select_image_button_text_fragment_add_deck">Select cover image for the deck</string>
     <string name="image_view_content_description_fragment_add_deck">Cover image for the new deck</string>
     <string name="add_deck_button_text_fragment_add_deck">Add</string>
+
+    <string name="page_title_fragment_edit_deck">Edit deck</string>
+    <string name="name_edit_text_hint_fragment_edit_deck">Name of the deck</string>
+    <string name="description_edit_text_hint_fragment_edit_deck">Description</string>
+    <string name="select_image_button_text_fragment_edit_deck">Select cover image for the deck</string>
+    <string name="image_view_content_description_fragment_edit_deck">Cover image for the deck</string>
+    <string name="edit_deck_button_text_fragment_edit_deck">Edit</string>
 
     <string name="page_title_fragment_card">Flash cards</string>
     <string name="fab_text_fragment_card">Add card</string>
@@ -51,6 +69,13 @@
     <string name="caption_edit_text_hint_fragment_add_card">Caption of the flash card</string>
     <string name="answer_edit_text_hint_fragment_add_card">Answer of the flash card</string>
     <string name="add_card_button_text_fragment_add_card">Add</string>
+
+    <string name="page_title_fragment_edit_card">Edit card</string>
+    <string name="select_image_button_text_fragment_edit_card">Select image for the flash card</string>
+    <string name="image_view_content_description_fragment_edit_card">Image for the flash card</string>
+    <string name="caption_edit_text_hint_fragment_edit_card">Caption of the flash card</string>
+    <string name="answer_edit_text_hint_fragment_edit_card">Answer of the flash card</string>
+    <string name="edit_card_button_text_fragment_edit_card">Edit</string>
 
     <string name="page_title_fragment_activity">Activities</string>
     <string name="image_identification_activity_title_fragment_activity">Image identification activity</string>
@@ -90,6 +115,12 @@
     <string name="image_view_content_description_fragment_add_help_card">Image for the new help card</string>
     <string name="add_help_card_button_text_fragment_add_help_card">Add</string>
 
+    <string name="page_title_fragment_edit_help_card">Edit help card</string>
+    <string name="name_edit_text_hint_fragment_edit_help_card">Name of the help card</string>
+    <string name="select_image_button_text_fragment_edit_help_card">Select image for the help card</string>
+    <string name="image_view_content_description_fragment_edit_help_card">Image for the help card</string>
+    <string name="edit_help_card_button_text_fragment_edit_help_card">Edit</string>
+
     <string name="close_button_text_fragment_active_help_card">Close</string>
 
     <string name="page_title_fragment_training">Train</string>
@@ -107,6 +138,7 @@
     <string name="next_button_text_fragment_training">Next</string>
 
     <!-- Common strings -->
+    <string name="action_edit_text">Edit</string>
     <string name="action_delete_text">Delete</string>
     <string name="action_cancel_text">Cancel</string>
 </resources>
