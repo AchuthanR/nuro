@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         trainingFragment = new TrainingFragment();
 
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.nav_host_fragment_activity_main, scheduleFragment, ScheduleFragment.TAG)
+                .replace(R.id.nav_host_fragment_activity_main, scheduleFragment, ScheduleFragment.TAG)
                 .addToBackStack(ScheduleFragment.TAG)
                 .setReorderingAllowed(true)
                 .commit();
