@@ -84,40 +84,57 @@
                             android:layout_marginTop="16dp"
                             android:orientation="vertical">
 
-                            <com.google.android.material.imageview.ShapeableImageView
-                                android:id="@+id/imageView1"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:adjustViewBounds="true"
-                                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.ShapeableImageView" />
-
-                            <com.google.android.material.imageview.ShapeableImageView
-                                android:id="@+id/imageView2"
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="8dp"
-                                android:layout_gravity="center_horizontal"
-                                android:adjustViewBounds="true"
-                                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.ShapeableImageView" />
+                                android:orientation="horizontal">
 
-                            <com.google.android.material.imageview.ShapeableImageView
-                                android:id="@+id/imageView3"
+                                <com.google.android.material.imageview.ShapeableImageView
+                                    android:id="@+id/imageView1"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:layout_gravity="center_vertical"
+                                    android:adjustViewBounds="true"
+                                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.ShapeableImageView" />
+
+                                <com.google.android.material.imageview.ShapeableImageView
+                                    android:id="@+id/imageView2"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_gravity="center_vertical"
+                                    android:adjustViewBounds="true"
+                                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.ShapeableImageView" />
+                            </LinearLayout>
+
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="8dp"
-                                android:layout_gravity="center_horizontal"
-                                android:adjustViewBounds="true"
-                                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.ShapeableImageView" />
+                                android:orientation="horizontal">
 
-                            <com.google.android.material.imageview.ShapeableImageView
-                                android:id="@+id/imageView4"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
-                                android:layout_gravity="center_horizontal"
-                                android:adjustViewBounds="true"
-                                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.ShapeableImageView" />
+                                <com.google.android.material.imageview.ShapeableImageView
+                                    android:id="@+id/imageView3"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:layout_gravity="center_vertical"
+                                    android:adjustViewBounds="true"
+                                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.ShapeableImageView" />
+
+                                <com.google.android.material.imageview.ShapeableImageView
+                                    android:id="@+id/imageView4"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_gravity="center_vertical"
+                                    android:adjustViewBounds="true"
+                                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.ShapeableImageView" />
+                            </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>

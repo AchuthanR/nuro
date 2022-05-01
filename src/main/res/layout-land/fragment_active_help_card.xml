@@ -6,7 +6,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:fitsSystemWindows="true">
 
     <com.google.android.material.card.MaterialCardView
@@ -14,7 +14,6 @@
         style="@style/Widget.Material3.CardView.Elevated"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
         android:clickable="true"
         android:focusable="true">
 
@@ -52,7 +51,7 @@
         style="@style/Widget.Material3.Button.TonalButton.Icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
         android:text="@string/close_button_text_fragment_active_help_card"
         app:icon="@drawable/ic_round_close_24" />
 </LinearLayout>

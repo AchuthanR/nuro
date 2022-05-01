@@ -1,5 +1,6 @@
 package com.capstone.autism_training.ui.deck;
 
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.selection.SelectionPredicates;
 import androidx.recyclerview.selection.SelectionTracker;
 import androidx.recyclerview.selection.StorageStrategy;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -50,11 +52,16 @@ public class CardFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentCardBinding.inflate(inflater, container, false);
 
-        if (getArguments() != null) {
+        if (getArguments() != null && getArguments().containsKey("TABLE_NAME")) {
             TABLE_NAME = getArguments().getString("TABLE_NAME");
             binding.toolbarLayout.setTitle(getArguments().getString("TABLE_NAME") + " deck");
             tableNameBackStack.add(getArguments().getString("TABLE_NAME"));
-            setArguments(null);
+            getArguments().remove("TABLE_NAME");
+        }
+        else {
+            tableNameBackStack.addAll(savedInstanceState.getStringArrayList("tableNameBackStack"));
+            TABLE_NAME = tableNameBackStack.get(tableNameBackStack.size() - 1);
+            binding.toolbarLayout.setTitle(tableNameBackStack.get(tableNameBackStack.size() - 1) + " deck");
         }
 
         return binding.getRoot();
@@ -79,7 +86,12 @@ public class CardFragment extends Fragment {
         });
 
         mRecyclerView = binding.recyclerView;
-        mLayoutManager = new LinearLayoutManager(getContext());
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            mLayoutManager = new GridLayoutManager(getContext(), 2);
+        }
+        else {
+            mLayoutManager = new LinearLayoutManager(getContext());
+        }
         mAdapter = new CardAdapter();
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
@@ -219,6 +231,12 @@ public class CardFragment extends Fragment {
             cursor.moveToNext();
         }
         cursor.close();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putStringArrayList("tableNameBackStack", tableNameBackStack);
     }
 
     @Override

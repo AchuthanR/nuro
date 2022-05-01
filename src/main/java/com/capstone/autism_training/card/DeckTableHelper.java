@@ -4,7 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.capstone.autism_training.training.SuperMemoTableHelper;
+import com.capstone.autism_training.train.SuperMemoTableHelper;
 
 public class DeckTableHelper extends SQLiteOpenHelper {
 

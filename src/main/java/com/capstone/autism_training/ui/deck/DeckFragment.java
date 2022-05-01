@@ -1,5 +1,6 @@
 package com.capstone.autism_training.ui.deck;
 
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.selection.SelectionPredicates;
 import androidx.recyclerview.selection.SelectionTracker;
 import androidx.recyclerview.selection.StorageStrategy;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -60,7 +62,12 @@ public class DeckFragment extends Fragment {
         });
 
         mRecyclerView = binding.recyclerView;
-        mLayoutManager = new LinearLayoutManager(getContext());
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            mLayoutManager = new GridLayoutManager(getContext(), 2);
+        }
+        else {
+            mLayoutManager = new LinearLayoutManager(getContext());
+        }
         mAdapter = new DeckAdapter(getParentFragmentManager());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);

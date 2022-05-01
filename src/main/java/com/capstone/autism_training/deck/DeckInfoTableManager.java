@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteException;
 
 import com.capstone.autism_training.card.DeckTableHelper;
 import com.capstone.autism_training.card.DeckTableManager;
-import com.capstone.autism_training.training.SuperMemoTableHelper;
+import com.capstone.autism_training.train.SuperMemoTableHelper;
 
 public class DeckInfoTableManager {
 

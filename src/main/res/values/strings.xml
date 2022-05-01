@@ -6,7 +6,7 @@
     <string name="title_decks">Decks</string>
     <string name="title_activity">Activities</string>
     <string name="title_help">Help</string>
-    <string name="title_training">Train</string>
+    <string name="title_train">Train</string>
 
     <string name="page_title_fragment_schedule">Visual Scheduling</string>
     <string name="fab_text_fragment_schedule">Add task</string>
@@ -123,19 +123,19 @@
 
     <string name="close_button_text_fragment_active_help_card">Close</string>
 
-    <string name="page_title_fragment_training">Train</string>
-    <string name="choose_deck_text_view_text_fragment_training">Choose deck</string>
-    <string name="empty_deck_text_view_text_fragment_training">There are no cards to be reviewed in this deck now.</string>
-    <string name="review_done_text_view_text_fragment_training">You\'ve successfully reviewed all cards in this deck.</string>
-    <string name="what_answer_text_view_text_fragment_training">Can you recall the answer?</string>
-    <string name="show_answer_button_text_fragment_training">Show answer</string>
-    <string name="review_question_text_view_text_fragment_training">Review this card based on the difficulty in recalling the answer</string>
-    <string name="option1_button_text_fragment_training">Ignore attempt</string>
-    <string name="option2_button_text_fragment_training">Learn again</string>
-    <string name="option3_button_text_fragment_training">Feels familiar</string>
-    <string name="option4_button_text_fragment_training">Good</string>
-    <string name="option5_button_text_fragment_training">Easy</string>
-    <string name="next_button_text_fragment_training">Next</string>
+    <string name="page_title_fragment_train">Train</string>
+    <string name="choose_deck_text_view_text_fragment_train">Choose deck</string>
+    <string name="empty_deck_text_view_text_fragment_train">There are no cards to be reviewed in this deck now.</string>
+    <string name="review_done_text_view_text_fragment_train">You\'ve successfully reviewed all cards in this deck.</string>
+    <string name="what_answer_text_view_text_fragment_train">Can you recall the answer?</string>
+    <string name="show_answer_button_text_fragment_train">Show answer</string>
+    <string name="review_question_text_view_text_fragment_train">Review this card based on the difficulty in recalling the answer</string>
+    <string name="option1_button_text_fragment_train">Ignore attempt</string>
+    <string name="option2_button_text_fragment_train">Learn again</string>
+    <string name="option3_button_text_fragment_train">Feels familiar</string>
+    <string name="option4_button_text_fragment_train">Good</string>
+    <string name="option5_button_text_fragment_train">Easy</string>
+    <string name="next_button_text_fragment_train">Next</string>
 
     <!-- Common strings -->
     <string name="action_edit_text">Edit</string>

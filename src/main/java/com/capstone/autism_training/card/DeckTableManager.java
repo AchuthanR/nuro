@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.capstone.autism_training.training.SuperMemoTableHelper;
+import com.capstone.autism_training.train.SuperMemoTableHelper;
 
 public class DeckTableManager {
 

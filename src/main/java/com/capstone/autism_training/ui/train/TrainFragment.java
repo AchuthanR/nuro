@@ -1,4 +1,4 @@
-package com.capstone.autism_training.ui.training;
+package com.capstone.autism_training.ui.train;
 
 import android.database.Cursor;
 import android.os.Bundle;
@@ -14,29 +14,29 @@ import com.capstone.autism_training.R;
 import com.capstone.autism_training.card.CardModel;
 import com.capstone.autism_training.card.DeckTableHelper;
 import com.capstone.autism_training.common.MyArrayAdapter;
-import com.capstone.autism_training.databinding.FragmentTrainingBinding;
+import com.capstone.autism_training.databinding.FragmentTrainBinding;
 import com.capstone.autism_training.deck.DeckInfoTableHelper;
 import com.capstone.autism_training.deck.DeckInfoTableManager;
-import com.capstone.autism_training.training.SuperMemoTableHelper;
-import com.capstone.autism_training.training.SuperMemoTableManager;
-import com.capstone.autism_training.training.TrainingDeck;
+import com.capstone.autism_training.train.SuperMemoTableHelper;
+import com.capstone.autism_training.train.SuperMemoTableManager;
+import com.capstone.autism_training.train.TrainDeck;
 import com.capstone.autism_training.utilities.ImageHelper;
 
 import java.util.ArrayList;
 
-public class TrainingFragment extends Fragment {
+public class TrainFragment extends Fragment {
 
-    public static final String TAG = TrainingFragment.class.getSimpleName();
+    public static final String TAG = TrainFragment.class.getSimpleName();
 
     private SuperMemoTableManager superMemoTableManager;
-    private TrainingDeck trainingDeck;
+    private TrainDeck trainDeck;
     private CardModel currentCard;
 
-    private FragmentTrainingBinding binding;
+    private FragmentTrainBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentTrainingBinding.inflate(inflater, container, false);
+        binding = FragmentTrainBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
@@ -45,7 +45,7 @@ public class TrainingFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         superMemoTableManager = new SuperMemoTableManager(getContext());
-        trainingDeck = new TrainingDeck();
+        trainDeck = new TrainDeck();
 
         DeckInfoTableManager deckInfoTableManager = new DeckInfoTableManager(getContext());
         deckInfoTableManager.open();
@@ -64,12 +64,12 @@ public class TrainingFragment extends Fragment {
         binding.chooseDeckAutoCompleteTextView.setOnItemClickListener((adapterView, view1, i, l) -> {
             deckSelected(adapterView.getItemAtPosition(i).toString());
 
-            if (trainingDeck.getSize() == 0) {
+            if (trainDeck.getSize() == 0) {
                 if (binding.activityLinearLayout.getVisibility() != View.GONE) {
                     binding.activityLinearLayout.setVisibility(View.GONE);
                 }
 
-                binding.reviewInfoTextView.setText(R.string.empty_deck_text_view_text_fragment_training);
+                binding.reviewInfoTextView.setText(R.string.empty_deck_text_view_text_fragment_train);
                 if (binding.reviewInfoTextView.getVisibility() != View.VISIBLE) {
                     binding.reviewInfoTextView.setVisibility(View.VISIBLE);
                 }
@@ -100,7 +100,7 @@ public class TrainingFragment extends Fragment {
     }
 
     private void deckSelected(String table_name) {
-        trainingDeck.clearAllCards();
+        trainDeck.clearAllCards();
         currentCard = null;
 
         superMemoTableManager.close();
@@ -117,7 +117,7 @@ public class TrainingFragment extends Fragment {
         int nextPracticeTimeIndex = cursor.getColumnIndex(SuperMemoTableHelper.NEXT_PRACTICE_TIME);
         while (!cursor.isAfterLast() || cursor.isFirst()) {
             CardModel cardModel = new CardModel(cursor.getInt(idIndex), cursor.getBlob(imageIndex), cursor.getString(captionIndex), cursor.getString(answerIndex), cursor.getInt(repetitionsIndex), cursor.getInt(intervalIndex), cursor.getDouble(easinessIndex), cursor.getLong(nextPracticeTimeIndex));
-            trainingDeck.addCard(cardModel);
+            trainDeck.addCard(cardModel);
             cursor.moveToNext();
         }
         cursor.close();
@@ -126,7 +126,7 @@ public class TrainingFragment extends Fragment {
     private void nextCard() {
         if (currentCard != null) {
             if (binding.buttonToggleGroup.getCheckedButtonId() != R.id.option2) {
-                trainingDeck.removeCard(currentCard);
+                trainDeck.removeCard(currentCard);
             }
             int quality = -1;
             if (binding.buttonToggleGroup.getCheckedButtonId() == R.id.option2) {
@@ -148,12 +148,12 @@ public class TrainingFragment extends Fragment {
             }
         }
 
-        currentCard = trainingDeck.getNextCard();
+        currentCard = trainDeck.getNextCard();
 
         if (currentCard == null) {
             binding.activityLinearLayout.setVisibility(View.GONE);
 
-            binding.reviewInfoTextView.setText(R.string.review_done_text_view_text_fragment_training);
+            binding.reviewInfoTextView.setText(R.string.review_done_text_view_text_fragment_train);
             binding.reviewInfoTextView.setVisibility(View.VISIBLE);
         }
         else {

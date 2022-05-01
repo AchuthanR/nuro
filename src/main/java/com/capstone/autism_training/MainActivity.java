@@ -2,6 +2,7 @@ package com.capstone.autism_training;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -12,7 +13,14 @@ import com.capstone.autism_training.ui.deck.CardFragment;
 import com.capstone.autism_training.ui.deck.DeckFragment;
 import com.capstone.autism_training.ui.help.HelpFragment;
 import com.capstone.autism_training.ui.schedule.ScheduleFragment;
-import com.capstone.autism_training.ui.training.TrainingFragment;
+import com.capstone.autism_training.ui.train.TrainFragment;
+import com.google.android.material.navigation.NavigationBarView;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,7 +30,9 @@ public class MainActivity extends AppCompatActivity {
     private DeckFragment deckFragment;
     private ActivityFragment activityFragment;
     private HelpFragment helpFragment;
-    private TrainingFragment trainingFragment;
+    private TrainFragment trainFragment;
+
+    private NavigationBarView navigationBarView;
 
     private ActivityMainBinding binding;
 
@@ -33,19 +43,57 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        scheduleFragment = new ScheduleFragment();
-        deckFragment = new DeckFragment();
-        activityFragment = new ActivityFragment();
-        helpFragment = new HelpFragment();
-        trainingFragment = new TrainingFragment();
+        scheduleFragment = (ScheduleFragment) getSupportFragmentManager().findFragmentByTag(ScheduleFragment.TAG);
+        if (scheduleFragment == null) {
+            scheduleFragment = new ScheduleFragment();
+        }
+        deckFragment = (DeckFragment) getSupportFragmentManager().findFragmentByTag(DeckFragment.TAG);
+        if (deckFragment == null) {
+            deckFragment = new DeckFragment();
+        }
+        activityFragment = (ActivityFragment) getSupportFragmentManager().findFragmentByTag(ActivityFragment.TAG);
+        if (activityFragment == null) {
+            activityFragment = new ActivityFragment();
+        }
+        helpFragment = (HelpFragment) getSupportFragmentManager().findFragmentByTag(HelpFragment.TAG);
+        if (helpFragment == null) {
+            helpFragment = new HelpFragment();
+        }
+        trainFragment = (TrainFragment) getSupportFragmentManager().findFragmentByTag(TrainFragment.TAG);
+        if (trainFragment == null) {
+            trainFragment = new TrainFragment();
+        }
 
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.nav_host_fragment_activity_main, scheduleFragment, ScheduleFragment.TAG)
-                .addToBackStack(ScheduleFragment.TAG)
-                .setReorderingAllowed(true)
-                .commit();
+        if (binding.navView != null) {
+            navigationBarView = binding.navView;
+        }
+        else if (binding.navigationRail != null) {
+            navigationBarView = binding.navigationRail;
+        }
 
-        binding.navView.setOnItemSelectedListener(item -> {
+        if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.nav_host_fragment_activity_main, scheduleFragment, ScheduleFragment.TAG)
+                    .addToBackStack(ScheduleFragment.TAG)
+                    .setReorderingAllowed(true)
+                    .commit();
+        }
+        else if (savedInstanceState.containsKey("currentDestination")) {
+            if (savedInstanceState.getInt("currentDestination") == R.id.navigation_deck) {
+                navigationBarView.setSelectedItemId(R.id.navigation_deck);
+            }
+            else if (savedInstanceState.getInt("currentDestination") == R.id.navigation_activity) {
+                navigationBarView.setSelectedItemId(R.id.navigation_activity);
+            }
+            else if (savedInstanceState.getInt("currentDestination") == R.id.navigation_help) {
+                navigationBarView.setSelectedItemId(R.id.navigation_help);
+            }
+            else if (savedInstanceState.getInt("currentDestination") == R.id.navigation_train) {
+                navigationBarView.setSelectedItemId(R.id.navigation_train);
+            }
+        }
+
+        navigationBarView.setOnItemSelectedListener(item -> {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
             if (item.getItemId() == R.id.navigation_schedule) {
@@ -92,15 +140,15 @@ public class MainActivity extends AppCompatActivity {
                     transaction.show(helpFragment).addToBackStack(HelpFragment.TAG).setReorderingAllowed(true);
                 }
             }
-            else if (item.getItemId() == R.id.navigation_training) {
-                if (!trainingFragment.isAdded()) {
+            else if (item.getItemId() == R.id.navigation_train) {
+                if (!trainFragment.isAdded()) {
                     transaction
-                            .add(R.id.nav_host_fragment_activity_main, trainingFragment, TrainingFragment.TAG)
-                            .addToBackStack(TrainingFragment.TAG)
+                            .add(R.id.nav_host_fragment_activity_main, trainFragment, TrainFragment.TAG)
+                            .addToBackStack(TrainFragment.TAG)
                             .setReorderingAllowed(true);
                 }
-                else if (!trainingFragment.isVisible()) {
-                    transaction.show(trainingFragment).addToBackStack(TrainingFragment.TAG).setReorderingAllowed(true);
+                else if (!trainFragment.isVisible()) {
+                    transaction.show(trainFragment).addToBackStack(TrainFragment.TAG).setReorderingAllowed(true);
                 }
             }
 
@@ -117,6 +165,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("currentDestination", navigationBarView.getSelectedItemId());
+    }
+
+    @Override
     public void onBackPressed() {
         if (DeckFragment.TAG.equals(getSupportFragmentManager().getBackStackEntryAt(getSupportFragmentManager().getBackStackEntryCount() - 1).getName())) {
             Fragment fragment = getSupportFragmentManager().findFragmentByTag(CardFragment.TAG);
@@ -128,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        getSupportFragmentManager().popBackStackImmediate();
+        super.onBackPressed();
         int size = getSupportFragmentManager().getBackStackEntryCount();
         if (size == 0) {
             super.onBackPressed();
@@ -137,19 +191,19 @@ public class MainActivity extends AppCompatActivity {
 
         String tag = getSupportFragmentManager().getBackStackEntryAt(size - 1).getName();
         if (ScheduleFragment.TAG.equals(tag)) {
-            binding.navView.getMenu().findItem(R.id.navigation_schedule).setChecked(true);
+            navigationBarView.getMenu().findItem(R.id.navigation_schedule).setChecked(true);
         }
         else if (DeckFragment.TAG.equals(tag)) {
-            binding.navView.getMenu().findItem(R.id.navigation_deck).setChecked(true);
+            navigationBarView.getMenu().findItem(R.id.navigation_deck).setChecked(true);
         }
         else if (ActivityFragment.TAG.equals(tag)) {
-            binding.navView.getMenu().findItem(R.id.navigation_activity).setChecked(true);
+            navigationBarView.getMenu().findItem(R.id.navigation_activity).setChecked(true);
         }
         else if (HelpFragment.TAG.equals(tag)) {
-            binding.navView.getMenu().findItem(R.id.navigation_help).setChecked(true);
+            navigationBarView.getMenu().findItem(R.id.navigation_help).setChecked(true);
         }
-        else if (TrainingFragment.TAG.equals(tag)) {
-            binding.navView.getMenu().findItem(R.id.navigation_training).setChecked(true);
+        else if (TrainFragment.TAG.equals(tag)) {
+            navigationBarView.getMenu().findItem(R.id.navigation_train).setChecked(true);
         }
     }
 

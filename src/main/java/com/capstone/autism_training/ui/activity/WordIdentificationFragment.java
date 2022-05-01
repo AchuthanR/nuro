@@ -2,6 +2,7 @@ package com.capstone.autism_training.ui.activity;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -208,7 +209,12 @@ public class WordIdentificationFragment extends Fragment {
         correctOption = random.nextInt(4);
         answers.add(correctOption, cursor.getString(answerColumnIndex));
         byte[] image = cursor.getBlob(imageColumnIndex);
-        binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(image));
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(image));
+        }
+        else {
+            binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(image, 500));
+        }
 
         binding.option1.setText(answers.get(0));
 

@@ -1,4 +1,4 @@
-package com.capstone.autism_training.training;
+package com.capstone.autism_training.train;
 
 import com.capstone.autism_training.card.CardModel;
 
@@ -7,14 +7,14 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
-public class TrainingDeck {
+public class TrainDeck {
 
     private final int SUBDECK_SIZE = 20;
 
     private final ArrayList<CardModel> cards;
     private CardModel previousCard;
 
-    public TrainingDeck() {
+    public TrainDeck() {
         cards = new ArrayList<>();
         previousCard = null;
     }

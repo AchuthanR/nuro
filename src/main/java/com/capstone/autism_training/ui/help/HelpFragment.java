@@ -1,5 +1,6 @@
 package com.capstone.autism_training.ui.help;
 
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.selection.SelectionPredicates;
 import androidx.recyclerview.selection.SelectionTracker;
 import androidx.recyclerview.selection.StorageStrategy;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -64,7 +66,12 @@ public class HelpFragment extends Fragment {
         });
 
         mRecyclerView = binding.recyclerView;
-        mLayoutManager = new LinearLayoutManager(getContext());
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            mLayoutManager = new GridLayoutManager(getContext(), 2);
+        }
+        else {
+            mLayoutManager = new LinearLayoutManager(getContext());
+        }
         mAdapter = new HelpCardAdapter(getParentFragmentManager());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
@@ -145,6 +152,8 @@ public class HelpFragment extends Fragment {
         });
         mAdapter.setSelectionTracker(selectionTracker);
 
+        helpCardTableManager = new HelpCardTableManager(getContext());
+
         ArrayList<String> decks = new ArrayList<>(Arrays.asList("Requests", "Responses", "Emotions", "Problems"));
         MyArrayAdapter adapter = new MyArrayAdapter(getContext(),
                 android.R.layout.simple_list_item_1, decks);
@@ -166,7 +175,7 @@ public class HelpFragment extends Fragment {
     private void categorySelected(String deck) {
         mAdapter.clearAll();
 
-        helpCardTableManager = new HelpCardTableManager(getContext());
+        helpCardTableManager.close();
         helpCardTableManager.open(deck);
         Cursor cursor = helpCardTableManager.fetch();
 

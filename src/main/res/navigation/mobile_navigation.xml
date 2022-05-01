@@ -29,8 +29,8 @@
         tools:layout="@layout/fragment_help" />
 
     <fragment
-        android:id="@+id/navigation_training"
-        android:name="com.capstone.autism_training.ui.training.TrainingFragment"
-        android:label="@string/page_title_fragment_training"
-        tools:layout="@layout/fragment_training" />
+        android:id="@+id/navigation_train"
+        android:name="com.capstone.autism_training.ui.train.TrainFragment"
+        android:label="@string/page_title_fragment_train"
+        tools:layout="@layout/fragment_train" />
 </navigation>

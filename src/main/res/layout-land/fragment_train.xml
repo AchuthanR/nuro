@@ -13,7 +13,7 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:title="@string/page_title_fragment_training"
+            app:title="@string/page_title_fragment_train"
             app:titleCollapseMode="scale"
             app:expandedTitleMarginBottom="32dp"
             app:expandedTitleTextAppearance="@style/TextAppearance.App.CollapsingToolbar.Expanded"
@@ -45,14 +45,14 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:placeholderText="@string/choose_deck_text_view_text_fragment_training"
+                app:placeholderText="@string/choose_deck_text_view_text_fragment_train"
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:id="@+id/chooseDeckAutoCompleteTextView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="@string/choose_deck_text_view_text_fragment_training"
+                    android:hint="@string/choose_deck_text_view_text_fragment_train"
                     android:inputType="none"
                     android:textAppearance="?attr/textAppearanceTitleLarge" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -95,8 +95,9 @@
 
                         <com.google.android.material.imageview.ShapeableImageView
                             android:id="@+id/imageView"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:minWidth="500dp"
                             android:layout_marginTop="16dp"
                             android:layout_gravity="center_horizontal"
                             android:adjustViewBounds="true"
@@ -123,7 +124,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:text="@string/what_answer_text_view_text_fragment_training"
+                            android:text="@string/what_answer_text_view_text_fragment_train"
                             android:textAppearance="?attr/textAppearanceTitleLarge" />
 
                         <com.google.android.material.button.MaterialButton
@@ -133,7 +134,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="16dp"
-                            android:text="@string/show_answer_button_text_fragment_training"
+                            android:text="@string/show_answer_button_text_fragment_train"
                             app:icon="@drawable/ic_baseline_remove_red_eye_24"
                             app:iconPadding="5dp" />
 
@@ -152,7 +153,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="16dp"
-                            android:text="@string/review_question_text_view_text_fragment_training"
+                            android:text="@string/review_question_text_view_text_fragment_train"
                             android:textAppearance="?attr/textAppearanceTitleMedium"
                             android:visibility="gone" />
 
@@ -172,7 +173,7 @@
                                 style="@style/Widget.Material3.Button.OutlinedButton"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/option1_button_text_fragment_training"
+                                android:text="@string/option1_button_text_fragment_train"
                                 android:textAppearance="?attr/textAppearanceTitleMedium"
                                 android:insetTop="0dp"
                                 android:insetBottom="0dp" />
@@ -182,7 +183,7 @@
                                 style="@style/Widget.Material3.Button.OutlinedButton"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/option2_button_text_fragment_training"
+                                android:text="@string/option2_button_text_fragment_train"
                                 android:textAppearance="?attr/textAppearanceTitleMedium"
                                 android:insetTop="0dp"
                                 android:insetBottom="0dp" />
@@ -192,7 +193,7 @@
                                 style="@style/Widget.Material3.Button.OutlinedButton"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/option3_button_text_fragment_training"
+                                android:text="@string/option3_button_text_fragment_train"
                                 android:textAppearance="?attr/textAppearanceTitleMedium"
                                 android:insetTop="0dp"
                                 android:insetBottom="0dp" />
@@ -202,7 +203,7 @@
                                 style="@style/Widget.Material3.Button.OutlinedButton"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/option4_button_text_fragment_training"
+                                android:text="@string/option4_button_text_fragment_train"
                                 android:textAppearance="?attr/textAppearanceTitleMedium"
                                 android:insetTop="0dp"
                                 android:insetBottom="0dp" />
@@ -212,7 +213,7 @@
                                 style="@style/Widget.Material3.Button.OutlinedButton"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/option5_button_text_fragment_training"
+                                android:text="@string/option5_button_text_fragment_train"
                                 android:textAppearance="?attr/textAppearanceTitleMedium"
                                 android:insetTop="0dp"
                                 android:insetBottom="0dp" />
@@ -229,7 +230,7 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="56dp"
                     android:layout_marginEnd="2dp"
-                    android:text="@string/next_button_text_fragment_training"
+                    android:text="@string/next_button_text_fragment_train"
                     android:textAllCaps="true"
                     android:enabled="false" />
             </LinearLayout>

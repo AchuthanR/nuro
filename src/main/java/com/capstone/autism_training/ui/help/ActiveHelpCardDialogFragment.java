@@ -42,6 +42,8 @@ public class ActiveHelpCardDialogFragment extends DialogFragment {
         }
 
         binding.closeButton.setOnClickListener(view1 -> ActiveHelpCardDialogFragment.this.dismiss());
+
+        binding.linearLayout.setOnClickListener(view1 -> ActiveHelpCardDialogFragment.this.dismiss());
     }
 
     @Override
@@ -49,7 +51,7 @@ public class ActiveHelpCardDialogFragment extends DialogFragment {
         super.onStart();
         if (getDialog() != null)
         {
-            getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             getDialog().getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         }
     }
