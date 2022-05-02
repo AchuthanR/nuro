@@ -161,9 +161,6 @@ public class ScheduleFragment extends Fragment {
                 android.R.layout.simple_list_item_1, days);
         binding.chooseDayAutoCompleteTextView.setAdapter(adapter);
 
-        SimpleDateFormat formatter = new SimpleDateFormat("EEEE", Locale.ENGLISH);
-        String day = formatter.format(Calendar.getInstance().getTime());
-        binding.chooseDayAutoCompleteTextView.setText(day, false);
         binding.chooseDayAutoCompleteTextView.setOnItemClickListener((adapterView, view1, i, l) -> daySelected(adapterView.getItemAtPosition(i).toString()));
 
         scheduleTableManager = new ScheduleTableManager(getContext());
@@ -195,11 +192,17 @@ public class ScheduleFragment extends Fragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
 
         if (!binding.chooseDayAutoCompleteTextView.getText().toString().isEmpty()) {
             daySelected(binding.chooseDayAutoCompleteTextView.getText().toString());
+        }
+        else {
+            SimpleDateFormat formatter = new SimpleDateFormat("EEEE", Locale.ENGLISH);
+            String day = formatter.format(Calendar.getInstance().getTime());
+            binding.chooseDayAutoCompleteTextView.setText(day, false);
+            daySelected(day);
         }
     }
 

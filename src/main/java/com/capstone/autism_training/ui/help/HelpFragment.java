@@ -44,6 +44,7 @@ public class HelpFragment extends Fragment {
     protected RecyclerView.LayoutManager mLayoutManager;
     public HelpCardTableManager helpCardTableManager;
     private SelectionTracker<Long> selectionTracker;
+    private ArrayList<String> decks;
 
     private FragmentHelpBinding binding;
 
@@ -154,21 +155,24 @@ public class HelpFragment extends Fragment {
 
         helpCardTableManager = new HelpCardTableManager(getContext());
 
-        ArrayList<String> decks = new ArrayList<>(Arrays.asList("Requests", "Responses", "Emotions", "Problems"));
+        decks = new ArrayList<>(Arrays.asList("Requests", "Responses", "Emotions", "Problems"));
         MyArrayAdapter adapter = new MyArrayAdapter(getContext(),
                 android.R.layout.simple_list_item_1, decks);
         binding.chooseCategoryAutoCompleteTextView.setAdapter(adapter);
 
-        binding.chooseCategoryAutoCompleteTextView.setText(decks.get(0), false);
         binding.chooseCategoryAutoCompleteTextView.setOnItemClickListener((adapterView, view1, i, l) -> categorySelected(adapterView.getItemAtPosition(i).toString()));
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
 
         if (!binding.chooseCategoryAutoCompleteTextView.getText().toString().isEmpty()) {
             categorySelected(binding.chooseCategoryAutoCompleteTextView.getText().toString());
+        }
+        else {
+            binding.chooseCategoryAutoCompleteTextView.setText(decks.get(0), false);
+            categorySelected(decks.get(0));
         }
     }
 

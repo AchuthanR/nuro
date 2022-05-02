@@ -43,6 +43,28 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        File databaseFile = new File(getApplicationContext().getDatabasePath("database").getPath());
+        if (!databaseFile.exists()) {
+            try {
+                InputStream myInput = getApplicationContext().getAssets().open("databases/database.db");
+                String fileName = getApplicationContext().getDatabasePath("database").getPath();
+                OutputStream myOutput = new FileOutputStream(fileName);
+
+                byte[] buffer = new byte[1024];
+                int length;
+                while ((length = myInput.read(buffer)) > 0) {
+                    myOutput.write(buffer, 0, length);
+                }
+
+                myOutput.flush();
+                myOutput.close();
+                myInput.close();
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         scheduleFragment = (ScheduleFragment) getSupportFragmentManager().findFragmentByTag(ScheduleFragment.TAG);
         if (scheduleFragment == null) {
             scheduleFragment = new ScheduleFragment();
