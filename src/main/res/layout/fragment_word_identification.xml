@@ -14,7 +14,8 @@
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/toolbar_background"
             android:elevation="0dp"
             app:title="@string/page_title_fragment_word_identification"
             app:menu="@menu/menu_word_identification"
@@ -116,7 +117,7 @@
 
                         <com.google.android.material.button.MaterialButtonToggleGroup
                             android:id="@+id/buttonToggleGroup"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="16dp"

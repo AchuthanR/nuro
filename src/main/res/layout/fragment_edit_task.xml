@@ -14,7 +14,8 @@
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/toolbar_background"
             android:elevation="0dp"
             app:title="@string/page_title_fragment_edit_task"
             app:navigationIcon="@drawable/ic_round_close_24">
@@ -42,9 +43,9 @@
             android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 app:endIconMode="clear_text">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -52,15 +53,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="@string/name_edit_text_hint_fragment_edit_task"
-                    android:inputType="text"
+                    android:inputType="text|textCapSentences"
                     android:textAppearance="?attr/textAppearanceTitleLarge" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 app:endIconMode="clear_text">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -68,16 +69,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="@string/instruction_edit_text_hint_fragment_edit_task"
-                    android:inputType="textMultiLine"
+                    android:inputType="textMultiLine|textCapSentences"
                     android:textAppearance="?attr/textAppearanceTitleLarge" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/selectStartTimeButton"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:layout_gravity="center_horizontal"
                 android:text="@string/select_start_time_button_text_fragment_edit_task" />
 
             <com.google.android.material.textview.MaterialTextView
@@ -102,10 +103,10 @@
                 android:orientation="horizontal">
 
                 <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     app:endIconMode="clear_text">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -114,15 +115,16 @@
                         android:layout_height="match_parent"
                         android:hint="@string/duration_hour_edit_text_hint_fragment_edit_task"
                         android:inputType="number"
+                        android:maxLength="2"
                         android:textAppearance="?attr/textAppearanceTitleLarge" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginStart="8dp"
-                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                     app:endIconMode="clear_text">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -131,25 +133,27 @@
                         android:layout_height="match_parent"
                         android:hint="@string/duration_minute_edit_text_hint_fragment_edit_task"
                         android:inputType="number"
+                        android:maxLength="2"
                         android:textAppearance="?attr/textAppearanceTitleLarge" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/selectImageButton"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:layout_gravity="center_horizontal"
                 android:text="@string/select_image_button_text_fragment_edit_task" />
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:contentDescription="@string/image_view_content_description_fragment_edit_task"
-                tools:src="@drawable/media" />
+                android:adjustViewBounds="true"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.ShapeableImageView" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

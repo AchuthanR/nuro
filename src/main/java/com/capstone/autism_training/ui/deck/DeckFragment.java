@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,8 +26,10 @@ import com.capstone.autism_training.deck.DeckInfoTableHelper;
 import com.capstone.autism_training.deck.DeckInfoTableManager;
 import com.capstone.autism_training.deck.DeckItemKeyProvider;
 import com.capstone.autism_training.deck.DeckModel;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textview.MaterialTextView;
 
 public class DeckFragment extends Fragment {
@@ -40,6 +41,7 @@ public class DeckFragment extends Fragment {
     protected RecyclerView.LayoutManager mLayoutManager;
     public DeckInfoTableManager deckInfoTableManager;
     private SelectionTracker<Long> selectionTracker;
+    private RecyclerView.AdapterDataObserver adapterDataObserver;
 
     private FragmentDeckBinding binding;
 
@@ -88,11 +90,14 @@ public class DeckFragment extends Fragment {
                 if (!selectionTracker.getSelection().isEmpty() && getContext() != null) {
                     BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
                     bottomSheetDialog.setContentView(R.layout.fragment_bottom_sheet_dialog);
+                    if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                        bottomSheetDialog.getBehavior().setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
+                    }
                     bottomSheetDialog.setOnCancelListener(dialogInterface -> selectionTracker.clearSelection());
 
                     MaterialTextView editTextView = bottomSheetDialog.findViewById(R.id.action_edit);
                     if (editTextView != null) {
-                        editTextView.setOnClickListener(view -> {
+                        editTextView.setOnClickListener(view1 -> {
                             bottomSheetDialog.dismiss();
                             if (!selectionTracker.hasSelection()) {
                                 return;
@@ -116,7 +121,7 @@ public class DeckFragment extends Fragment {
 
                     MaterialTextView deleteTextView = bottomSheetDialog.findViewById(R.id.action_delete);
                     if (deleteTextView != null) {
-                        deleteTextView.setOnClickListener(view -> {
+                        deleteTextView.setOnClickListener(view1 -> {
                             bottomSheetDialog.dismiss();
                             new MaterialAlertDialogBuilder(getContext(), com.google.android.material.R.style.ThemeOverlay_Material3_MaterialAlertDialog_Centered)
                                     .setIcon(R.drawable.ic_round_delete_24)
@@ -128,7 +133,8 @@ public class DeckFragment extends Fragment {
                                             selectionTracker.clearSelection();
                                             deckInfoTableManager.deleteRow(id);
                                             mAdapter.removeItem(mRecyclerView.findViewHolderForItemId(id).getAdapterPosition());
-                                            Toast.makeText(getContext(), "Deleted the deck", Toast.LENGTH_LONG).show();
+                                            Snackbar.make(view, "Deleted the deck", Snackbar.LENGTH_LONG)
+                                                    .setAction("OKAY", view2 -> {}).show();
                                         }
                                     })
                                     .setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.cancel())
@@ -139,7 +145,7 @@ public class DeckFragment extends Fragment {
 
                     MaterialTextView cancelTextView = bottomSheetDialog.findViewById(R.id.action_cancel);
                     if (cancelTextView != null) {
-                        cancelTextView.setOnClickListener(view -> bottomSheetDialog.cancel());
+                        cancelTextView.setOnClickListener(view1 -> bottomSheetDialog.cancel());
                     }
 
                     bottomSheetDialog.show();
@@ -147,6 +153,25 @@ public class DeckFragment extends Fragment {
             }
         });
         mAdapter.setSelectionTracker(selectionTracker);
+
+        adapterDataObserver = new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                if (binding.zeroDeckTextView.getVisibility() != View.GONE) {
+                    binding.zeroDeckTextView.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onItemRangeRemoved(int positionStart, int itemCount) {
+                super.onItemRangeRemoved(positionStart, itemCount);
+                if (mAdapter.getItemCount() == 0) {
+                    binding.zeroDeckTextView.setVisibility(View.VISIBLE);
+                }
+            }
+        };
+        mAdapter.registerAdapterDataObserver(adapterDataObserver);
 
         deckInfoTableManager = new DeckInfoTableManager(getContext());
         deckInfoTableManager.open();
@@ -169,5 +194,6 @@ public class DeckFragment extends Fragment {
         super.onDestroyView();
         binding = null;
         deckInfoTableManager.close();
+        mAdapter.unregisterAdapterDataObserver(adapterDataObserver);
     }
 }

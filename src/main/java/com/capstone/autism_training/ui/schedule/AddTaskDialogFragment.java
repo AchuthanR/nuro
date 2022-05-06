@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -18,6 +17,7 @@ import com.capstone.autism_training.R;
 import com.capstone.autism_training.databinding.FragmentAddTaskBinding;
 import com.capstone.autism_training.schedule.TaskModel;
 import com.capstone.autism_training.utilities.ImageHelper;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
 
@@ -66,7 +66,8 @@ public class AddTaskDialogFragment extends DialogFragment {
                             binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(image));
                         }
                     } catch (FileNotFoundException e) {
-                        Toast.makeText(getContext(), "Image not found!", Toast.LENGTH_LONG).show();
+                        Snackbar.make(view, "Image not found!", Snackbar.LENGTH_LONG)
+                                .setAction("OKAY", view1 -> {}).show();
                         e.printStackTrace();
                     }
                 });
@@ -106,37 +107,47 @@ public class AddTaskDialogFragment extends DialogFragment {
             EditText durationMinuteEditText = binding.durationMinuteEditText;
 
             if (image != null && start_time != -1 && !nameEditText.getText().toString().isEmpty() && !instructionEditText.getText().toString().isEmpty() && !durationHourEditText.getText().toString().isEmpty() && !durationMinuteEditText.getText().toString().isEmpty()) {
+                long hour;
+                long minute;
                 try {
-                    long hour = Long.parseLong(durationHourEditText.getText().toString());
-                    long minute = Long.parseLong(durationMinuteEditText.getText().toString());
+                    hour = Long.parseLong(durationHourEditText.getText().toString());
+                    minute = Long.parseLong(durationMinuteEditText.getText().toString());
                     if (hour < 0 || hour > 23) {
-                        Toast.makeText(getContext(), "Hour value should be between 0 and 23", Toast.LENGTH_LONG).show();
+                        Snackbar.make(view, "Hour value should be between 0 and 23", Snackbar.LENGTH_LONG)
+                                .setAction("OKAY", view2 -> {}).show();
                         return;
                     }
                     if (minute < 0 || minute > 59) {
-                        Toast.makeText(getContext(), "Minute value should be between 0 and 59", Toast.LENGTH_LONG).show();
+                        Snackbar.make(view, "Minute value should be between 0 and 59", Snackbar.LENGTH_LONG)
+                                .setAction("OKAY", view2 -> {}).show();
                         return;
                     }
                 }
                 catch (NumberFormatException exception) {
-                    Toast.makeText(getContext(), "Hour and minute values should be numbers!", Toast.LENGTH_LONG).show();
+                    Snackbar.make(view, "Hour and minute values should be numbers!", Snackbar.LENGTH_LONG)
+                            .setAction("OKAY", view2 -> {}).show();
                     return;
                 }
 
-                long duration = TimeUnit.HOURS.toMillis(Long.parseLong(durationHourEditText.getText().toString())) + TimeUnit.MINUTES.toMillis(Long.parseLong(durationMinuteEditText.getText().toString()));
+                long duration = TimeUnit.HOURS.toMillis(hour) + TimeUnit.MINUTES.toMillis(minute);
                 long rowNumber = scheduleFragment.scheduleTableManager.insert(nameEditText.getText().toString(), image, instructionEditText.getText().toString(), start_time, duration);
                 if (rowNumber != -1) {
                     TaskModel taskModel = new TaskModel(rowNumber, nameEditText.getText().toString(), image, instructionEditText.getText().toString(), start_time, duration, false, -1);
                     scheduleFragment.mAdapter.addItemAtRightPosition(taskModel);
-                    Toast.makeText(getContext(), "Successfully added the task", Toast.LENGTH_LONG).show();
+                    if (getParentFragment() != null && getParentFragment().getView() != null) {
+                        Snackbar.make(getParentFragment().getView(), "Successfully added the task", Snackbar.LENGTH_LONG)
+                                .setAction("OKAY", view2 -> {}).show();
+                    }
                     this.dismiss();
                 }
                 else {
-                    Toast.makeText(getContext(), "Error while adding the task", Toast.LENGTH_LONG).show();
+                    Snackbar.make(view, "Error occurred while adding the task", Snackbar.LENGTH_LONG)
+                            .setAction("OKAY", view2 -> {}).show();
                 }
             }
             else {
-                Toast.makeText(getContext(), "All fields are necessary", Toast.LENGTH_LONG).show();
+                Snackbar.make(view, "All fields are necessary", Snackbar.LENGTH_LONG)
+                        .setAction("OKAY", view2 -> {}).show();
             }
         });
     }

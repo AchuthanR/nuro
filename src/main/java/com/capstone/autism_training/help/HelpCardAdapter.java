@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
@@ -18,6 +17,7 @@ import com.capstone.autism_training.R;
 import com.capstone.autism_training.ui.help.ActiveHelpCardDialogFragment;
 import com.capstone.autism_training.utilities.ImageHelper;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ public class HelpCardAdapter extends RecyclerView.Adapter<HelpCardAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final Context context;
         private final MaterialCardView cardView;
-        private final ImageView imageView;
+        private final ShapeableImageView imageView;
         private final MaterialTextView nameTextView;
         private final HelpCardItemDetails helpCardItemDetails;
 
@@ -52,7 +52,7 @@ public class HelpCardAdapter extends RecyclerView.Adapter<HelpCardAdapter.ViewHo
             return cardView;
         }
 
-        public ImageView getImageView() {
+        public ShapeableImageView getImageView() {
             return imageView;
         }
 

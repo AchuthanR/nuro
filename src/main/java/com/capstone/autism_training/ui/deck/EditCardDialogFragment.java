@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -18,6 +17,7 @@ import com.capstone.autism_training.R;
 import com.capstone.autism_training.card.CardModel;
 import com.capstone.autism_training.databinding.FragmentEditCardBinding;
 import com.capstone.autism_training.utilities.ImageHelper;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.io.FileNotFoundException;
 
@@ -56,7 +56,7 @@ public class EditCardDialogFragment extends DialogFragment {
 
         binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(cardModel.image));
         binding.captionEditText.setText(cardModel.caption);
-        binding.answerEditText.setText(cardModel.answer);
+        binding.shortAnswerEditText.setText(cardModel.short_answer);
 
         mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
                 uri -> {
@@ -66,7 +66,8 @@ public class EditCardDialogFragment extends DialogFragment {
                             binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(image));
                         }
                     } catch (FileNotFoundException e) {
-                        Toast.makeText(getContext(), "Image not found!", Toast.LENGTH_LONG).show();
+                        Snackbar.make(view, "Image not found", Snackbar.LENGTH_LONG)
+                                .setAction("OKAY", view1 -> {}).show();
                         e.printStackTrace();
                     }
                 });
@@ -75,22 +76,27 @@ public class EditCardDialogFragment extends DialogFragment {
 
         binding.editCardButton.setOnClickListener(view1 -> {
             EditText captionEditText = binding.captionEditText;
-            EditText answerEditText = binding.answerEditText;
+            EditText shortAnswerEditText = binding.shortAnswerEditText;
 
-            if (image != null && !captionEditText.getText().toString().isEmpty() && !answerEditText.getText().toString().isEmpty()) {
-                long rowsAffected = cardFragment.deckTableManager.update(cardModel.id, image, captionEditText.getText().toString(), answerEditText.getText().toString());
+            if (image != null && !captionEditText.getText().toString().isEmpty() && !shortAnswerEditText.getText().toString().isEmpty()) {
+                long rowsAffected = cardFragment.deckTableManager.update(cardModel.id, image, captionEditText.getText().toString(), shortAnswerEditText.getText().toString());
                 if (rowsAffected > 0) {
-                    CardModel newCardModel = new CardModel(cardModel.id, image, captionEditText.getText().toString(), answerEditText.getText().toString());
+                    CardModel newCardModel = new CardModel(cardModel.id, image, captionEditText.getText().toString(), shortAnswerEditText.getText().toString());
                     cardFragment.mAdapter.changeItem(adapterPosition, newCardModel);
-                    Toast.makeText(getContext(), "Successfully edited the card", Toast.LENGTH_LONG).show();
+                    if (getParentFragment() != null && getParentFragment().getView() != null) {
+                        Snackbar.make(getParentFragment().getView(), "Successfully edited the card", Snackbar.LENGTH_LONG)
+                                .setAction("OKAY", view2 -> {}).show();
+                    }
                     this.dismiss();
                 }
                 else {
-                    Toast.makeText(getContext(), "Error while editing the card", Toast.LENGTH_LONG).show();
+                    Snackbar.make(view, "Error occurred while editing the card", Snackbar.LENGTH_LONG)
+                            .setAction("OKAY", view2 -> {}).show();
                 }
             }
             else {
-                Toast.makeText(getContext(), "All fields are necessary", Toast.LENGTH_LONG).show();
+                Snackbar.make(view, "All fields are necessary", Snackbar.LENGTH_LONG)
+                        .setAction("OKAY", view2 -> {}).show();
             }
         });
     }

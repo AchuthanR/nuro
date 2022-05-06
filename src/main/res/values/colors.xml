@@ -1,4 +1,6 @@
 <resources>
+	<color name="splash_screen_background">#00315C</color>
+
 	<color name="md_theme_light_primary">#1060A4</color>
 	<color name="md_theme_light_onPrimary">#FFFFFF</color>
 	<color name="md_theme_light_primaryContainer">#D2E4FF</color>
@@ -64,4 +66,7 @@
 	<color name="md_theme_dark_inverseSurface">#E2E2E6</color>
 
 	<color name="md_theme_dark_primaryInverse">#1060A4</color>
+
+	<!-- Custom colors for components -->
+	<color name="toolbar_background">#F1F6FF</color>
 </resources>

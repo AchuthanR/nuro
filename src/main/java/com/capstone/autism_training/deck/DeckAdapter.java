@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -20,6 +19,7 @@ import com.capstone.autism_training.ui.deck.CardFragment;
 import com.capstone.autism_training.ui.deck.DeckFragment;
 import com.capstone.autism_training.utilities.ImageHelper;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final Context context;
         private final MaterialCardView cardView;
-        private final ImageView imageView;
+        private final ShapeableImageView imageView;
         private final MaterialTextView titleTextView;
         private final MaterialTextView descriptionTextView;
         private final DeckItemDetails deckItemDetails;
@@ -56,7 +56,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
             return cardView;
         }
 
-        public ImageView getImageView() {
+        public ShapeableImageView getImageView() {
             return imageView;
         }
 

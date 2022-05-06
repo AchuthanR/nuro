@@ -34,11 +34,11 @@ public class DeckTableManager {
         }
     }
 
-    public long insert(byte[] image, String caption, String answer) {
+    public long insert(byte[] image, String caption, String short_answer) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DeckTableHelper.IMAGE, image);
         contentValues.put(DeckTableHelper.CAPTION, caption);
-        contentValues.put(DeckTableHelper.ANSWER, answer);
+        contentValues.put(DeckTableHelper.SHORT_ANSWER, short_answer);
         long rowNumber = database.insert(deckTableHelper.TABLE_NAME, null, contentValues);
 
         if (rowNumber != -1) {
@@ -55,7 +55,7 @@ public class DeckTableManager {
     }
 
     public Cursor fetch() {
-        String[] columns = new String[] { DeckTableHelper.ID, DeckTableHelper.IMAGE, DeckTableHelper.CAPTION, DeckTableHelper.ANSWER };
+        String[] columns = new String[] { DeckTableHelper.ID, DeckTableHelper.IMAGE, DeckTableHelper.CAPTION, DeckTableHelper.SHORT_ANSWER};
         Cursor cursor = database.query(deckTableHelper.TABLE_NAME, columns, null, null, null, null, null);
         if (cursor != null) {
             cursor.moveToFirst();
@@ -63,11 +63,11 @@ public class DeckTableManager {
         return cursor;
     }
 
-    public int update(long id, byte[] image, String caption, String answer) {
+    public int update(long id, byte[] image, String caption, String short_answer) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DeckTableHelper.IMAGE, image);
         contentValues.put(DeckTableHelper.CAPTION, caption);
-        contentValues.put(DeckTableHelper.ANSWER, answer);
+        contentValues.put(DeckTableHelper.SHORT_ANSWER, short_answer);
         int rowsAffected = database.update(deckTableHelper.TABLE_NAME, contentValues, DeckTableHelper.ID + " = " + id, null);
 
         if (rowsAffected > 0) {

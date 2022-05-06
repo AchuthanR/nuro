@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -18,6 +17,7 @@ import com.capstone.autism_training.R;
 import com.capstone.autism_training.databinding.FragmentEditDeckBinding;
 import com.capstone.autism_training.deck.DeckModel;
 import com.capstone.autism_training.utilities.ImageHelper;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.io.FileNotFoundException;
 
@@ -66,7 +66,8 @@ public class EditDeckDialogFragment extends DialogFragment {
                             binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(image));
                         }
                     } catch (FileNotFoundException e) {
-                        Toast.makeText(getContext(), "Image not found!", Toast.LENGTH_LONG).show();
+                        Snackbar.make(view, "Image not found!", Snackbar.LENGTH_LONG)
+                                .setAction("OKAY", view1 -> {}).show();
                         e.printStackTrace();
                     }
                 });
@@ -82,15 +83,20 @@ public class EditDeckDialogFragment extends DialogFragment {
                 if (rowsAffected > 0) {
                     DeckModel newDeckModel = new DeckModel(deckModel.id, image, nameEditText.getText().toString(), descriptionEditText.getText().toString());
                     deckFragment.mAdapter.changeItem(adapterPosition, newDeckModel);
-                    Toast.makeText(getContext(), "Successfully edited the deck", Toast.LENGTH_LONG).show();
+                    if (getParentFragment() != null && getParentFragment().getView() != null) {
+                        Snackbar.make(getParentFragment().getView(), "Successfully edited the deck", Snackbar.LENGTH_LONG)
+                                .setAction("OKAY", view2 -> {}).show();
+                    }
                     this.dismiss();
                 }
                 else {
-                    Toast.makeText(getContext(), "Error while editing the deck", Toast.LENGTH_LONG).show();
+                    Snackbar.make(view, "Error occurred while editing the deck", Snackbar.LENGTH_LONG)
+                            .setAction("OKAY", view2 -> {}).show();
                 }
             }
             else {
-                Toast.makeText(getContext(), "All fields are necessary", Toast.LENGTH_LONG).show();
+                Snackbar.make(view, "All fields are necessary", Snackbar.LENGTH_LONG)
+                        .setAction("OKAY", view2 -> {}).show();
             }
         });
     }

@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -78,11 +77,12 @@ public class WordIdentificationFragment extends Fragment {
         DeckInfoTableManager deckInfoTableManager = new DeckInfoTableManager(getContext());
         deckInfoTableManager.open();
         cursor = deckInfoTableManager.fetch();
+        cursor.moveToLast();
         ArrayList<String> decks = new ArrayList<>();
-        while (!cursor.isAfterLast() || cursor.isFirst()) {
+        while (!cursor.isBeforeFirst() || cursor.isLast()) {
             int nameIndex = cursor.getColumnIndex(DeckInfoTableHelper.NAME);
             decks.add(cursor.getString(nameIndex));
-            cursor.moveToNext();
+            cursor.moveToPrevious();
         }
         cursor.close();
 
@@ -92,35 +92,7 @@ public class WordIdentificationFragment extends Fragment {
         MyArrayAdapter adapter = new MyArrayAdapter(getContext(),
                 android.R.layout.simple_list_item_1, decks);
         binding.chooseDeckAutoCompleteTextView.setAdapter(adapter);
-        binding.chooseDeckAutoCompleteTextView.setOnItemClickListener((adapterView, view1, i, l) -> {
-            deckTableManager.open(adapterView.getItemAtPosition(i).toString());
-            if (!cursor.isClosed()) {
-                cursor.close();
-            }
-            cursor = deckTableManager.fetch();
-            deckTableManager.close();
-
-            if (cursor.getCount() >= 4) {
-                cardPositions.clear();
-                for (int j=0; j<cursor.getCount(); j++) {
-                    cardPositions.add(j);
-                }
-                Collections.shuffle(cardPositions);
-                currentAnswerIndex = 0;
-
-                nextQuestion();
-
-                if (binding.activityLinearLayout.getVisibility() == View.GONE) {
-                    binding.activityLinearLayout.setVisibility(View.VISIBLE);
-                }
-            }
-            else {
-                if (binding.activityLinearLayout.getVisibility() != View.GONE) {
-                    binding.activityLinearLayout.setVisibility(View.GONE);
-                }
-                Toast.makeText(getContext(), "At least 4 cards are needed in a deck to perform this activity", Toast.LENGTH_LONG).show();
-            }
-        });
+        binding.chooseDeckAutoCompleteTextView.setOnItemClickListener((adapterView, view1, i, l) -> deckSelected(adapterView.getItemAtPosition(i).toString()));
 
         binding.submitButton.setOnClickListener(view1 -> {
             int id = binding.buttonToggleGroup.getCheckedButtonId();
@@ -186,6 +158,49 @@ public class WordIdentificationFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+
+        if (!binding.chooseDeckAutoCompleteTextView.getText().toString().isEmpty()) {
+            deckSelected(binding.chooseDeckAutoCompleteTextView.getText().toString());
+        }
+    }
+
+    private void deckSelected(String deck) {
+        deckTableManager.open(deck);
+        if (!cursor.isClosed()) {
+            cursor.close();
+        }
+        cursor = deckTableManager.fetch();
+        deckTableManager.close();
+
+        if (cursor.getCount() >= 4) {
+            cardPositions.clear();
+            for (int j=0; j<cursor.getCount(); j++) {
+                cardPositions.add(j);
+            }
+            Collections.shuffle(cardPositions);
+            currentAnswerIndex = 0;
+
+            nextQuestion();
+
+            if (binding.activityLinearLayout.getVisibility() == View.GONE) {
+                binding.activityLinearLayout.setVisibility(View.VISIBLE);
+            }
+        }
+        else {
+            if (binding.activityLinearLayout.getVisibility() != View.GONE) {
+                binding.activityLinearLayout.setVisibility(View.GONE);
+            }
+            if (getView() != null) {
+                Snackbar.make(getView(), "At least 4 cards are needed in a deck to perform this activity", Snackbar.LENGTH_INDEFINITE)
+                        .setAction("OKAY", view2 -> {
+                        }).show();
+            }
+        }
+    }
+
     private void nextQuestion() {
         binding.buttonToggleGroup.clearChecked();
         binding.nextButton.setEnabled(false);
@@ -193,7 +208,7 @@ public class WordIdentificationFragment extends Fragment {
         Random random = new Random();
         int answerPosition = cardPositions.get(currentAnswerIndex);
         int imageColumnIndex = cursor.getColumnIndex(DeckTableHelper.IMAGE);
-        int answerColumnIndex = cursor.getColumnIndex(DeckTableHelper.ANSWER);
+        int answerColumnIndex = cursor.getColumnIndex(DeckTableHelper.SHORT_ANSWER);
 
         ArrayList<Integer> otherPositions = new ArrayList<>(cardPositions);
         otherPositions.remove(currentAnswerIndex);

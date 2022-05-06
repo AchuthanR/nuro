@@ -5,28 +5,28 @@ public class CardModel {
     public long id;
     public byte[] image;
     public String caption;
-    public String answer;
+    public String short_answer;
     public int repetitions;
     public int interval;
     public double easiness;
     public long nextPracticeTime;
 
-    public CardModel(long id, byte[] image, String caption, String answer, int repetitions, int interval, double easiness, long nextPracticeTime) {
+    public CardModel(long id, byte[] image, String caption, String short_answer, int repetitions, int interval, double easiness, long nextPracticeTime) {
         this.id = id;
         this.image = image;
         this.caption = caption;
-        this.answer = answer;
+        this.short_answer = short_answer;
         this.repetitions = repetitions;
         this.interval = interval;
         this.easiness = easiness;
         this.nextPracticeTime = nextPracticeTime;
     }
 
-    public CardModel(long id, byte[] image, String caption, String answer) {
+    public CardModel(long id, byte[] image, String caption, String short_answer) {
         this.id = id;
         this.image = image;
         this.caption = caption;
-        this.answer = answer;
+        this.short_answer = short_answer;
         this.repetitions = 0;
         this.interval = 0;
         this.easiness = 2.5;

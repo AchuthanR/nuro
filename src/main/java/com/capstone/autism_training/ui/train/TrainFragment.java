@@ -1,5 +1,6 @@
 package com.capstone.autism_training.ui.train;
 
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -50,46 +51,23 @@ public class TrainFragment extends Fragment {
         DeckInfoTableManager deckInfoTableManager = new DeckInfoTableManager(getContext());
         deckInfoTableManager.open();
         Cursor cursor = deckInfoTableManager.fetch();
+        cursor.moveToLast();
         ArrayList<String> decks = new ArrayList<>();
-        while (!cursor.isAfterLast() || cursor.isFirst()) {
+        while (!cursor.isBeforeFirst() || cursor.isLast()) {
             int nameIndex = cursor.getColumnIndex(DeckInfoTableHelper.NAME);
             decks.add(cursor.getString(nameIndex));
-            cursor.moveToNext();
+            cursor.moveToPrevious();
         }
         cursor.close();
 
         MyArrayAdapter adapter = new MyArrayAdapter(getContext(),
                 android.R.layout.simple_list_item_1, decks);
         binding.chooseDeckAutoCompleteTextView.setAdapter(adapter);
-        binding.chooseDeckAutoCompleteTextView.setOnItemClickListener((adapterView, view1, i, l) -> {
-            deckSelected(adapterView.getItemAtPosition(i).toString());
-
-            if (trainDeck.getSize() == 0) {
-                if (binding.activityLinearLayout.getVisibility() != View.GONE) {
-                    binding.activityLinearLayout.setVisibility(View.GONE);
-                }
-
-                binding.reviewInfoTextView.setText(R.string.empty_deck_text_view_text_fragment_train);
-                if (binding.reviewInfoTextView.getVisibility() != View.VISIBLE) {
-                    binding.reviewInfoTextView.setVisibility(View.VISIBLE);
-                }
-            }
-            else {
-                if (binding.activityLinearLayout.getVisibility() != View.VISIBLE) {
-                    binding.activityLinearLayout.setVisibility(View.VISIBLE);
-                }
-
-                if (binding.reviewInfoTextView.getVisibility() != View.GONE) {
-                    binding.reviewInfoTextView.setVisibility(View.GONE);
-                }
-
-                nextCard();
-            }
-        });
+        binding.chooseDeckAutoCompleteTextView.setOnItemClickListener((adapterView, view1, i, l) -> deckSelected(adapterView.getItemAtPosition(i).toString()));
 
         binding.showAnswerButton.setOnClickListener(view1 -> {
             view1.setVisibility(View.GONE);
-            binding.answerTextView.setVisibility(View.VISIBLE);
+            binding.shortAnswerTextView.setVisibility(View.VISIBLE);
             binding.reviewQuestionTextView.setVisibility(View.VISIBLE);
             binding.buttonToggleGroup.setVisibility(View.VISIBLE);
         });
@@ -97,6 +75,15 @@ public class TrainFragment extends Fragment {
         binding.buttonToggleGroup.addOnButtonCheckedListener((group, checkedId, isChecked) -> binding.nextButton.setEnabled(true));
 
         binding.nextButton.setOnClickListener(view1 -> nextCard());
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+
+        if (!binding.chooseDeckAutoCompleteTextView.getText().toString().isEmpty()) {
+            deckSelected(binding.chooseDeckAutoCompleteTextView.getText().toString());
+        }
     }
 
     private void deckSelected(String table_name) {
@@ -110,7 +97,7 @@ public class TrainFragment extends Fragment {
         int idIndex = cursor.getColumnIndex(DeckTableHelper.ID);
         int imageIndex = cursor.getColumnIndex(DeckTableHelper.IMAGE);
         int captionIndex = cursor.getColumnIndex(DeckTableHelper.CAPTION);
-        int answerIndex = cursor.getColumnIndex(DeckTableHelper.ANSWER);
+        int answerIndex = cursor.getColumnIndex(DeckTableHelper.SHORT_ANSWER);
         int repetitionsIndex = cursor.getColumnIndex(SuperMemoTableHelper.REPETITIONS);
         int intervalIndex = cursor.getColumnIndex(SuperMemoTableHelper.INTERVAL);
         int easinessIndex = cursor.getColumnIndex(SuperMemoTableHelper.EASINESS);
@@ -121,6 +108,28 @@ public class TrainFragment extends Fragment {
             cursor.moveToNext();
         }
         cursor.close();
+
+        if (trainDeck.getSize() == 0) {
+            if (binding.activityLinearLayout.getVisibility() != View.GONE) {
+                binding.activityLinearLayout.setVisibility(View.GONE);
+            }
+
+            binding.reviewInfoTextView.setText(R.string.empty_deck_text_view_text_fragment_train);
+            if (binding.reviewInfoTextView.getVisibility() != View.VISIBLE) {
+                binding.reviewInfoTextView.setVisibility(View.VISIBLE);
+            }
+        }
+        else {
+            if (binding.activityLinearLayout.getVisibility() != View.VISIBLE) {
+                binding.activityLinearLayout.setVisibility(View.VISIBLE);
+            }
+
+            if (binding.reviewInfoTextView.getVisibility() != View.GONE) {
+                binding.reviewInfoTextView.setVisibility(View.GONE);
+            }
+
+            nextCard();
+        }
     }
 
     private void nextCard() {
@@ -158,15 +167,20 @@ public class TrainFragment extends Fragment {
         }
         else {
             binding.showAnswerButton.setVisibility(View.VISIBLE);
-            binding.answerTextView.setVisibility(View.GONE);
+            binding.shortAnswerTextView.setVisibility(View.GONE);
             binding.reviewQuestionTextView.setVisibility(View.GONE);
             binding.buttonToggleGroup.setVisibility(View.GONE);
             binding.buttonToggleGroup.clearChecked();
             binding.nextButton.setEnabled(false);
 
             binding.questionTextView.setText(currentCard.caption);
-            binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(currentCard.image));
-            binding.answerTextView.setText(currentCard.answer);
+            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(currentCard.image));
+            }
+            else {
+                binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(currentCard.image, 500));
+            }
+            binding.shortAnswerTextView.setText(currentCard.short_answer);
         }
     }
 

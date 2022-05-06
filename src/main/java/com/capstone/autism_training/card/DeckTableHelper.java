@@ -14,7 +14,7 @@ public class DeckTableHelper extends SQLiteOpenHelper {
     public static final String ID = "id";
     public static final String IMAGE = "image";
     public static final String CAPTION = "caption";
-    public static final String ANSWER = "answer";
+    public static final String SHORT_ANSWER = "short_answer";
 
     static final String DB_NAME = "database";
 
@@ -34,7 +34,7 @@ public class DeckTableHelper extends SQLiteOpenHelper {
                 + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + IMAGE + " BLOB NOT NULL, "
                 + CAPTION + " TEXT NOT NULL, "
-                + ANSWER + " TEXT NOT NULL);";
+                + SHORT_ANSWER + " TEXT NOT NULL);";
     }
 
     @Override

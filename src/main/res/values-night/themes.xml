@@ -1,4 +1,11 @@
 <resources>
+	<style name="Theme.App.SplashScreen" parent="Theme.SplashScreen">
+		<item name="windowSplashScreenBackground">@color/splash_screen_background</item>
+		<item name="windowSplashScreenAnimatedIcon">@drawable/ic_logo_splash</item>
+		<item name="windowSplashScreenAnimationDuration">2000</item>
+		<item name="postSplashScreenTheme">@style/Theme.App</item>
+	</style>
+
 	<style name="Theme.App" parent="Theme.Material3.Dark.NoActionBar">
 		<item name="android:fontFamily">@font/dm_sans</item>
 

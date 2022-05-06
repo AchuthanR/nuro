@@ -34,7 +34,7 @@ public class SuperMemoTableManager {
 
     public Cursor fetch() {
         String query = "SELECT a." + DeckTableHelper.ID + ", " + DeckTableHelper.IMAGE + ", "
-                + DeckTableHelper.CAPTION + ", " + DeckTableHelper.ANSWER + ", "
+                + DeckTableHelper.CAPTION + ", " + DeckTableHelper.SHORT_ANSWER + ", "
                 + SuperMemoTableHelper.REPETITIONS + ", " + SuperMemoTableHelper.INTERVAL + ", "
                 + SuperMemoTableHelper.EASINESS + ", " + SuperMemoTableHelper.NEXT_PRACTICE_TIME
                 + " FROM " + superMemoTableHelper.DECK_TABLE_NAME + " a"

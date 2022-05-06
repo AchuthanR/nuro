@@ -13,9 +13,12 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/toolbar_background"
             app:title="@string/page_title_fragment_help"
             app:titleCollapseMode="scale"
             app:expandedTitleMarginBottom="32dp"
+            app:collapsedTitleTextColor="?attr/colorPrimary"
+            app:expandedTitleTextColor="?attr/colorPrimary"
             app:expandedTitleTextAppearance="@style/TextAppearance.App.CollapsingToolbar.Expanded"
             app:collapsedTitleTextAppearance="@style/TextAppearance.App.CollapsingToolbar.Collapsed"
             app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
@@ -45,17 +48,25 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:placeholderText="@string/choose_category_text_view_text_fragment_help"
+                app:placeholderText="@string/choose_deck_text_view_text_fragment_help"
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                    android:id="@+id/chooseCategoryAutoCompleteTextView"
+                    android:id="@+id/chooseDeckAutoCompleteTextView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="@string/choose_category_text_view_text_fragment_help"
+                    android:hint="@string/choose_deck_text_view_text_fragment_help"
                     android:inputType="none"
                     android:textAppearance="?attr/textAppearanceTitleLarge" />
             </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/empty_deck_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/empty_deck_text_view_text_fragment_help"
+                android:textAppearance="?attr/textAppearanceBodyLarge" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"

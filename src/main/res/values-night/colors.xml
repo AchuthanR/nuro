@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Custom colors for components -->
+    <color name="toolbar_background">@color/md_theme_dark_surface</color>
+</resources>

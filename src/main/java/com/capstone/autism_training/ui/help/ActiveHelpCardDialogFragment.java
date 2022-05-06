@@ -41,8 +41,6 @@ public class ActiveHelpCardDialogFragment extends DialogFragment {
             binding.nameTextView.setText(name);
         }
 
-        binding.closeButton.setOnClickListener(view1 -> ActiveHelpCardDialogFragment.this.dismiss());
-
         binding.linearLayout.setOnClickListener(view1 -> ActiveHelpCardDialogFragment.this.dismiss());
     }
 

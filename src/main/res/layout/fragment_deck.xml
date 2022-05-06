@@ -13,9 +13,12 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/toolbar_background"
             app:title="@string/page_title_fragment_deck"
             app:titleCollapseMode="scale"
             app:expandedTitleMarginBottom="32dp"
+            app:collapsedTitleTextColor="?attr/colorPrimary"
+            app:expandedTitleTextColor="?attr/colorPrimary"
             app:expandedTitleTextAppearance="@style/TextAppearance.App.CollapsingToolbar.Expanded"
             app:collapsedTitleTextAppearance="@style/TextAppearance.App.CollapsingToolbar.Collapsed"
             app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
@@ -41,6 +44,13 @@
             android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
             android:layout_marginVertical="@dimen/activity_vertical_margin"
             android:orientation="vertical">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/zero_deck_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/zero_deck_text_view_text_fragment_deck"
+                android:textAppearance="?attr/textAppearanceBodyLarge" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,8 +27,10 @@ import com.capstone.autism_training.help.HelpCardItemKeyProvider;
 import com.capstone.autism_training.help.HelpCardModel;
 import com.capstone.autism_training.help.HelpCardTableHelper;
 import com.capstone.autism_training.help.HelpCardTableManager;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
@@ -44,6 +45,7 @@ public class HelpFragment extends Fragment {
     protected RecyclerView.LayoutManager mLayoutManager;
     public HelpCardTableManager helpCardTableManager;
     private SelectionTracker<Long> selectionTracker;
+    private RecyclerView.AdapterDataObserver adapterDataObserver;
     private ArrayList<String> decks;
 
     private FragmentHelpBinding binding;
@@ -93,11 +95,14 @@ public class HelpFragment extends Fragment {
                 if (!selectionTracker.getSelection().isEmpty() && getContext() != null) {
                     BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
                     bottomSheetDialog.setContentView(R.layout.fragment_bottom_sheet_dialog);
+                    if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                        bottomSheetDialog.getBehavior().setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
+                    }
                     bottomSheetDialog.setOnCancelListener(dialogInterface -> selectionTracker.clearSelection());
 
                     MaterialTextView editTextView = bottomSheetDialog.findViewById(R.id.action_edit);
                     if (editTextView != null) {
-                        editTextView.setOnClickListener(view -> {
+                        editTextView.setOnClickListener(view1 -> {
                             bottomSheetDialog.dismiss();
                             if (!selectionTracker.hasSelection()) {
                                 return;
@@ -121,7 +126,7 @@ public class HelpFragment extends Fragment {
 
                     MaterialTextView deleteTextView = bottomSheetDialog.findViewById(R.id.action_delete);
                     if (deleteTextView != null) {
-                        deleteTextView.setOnClickListener(view -> {
+                        deleteTextView.setOnClickListener(view1 -> {
                             bottomSheetDialog.dismiss();
                             new MaterialAlertDialogBuilder(getContext(), com.google.android.material.R.style.ThemeOverlay_Material3_MaterialAlertDialog_Centered)
                                     .setIcon(R.drawable.ic_round_delete_24)
@@ -133,7 +138,8 @@ public class HelpFragment extends Fragment {
                                             selectionTracker.clearSelection();
                                             helpCardTableManager.deleteRow(id);
                                             mAdapter.removeItem(mRecyclerView.findViewHolderForItemId(id).getAdapterPosition());
-                                            Toast.makeText(getContext(), "Deleted the help card", Toast.LENGTH_LONG).show();
+                                            Snackbar.make(view, "Deleted the help card", Snackbar.LENGTH_LONG)
+                                                    .setAction("OKAY", view2 -> {}).show();
                                         }
                                     })
                                     .setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.cancel())
@@ -144,7 +150,7 @@ public class HelpFragment extends Fragment {
 
                     MaterialTextView cancelTextView = bottomSheetDialog.findViewById(R.id.action_cancel);
                     if (cancelTextView != null) {
-                        cancelTextView.setOnClickListener(view -> bottomSheetDialog.cancel());
+                        cancelTextView.setOnClickListener(view1 -> bottomSheetDialog.cancel());
                     }
 
                     bottomSheetDialog.show();
@@ -153,30 +159,49 @@ public class HelpFragment extends Fragment {
         });
         mAdapter.setSelectionTracker(selectionTracker);
 
+        adapterDataObserver = new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                if (binding.emptyDeckTextView.getVisibility() != View.GONE) {
+                    binding.emptyDeckTextView.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onItemRangeRemoved(int positionStart, int itemCount) {
+                super.onItemRangeRemoved(positionStart, itemCount);
+                if (mAdapter.getItemCount() == 0) {
+                    binding.emptyDeckTextView.setVisibility(View.VISIBLE);
+                }
+            }
+        };
+        mAdapter.registerAdapterDataObserver(adapterDataObserver);
+
         helpCardTableManager = new HelpCardTableManager(getContext());
 
         decks = new ArrayList<>(Arrays.asList("Requests", "Responses", "Emotions", "Problems"));
         MyArrayAdapter adapter = new MyArrayAdapter(getContext(),
                 android.R.layout.simple_list_item_1, decks);
-        binding.chooseCategoryAutoCompleteTextView.setAdapter(adapter);
+        binding.chooseDeckAutoCompleteTextView.setAdapter(adapter);
 
-        binding.chooseCategoryAutoCompleteTextView.setOnItemClickListener((adapterView, view1, i, l) -> categorySelected(adapterView.getItemAtPosition(i).toString()));
+        binding.chooseDeckAutoCompleteTextView.setOnItemClickListener((adapterView, view1, i, l) -> deckSelected(adapterView.getItemAtPosition(i).toString()));
     }
 
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
 
-        if (!binding.chooseCategoryAutoCompleteTextView.getText().toString().isEmpty()) {
-            categorySelected(binding.chooseCategoryAutoCompleteTextView.getText().toString());
+        if (!binding.chooseDeckAutoCompleteTextView.getText().toString().isEmpty()) {
+            deckSelected(binding.chooseDeckAutoCompleteTextView.getText().toString());
         }
         else {
-            binding.chooseCategoryAutoCompleteTextView.setText(decks.get(0), false);
-            categorySelected(decks.get(0));
+            binding.chooseDeckAutoCompleteTextView.setText(decks.get(0), false);
+            deckSelected(decks.get(0));
         }
     }
 
-    private void categorySelected(String deck) {
+    private void deckSelected(String deck) {
         mAdapter.clearAll();
 
         helpCardTableManager.close();
@@ -199,5 +224,6 @@ public class HelpFragment extends Fragment {
         super.onDestroyView();
         binding = null;
         helpCardTableManager.close();
+        mAdapter.unregisterAdapterDataObserver(adapterDataObserver);
     }
 }

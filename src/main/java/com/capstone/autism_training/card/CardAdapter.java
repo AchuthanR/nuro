@@ -3,7 +3,6 @@ package com.capstone.autism_training.card;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.selection.ItemDetailsLookup;
@@ -14,6 +13,7 @@ import com.capstone.autism_training.R;
 import com.capstone.autism_training.utilities.ImageHelper;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
@@ -25,10 +25,10 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final MaterialCardView cardView;
-        private final ImageView imageView;
+        private final ShapeableImageView imageView;
         private final MaterialTextView captionTextView;
         private final MaterialButton showAnswerButton;
-        private final MaterialTextView answerTextView;
+        private final MaterialTextView shortAnswerTextView;
         private final CardItemDetails cardItemDetails;
 
         public ViewHolder(View view) {
@@ -37,7 +37,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
             imageView = view.findViewById(R.id.imageView);
             captionTextView = view.findViewById(R.id.captionTextView);
             showAnswerButton = view.findViewById(R.id.showAnswerButton);
-            answerTextView = view.findViewById(R.id.answerTextView);
+            shortAnswerTextView = view.findViewById(R.id.shortAnswerTextView);
             cardItemDetails = new CardItemDetails();
         }
 
@@ -45,7 +45,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
             return cardView;
         }
 
-        public ImageView getImageView() {
+        public ShapeableImageView getImageView() {
             return imageView;
         }
 
@@ -57,8 +57,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
             return showAnswerButton;
         }
 
-        public MaterialTextView getAnswerTextView() {
-            return answerTextView;
+        public MaterialTextView getShortAnswerTextView() {
+            return shortAnswerTextView;
         }
 
         public ItemDetailsLookup.ItemDetails<Long> getItemDetails() {
@@ -91,12 +91,12 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         ViewHolder viewHolder = new ViewHolder(view);
 
         viewHolder.getShowAnswerButton().setOnClickListener(view1 -> {
-            if (viewHolder.answerTextView.getVisibility() == View.GONE) {
-                viewHolder.answerTextView.setVisibility(View.VISIBLE);
+            if (viewHolder.shortAnswerTextView.getVisibility() == View.GONE) {
+                viewHolder.shortAnswerTextView.setVisibility(View.VISIBLE);
                 viewHolder.getShowAnswerButton().setText(R.string.hide_answer_button_text_fragment_card);
             }
             else {
-                viewHolder.answerTextView.setVisibility(View.GONE);
+                viewHolder.shortAnswerTextView.setVisibility(View.GONE);
                 viewHolder.getShowAnswerButton().setText(R.string.show_answer_button_text_fragment_card);
             }
         });
@@ -108,7 +108,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
         viewHolder.getImageView().setImageBitmap(ImageHelper.toCompressedBitmap(cards.get(position).image));
         viewHolder.getCaptionTextView().setText(cards.get(position).caption);
-        viewHolder.getAnswerTextView().setText(cards.get(position).answer);
+        viewHolder.getShortAnswerTextView().setText(cards.get(position).short_answer);
 
         viewHolder.getCardView().setChecked(selectionTracker.isSelected(cards.get(position).id));
     }

@@ -13,9 +13,12 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/toolbar_background"
             app:title="@string/page_title_fragment_train"
             app:titleCollapseMode="scale"
             app:expandedTitleMarginBottom="32dp"
+            app:collapsedTitleTextColor="?attr/colorPrimary"
+            app:expandedTitleTextColor="?attr/colorPrimary"
             app:expandedTitleTextAppearance="@style/TextAppearance.App.CollapsingToolbar.Expanded"
             app:collapsedTitleTextAppearance="@style/TextAppearance.App.CollapsingToolbar.Collapsed"
             app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
@@ -138,7 +141,7 @@
                             app:iconPadding="5dp" />
 
                         <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/answerTextView"
+                            android:id="@+id/shortAnswerTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"

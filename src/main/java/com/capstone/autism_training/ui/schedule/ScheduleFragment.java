@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,8 +27,10 @@ import com.capstone.autism_training.schedule.TaskAdapter;
 import com.capstone.autism_training.schedule.TaskDetailsLookup;
 import com.capstone.autism_training.schedule.TaskItemKeyProvider;
 import com.capstone.autism_training.schedule.TaskModel;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.text.SimpleDateFormat;
@@ -96,11 +97,14 @@ public class ScheduleFragment extends Fragment {
                 if (!selectionTracker.getSelection().isEmpty() && getContext() != null) {
                     BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
                     bottomSheetDialog.setContentView(R.layout.fragment_bottom_sheet_dialog);
+                    if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                        bottomSheetDialog.getBehavior().setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
+                    }
                     bottomSheetDialog.setOnCancelListener(dialogInterface -> selectionTracker.clearSelection());
 
                     MaterialTextView editTextView = bottomSheetDialog.findViewById(R.id.action_edit);
                     if (editTextView != null) {
-                        editTextView.setOnClickListener(view -> {
+                        editTextView.setOnClickListener(view1 -> {
                             bottomSheetDialog.dismiss();
                             if (!selectionTracker.hasSelection()) {
                                 return;
@@ -124,7 +128,7 @@ public class ScheduleFragment extends Fragment {
 
                     MaterialTextView deleteTextView = bottomSheetDialog.findViewById(R.id.action_delete);
                     if (deleteTextView != null) {
-                        deleteTextView.setOnClickListener(view -> {
+                        deleteTextView.setOnClickListener(view1 -> {
                             bottomSheetDialog.dismiss();
                             new MaterialAlertDialogBuilder(getContext(), com.google.android.material.R.style.ThemeOverlay_Material3_MaterialAlertDialog_Centered)
                                     .setIcon(R.drawable.ic_round_delete_24)
@@ -136,7 +140,8 @@ public class ScheduleFragment extends Fragment {
                                             selectionTracker.clearSelection();
                                             scheduleTableManager.deleteRow(id);
                                             mAdapter.removeItem(mRecyclerView.findViewHolderForItemId(id).getAdapterPosition());
-                                            Toast.makeText(getContext(), "Deleted the task", Toast.LENGTH_LONG).show();
+                                            Snackbar.make(view, "Deleted the task", Snackbar.LENGTH_LONG)
+                                                    .setAction("OKAY", view2 -> {}).show();
                                         }
                                     })
                                     .setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.cancel())
@@ -147,7 +152,7 @@ public class ScheduleFragment extends Fragment {
 
                     MaterialTextView cancelTextView = bottomSheetDialog.findViewById(R.id.action_cancel);
                     if (cancelTextView != null) {
-                        cancelTextView.setOnClickListener(view -> bottomSheetDialog.cancel());
+                        cancelTextView.setOnClickListener(view1 -> bottomSheetDialog.cancel());
                     }
 
                     bottomSheetDialog.show();
@@ -155,6 +160,29 @@ public class ScheduleFragment extends Fragment {
             }
         });
         mAdapter.setSelectionTracker(selectionTracker);
+
+        adapterDataObserver = new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                if (binding.markAllAsPendingButton.getVisibility() != View.VISIBLE) {
+                    binding.markAllAsPendingButton.setVisibility(View.VISIBLE);
+                }
+                if (binding.emptyDayTextView.getVisibility() != View.GONE) {
+                    binding.emptyDayTextView.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onItemRangeRemoved(int positionStart, int itemCount) {
+                super.onItemRangeRemoved(positionStart, itemCount);
+                if (mAdapter.getItemCount() == 0) {
+                    binding.markAllAsPendingButton.setVisibility(View.GONE);
+                    binding.emptyDayTextView.setVisibility(View.VISIBLE);
+                }
+            }
+        };
+        mAdapter.registerAdapterDataObserver(adapterDataObserver);
 
         ArrayList<String> days = new ArrayList<>(Arrays.asList("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"));
         MyArrayAdapter adapter = new MyArrayAdapter(getContext(),
@@ -170,25 +198,6 @@ public class ScheduleFragment extends Fragment {
             scheduleTableManager.markAllAsPending();
             daySelected(binding.chooseDayAutoCompleteTextView.getText().toString());
         });
-
-        adapterDataObserver = new RecyclerView.AdapterDataObserver() {
-            @Override
-            public void onItemRangeInserted(int positionStart, int itemCount) {
-                super.onItemRangeInserted(positionStart, itemCount);
-                if (binding.markAllAsPendingButton.getVisibility() != View.VISIBLE) {
-                    binding.markAllAsPendingButton.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void onItemRangeRemoved(int positionStart, int itemCount) {
-                super.onItemRangeRemoved(positionStart, itemCount);
-                if (mAdapter.getItemCount() == 0) {
-                    binding.markAllAsPendingButton.setVisibility(View.GONE);
-                }
-            }
-        };
-        mAdapter.registerAdapterDataObserver(adapterDataObserver);
     }
 
     @Override

@@ -5,7 +5,6 @@ import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.selection.ItemDetailsLookup;
@@ -17,6 +16,7 @@ import com.capstone.autism_training.utilities.ImageHelper;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.checkbox.MaterialCheckBox;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.text.DateFormat;
@@ -34,7 +34,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final Context context;
         private final MaterialCardView cardView;
-        private final ImageView imageView;
+        private final ShapeableImageView imageView;
         private final MaterialTextView nameTextView;
         private final MaterialTextView instructionTextView;
         private final MaterialTextView startTimeTextView;
@@ -69,7 +69,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             return cardView;
         }
 
-        public ImageView getImageView() {
+        public ShapeableImageView getImageView() {
             return imageView;
         }
 
@@ -159,9 +159,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
                         viewHolder.getTimerTextView().setText(R.string.completed_timer_text_view_text_fragment_schedule);
                         viewHolder.getTimerButton().setText(R.string.start_task_button_text_fragment_schedule);
                         viewHolder.getTimerButton().setIconResource(R.drawable.ic_round_play_arrow_24);
+                        viewHolder.getResetButton().setEnabled(true);
                         if (viewHolder.getAdapterPosition() != RecyclerView.NO_POSITION) {
                             viewHolder.remainingTime = tasks.get(viewHolder.getAdapterPosition()).duration;
-                            scheduleTableManager.update(tasks.get(viewHolder.getAdapterPosition()).id, -1);
+                            if (scheduleTableManager.update(tasks.get(viewHolder.getAdapterPosition()).id, -1) > 0) {
+                                tasks.get(viewHolder.getAdapterPosition()).current_end_time = -1;
+                            }
                         }
                         viewHolder.countDownTimer = null;
                     }
@@ -169,7 +172,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
                 viewHolder.countDownTimer.start();
                 viewHolder.getTimerTextView().setVisibility(View.VISIBLE);
                 viewHolder.getResetButton().setEnabled(false);
-                scheduleTableManager.update(tasks.get(viewHolder.getAdapterPosition()).id, System.currentTimeMillis() + viewHolder.remainingTime);
+                if (scheduleTableManager.update(tasks.get(viewHolder.getAdapterPosition()).id, System.currentTimeMillis() + viewHolder.remainingTime) > 0) {
+                    tasks.get(viewHolder.getAdapterPosition()).current_end_time = System.currentTimeMillis() + viewHolder.remainingTime;
+                }
             }
             else {
                 viewHolder.getTimerButton().setText(R.string.continue_task_button_text_fragment_schedule);
@@ -177,7 +182,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
                 viewHolder.countDownTimer.cancel();
                 viewHolder.countDownTimer = null;
                 viewHolder.getResetButton().setEnabled(true);
-                scheduleTableManager.update(tasks.get(viewHolder.getAdapterPosition()).id, -1);
+                if (scheduleTableManager.update(tasks.get(viewHolder.getAdapterPosition()).id, -1) > 0) {
+                    tasks.get(viewHolder.getAdapterPosition()).current_end_time = -1;
+                }
             }
         });
 
@@ -199,11 +206,15 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             }
             view1.setEnabled(false);
             viewHolder.remainingTime = tasks.get(viewHolder.getAdapterPosition()).duration;
+            if (tasks.get(viewHolder.getAdapterPosition()).current_end_time != -1) {
+                if (scheduleTableManager.update(tasks.get(viewHolder.getAdapterPosition()).id, -1) > 0) {
+                    tasks.get(viewHolder.getAdapterPosition()).current_end_time = -1;
+                }
+            }
         });
 
         viewHolder.getMarkAsDoneCheckBox().setOnCheckedChangeListener((compoundButton, b) -> {
-            boolean success = scheduleTableManager.update(tasks.get(viewHolder.getAdapterPosition()).id, b) > 0;
-            if (success) {
+            if (scheduleTableManager.update(tasks.get(viewHolder.getAdapterPosition()).id, b) > 0) {
                 tasks.get(viewHolder.getAdapterPosition()).completed = b;
             }
             else {
@@ -228,18 +239,18 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             viewHolder.countDownTimer.cancel();
             viewHolder.countDownTimer = null;
         }
-        if (TimeUnit.MILLISECONDS.toHours(tasks.get(position).duration) != 0) {
-            long hour = TimeUnit.MILLISECONDS.toHours(tasks.get(position).duration);
-            long minute = TimeUnit.MILLISECONDS.toMinutes(tasks.get(position).duration) - hour * 60;
-            if (minute != 0) {
-                viewHolder.getTimerTextView().setText(String.format("Duration: %1$shr %2$smin", hour, minute));
+        if (tasks.get(position).current_end_time <= System.currentTimeMillis()) {
+            if (TimeUnit.MILLISECONDS.toHours(tasks.get(position).duration) != 0) {
+                long hour = TimeUnit.MILLISECONDS.toHours(tasks.get(position).duration);
+                long minute = TimeUnit.MILLISECONDS.toMinutes(tasks.get(position).duration) - hour * 60;
+                if (minute != 0) {
+                    viewHolder.getTimerTextView().setText(String.format("Duration: %1$shr %2$smin", hour, minute));
+                } else {
+                    viewHolder.getTimerTextView().setText(String.format("Duration: %1$shr", hour));
+                }
+            } else {
+                viewHolder.getTimerTextView().setText(String.format("Duration: %1$smin", TimeUnit.MILLISECONDS.toMinutes(tasks.get(position).duration)));
             }
-            else {
-                viewHolder.getTimerTextView().setText(String.format("Duration: %1$shr", hour));
-            }
-        }
-        else {
-            viewHolder.getTimerTextView().setText(String.format("Duration: %1$smin", TimeUnit.MILLISECONDS.toMinutes(tasks.get(position).duration)));
         }
 
         if (tasks.get(position).current_end_time > System.currentTimeMillis()) {
@@ -252,7 +263,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         else {
             viewHolder.remainingTime = tasks.get(position).duration;
             viewHolder.getTimerTextView().setText(R.string.completed_timer_text_view_text_fragment_schedule);
-            scheduleTableManager.update(tasks.get(position).id, -1);
+            viewHolder.getResetButton().setEnabled(true);
         }
 
         viewHolder.getMarkAsDoneCheckBox().setChecked(tasks.get(position).completed);

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,8 +26,10 @@ import com.capstone.autism_training.card.CardModel;
 import com.capstone.autism_training.card.DeckTableHelper;
 import com.capstone.autism_training.card.DeckTableManager;
 import com.capstone.autism_training.databinding.FragmentCardBinding;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
@@ -45,6 +46,7 @@ public class CardFragment extends Fragment {
     protected RecyclerView.LayoutManager mLayoutManager;
     public DeckTableManager deckTableManager;
     private SelectionTracker<Long> selectionTracker;
+    private RecyclerView.AdapterDataObserver adapterDataObserver;
 
     private FragmentCardBinding binding;
 
@@ -54,14 +56,14 @@ public class CardFragment extends Fragment {
 
         if (getArguments() != null && getArguments().containsKey("TABLE_NAME")) {
             TABLE_NAME = getArguments().getString("TABLE_NAME");
-            binding.toolbarLayout.setTitle(getArguments().getString("TABLE_NAME") + " deck");
+            binding.toolbar.setTitle(getArguments().getString("TABLE_NAME"));
             tableNameBackStack.add(getArguments().getString("TABLE_NAME"));
             getArguments().remove("TABLE_NAME");
         }
         else {
             tableNameBackStack.addAll(savedInstanceState.getStringArrayList("tableNameBackStack"));
             TABLE_NAME = tableNameBackStack.get(tableNameBackStack.size() - 1);
-            binding.toolbarLayout.setTitle(tableNameBackStack.get(tableNameBackStack.size() - 1) + " deck");
+            binding.toolbar.setTitle(tableNameBackStack.get(tableNameBackStack.size() - 1));
         }
 
         return binding.getRoot();
@@ -112,11 +114,14 @@ public class CardFragment extends Fragment {
                 if (!selectionTracker.getSelection().isEmpty() && getContext() != null) {
                     BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
                     bottomSheetDialog.setContentView(R.layout.fragment_bottom_sheet_dialog);
+                    if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                        bottomSheetDialog.getBehavior().setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
+                    }
                     bottomSheetDialog.setOnCancelListener(dialogInterface -> selectionTracker.clearSelection());
 
                     MaterialTextView editTextView = bottomSheetDialog.findViewById(R.id.action_edit);
                     if (editTextView != null) {
-                        editTextView.setOnClickListener(view -> {
+                        editTextView.setOnClickListener(view1 -> {
                             bottomSheetDialog.dismiss();
                             if (!selectionTracker.hasSelection()) {
                                 return;
@@ -140,7 +145,7 @@ public class CardFragment extends Fragment {
 
                     MaterialTextView deleteTextView = bottomSheetDialog.findViewById(R.id.action_delete);
                     if (deleteTextView != null) {
-                        deleteTextView.setOnClickListener(view -> {
+                        deleteTextView.setOnClickListener(view1 -> {
                             bottomSheetDialog.dismiss();
                             new MaterialAlertDialogBuilder(getContext(), com.google.android.material.R.style.ThemeOverlay_Material3_MaterialAlertDialog_Centered)
                                     .setIcon(R.drawable.ic_round_delete_24)
@@ -152,7 +157,8 @@ public class CardFragment extends Fragment {
                                             selectionTracker.clearSelection();
                                             deckTableManager.deleteRow(id);
                                             mAdapter.removeItem(mRecyclerView.findViewHolderForItemId(id).getAdapterPosition());
-                                            Toast.makeText(getContext(), "Deleted the card", Toast.LENGTH_LONG).show();
+                                            Snackbar.make(view, "Deleted the card", Snackbar.LENGTH_LONG)
+                                                    .setAction("OKAY", view2 -> {}).show();
                                         }
                                     })
                                     .setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.cancel())
@@ -163,7 +169,7 @@ public class CardFragment extends Fragment {
 
                     MaterialTextView cancelTextView = bottomSheetDialog.findViewById(R.id.action_cancel);
                     if (cancelTextView != null) {
-                        cancelTextView.setOnClickListener(view -> bottomSheetDialog.cancel());
+                        cancelTextView.setOnClickListener(view1 -> bottomSheetDialog.cancel());
                     }
 
                     bottomSheetDialog.show();
@@ -171,6 +177,25 @@ public class CardFragment extends Fragment {
             }
         });
         mAdapter.setSelectionTracker(selectionTracker);
+
+        adapterDataObserver = new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                if (binding.emptyDeckTextView.getVisibility() != View.GONE) {
+                    binding.emptyDeckTextView.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onItemRangeRemoved(int positionStart, int itemCount) {
+                super.onItemRangeRemoved(positionStart, itemCount);
+                if (mAdapter.getItemCount() == 0) {
+                    binding.emptyDeckTextView.setVisibility(View.VISIBLE);
+                }
+            }
+        };
+        mAdapter.registerAdapterDataObserver(adapterDataObserver);
 
         deckTableManager = new DeckTableManager(getContext());
         fetchFromTable();
@@ -183,7 +208,7 @@ public class CardFragment extends Fragment {
             if (getArguments() != null) {
                 if (getArguments().containsKey("TABLE_NAME")) {
                     TABLE_NAME = getArguments().getString("TABLE_NAME");
-                    binding.toolbarLayout.setTitle(getArguments().getString("TABLE_NAME") + " deck");
+                    binding.toolbar.setTitle(getArguments().getString("TABLE_NAME"));
                     tableNameBackStack.add(getArguments().getString("TABLE_NAME"));
                     getArguments().remove("TABLE_NAME");
 
@@ -191,7 +216,7 @@ public class CardFragment extends Fragment {
                 }
                 else if (getArguments().containsKey("BACK_STACK_TABLE_NAME")) {
                     TABLE_NAME = getArguments().getString("BACK_STACK_TABLE_NAME");
-                    binding.toolbarLayout.setTitle(getArguments().getString("BACK_STACK_TABLE_NAME") + " deck");
+                    binding.toolbar.setTitle(getArguments().getString("BACK_STACK_TABLE_NAME"));
                     getArguments().remove("BACK_STACK_TABLE_NAME");
 
                     fetchFromTable();
@@ -224,9 +249,9 @@ public class CardFragment extends Fragment {
         int idIndex = cursor.getColumnIndex(DeckTableHelper.ID);
         int imageIndex = cursor.getColumnIndex(DeckTableHelper.IMAGE);
         int captionIndex = cursor.getColumnIndex(DeckTableHelper.CAPTION);
-        int answerIndex = cursor.getColumnIndex(DeckTableHelper.ANSWER);
+        int shortAnswerIndex = cursor.getColumnIndex(DeckTableHelper.SHORT_ANSWER);
         while (!cursor.isAfterLast() || cursor.isFirst()) {
-            CardModel cardModel = new CardModel(cursor.getInt(idIndex), cursor.getBlob(imageIndex), cursor.getString(captionIndex), cursor.getString(answerIndex));
+            CardModel cardModel = new CardModel(cursor.getInt(idIndex), cursor.getBlob(imageIndex), cursor.getString(captionIndex), cursor.getString(shortAnswerIndex));
             mAdapter.addItem(cardModel);
             cursor.moveToNext();
         }
@@ -244,5 +269,6 @@ public class CardFragment extends Fragment {
         super.onDestroyView();
         binding = null;
         deckTableManager.close();
+        mAdapter.unregisterAdapterDataObserver(adapterDataObserver);
     }
 }
