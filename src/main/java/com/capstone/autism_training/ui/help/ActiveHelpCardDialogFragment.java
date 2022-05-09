@@ -9,14 +9,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-import com.capstone.autism_training.databinding.FragmentActiveHelpCardBinding;
+import com.capstone.autism_training.databinding.DialogFragmentActiveHelpCardBinding;
 import com.capstone.autism_training.utilities.ImageHelper;
 
 public class ActiveHelpCardDialogFragment extends DialogFragment {
 
     public static final String TAG = ActiveHelpCardDialogFragment.class.getSimpleName();
 
-    private FragmentActiveHelpCardBinding binding;
+    private DialogFragmentActiveHelpCardBinding binding;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -26,7 +26,7 @@ public class ActiveHelpCardDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentActiveHelpCardBinding.inflate(inflater, container, false);
+        binding = DialogFragmentActiveHelpCardBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 

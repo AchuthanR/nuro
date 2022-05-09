@@ -1,5 +1,6 @@
 package com.capstone.autism_training.ui.deck;
 
+import android.content.res.Configuration;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,17 +12,18 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 
 import com.capstone.autism_training.R;
 import com.capstone.autism_training.card.CardModel;
-import com.capstone.autism_training.databinding.FragmentEditCardBinding;
+import com.capstone.autism_training.databinding.DialogFragmentEditCardBinding;
 import com.capstone.autism_training.utilities.ImageHelper;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.FileNotFoundException;
 
-public class EditCardDialogFragment extends DialogFragment {
+public class EditCardDialogFragment extends BottomSheetDialogFragment {
 
     public static final String TAG = EditCardDialogFragment.class.getSimpleName();
 
@@ -31,18 +33,18 @@ public class EditCardDialogFragment extends DialogFragment {
     private byte[] image = null;
     private int adapterPosition = -1;
 
-    private FragmentEditCardBinding binding;
+    private DialogFragmentEditCardBinding binding;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStyle(DialogFragment.STYLE_NORMAL, R.style.Theme_App);
+        setStyle(BottomSheetDialogFragment.STYLE_NORMAL, R.style.Theme_App_BottomSheet_Modal);
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentEditCardBinding.inflate(inflater, container, false);
+        binding = DialogFragmentEditCardBinding.inflate(inflater, container, false);
 
         cardFragment = (CardFragment) getParentFragment();
         return binding.getRoot();
@@ -52,7 +54,14 @@ public class EditCardDialogFragment extends DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.toolbar.setNavigationOnClickListener(view1 -> this.dismiss());
+        if (getDialog() != null) {
+            getDialog().getWindow().getAttributes().windowAnimations = com.google.android.material.R.style.Animation_Design_BottomSheetDialog;
+        }
+
+        BottomSheetBehavior<View> bottomSheetBehavior = BottomSheetBehavior.from((View) view.getParent());
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
+        }
 
         binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(cardModel.image));
         binding.captionEditText.setText(cardModel.caption);

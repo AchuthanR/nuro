@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginVertical="15dp"
+        app:dividerThickness="3dp" />
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -15,18 +24,16 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/toolbar_background"
             android:elevation="0dp"
-            app:title="@string/page_title_fragment_add_task"
-            app:navigationIcon="@drawable/ic_round_close_24">
+            app:title="@string/page_title_fragment_edit_task">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/addTaskButton"
+                android:id="@+id/editTaskButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:layout_gravity="end"
-                android:text="@string/add_task_button_text_fragment_add_task" />
+                android:text="@string/edit_task_button_text_fragment_edit_task" />
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -39,7 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-            android:layout_marginVertical="@dimen/activity_vertical_margin"
+            android:layout_marginVertical="@dimen/activity_vertical_margin_16dp"
             android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
@@ -52,7 +59,7 @@
                     android:id="@+id/nameEditText"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="@string/name_edit_text_hint_fragment_add_task"
+                    android:hint="@string/name_edit_text_hint_fragment_edit_task"
                     android:inputType="text|textCapSentences"
                     android:textAppearance="?attr/textAppearanceTitleLarge" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -68,7 +75,7 @@
                     android:id="@+id/instructionEditText"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="@string/instruction_edit_text_hint_fragment_add_task"
+                    android:hint="@string/instruction_edit_text_hint_fragment_edit_task"
                     android:inputType="textMultiLine|textCapSentences"
                     android:textAppearance="?attr/textAppearanceTitleLarge" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -79,7 +86,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_gravity="center_horizontal"
-                android:text="@string/select_start_time_button_text_fragment_add_task" />
+                android:text="@string/select_start_time_button_text_fragment_edit_task" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/startTimeTextView"
@@ -93,7 +100,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/duration_text_view_text_fragment_add_task"
+                android:text="@string/duration_text_view_text_fragment_edit_task"
                 android:textAppearance="?attr/textAppearanceTitleLarge" />
 
             <LinearLayout
@@ -113,7 +120,7 @@
                         android:id="@+id/durationHourEditText"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:hint="@string/duration_hour_edit_text_hint_fragment_add_task"
+                        android:hint="@string/duration_hour_edit_text_hint_fragment_edit_task"
                         android:inputType="number"
                         android:maxLength="2"
                         android:textAppearance="?attr/textAppearanceTitleLarge" />
@@ -131,7 +138,7 @@
                         android:id="@+id/durationMinuteEditText"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:hint="@string/duration_minute_edit_text_hint_fragment_add_task"
+                        android:hint="@string/duration_minute_edit_text_hint_fragment_edit_task"
                         android:inputType="number"
                         android:maxLength="2"
                         android:textAppearance="?attr/textAppearanceTitleLarge" />
@@ -144,16 +151,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_gravity="center_horizontal"
-                android:text="@string/select_image_button_text_fragment_add_task" />
+                android:text="@string/select_image_button_text_fragment_edit_task" />
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:contentDescription="@string/image_view_content_description_fragment_add_task"
+                android:contentDescription="@string/image_view_content_description_fragment_edit_task"
                 android:adjustViewBounds="true"
                 app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.ShapeableImageView" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</LinearLayout>

@@ -113,7 +113,7 @@ public class CardFragment extends Fragment {
                 super.onSelectionChanged();
                 if (!selectionTracker.getSelection().isEmpty() && getContext() != null) {
                     BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
-                    bottomSheetDialog.setContentView(R.layout.fragment_bottom_sheet_dialog);
+                    bottomSheetDialog.setContentView(R.layout.layout_bottom_sheet_dialog);
                     if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
                         bottomSheetDialog.getBehavior().setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
                     }

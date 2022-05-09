@@ -59,6 +59,11 @@ public class CardModel {
 
         easiness = Math.max(1.3, easiness + 0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02));
 
-        nextPracticeTime = System.currentTimeMillis() + 60L * 60 * 24 * 1000 * interval;
+        if (quality == 0) {
+            nextPracticeTime = System.currentTimeMillis() + 60L * 1000 * 15;
+        }
+        else {
+            nextPracticeTime = System.currentTimeMillis() + 60L * 60 * 24 * 1000 * interval;
+        }
     }
 }

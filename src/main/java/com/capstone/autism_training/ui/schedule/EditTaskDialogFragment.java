@@ -1,5 +1,6 @@
 package com.capstone.autism_training.ui.schedule;
 
+import android.content.res.Configuration;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,12 +12,13 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 
 import com.capstone.autism_training.R;
-import com.capstone.autism_training.databinding.FragmentEditTaskBinding;
+import com.capstone.autism_training.databinding.DialogFragmentEditTaskBinding;
 import com.capstone.autism_training.schedule.TaskModel;
 import com.capstone.autism_training.utilities.ImageHelper;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
@@ -26,7 +28,7 @@ import java.text.DateFormat;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
-public class EditTaskDialogFragment extends DialogFragment {
+public class EditTaskDialogFragment extends BottomSheetDialogFragment {
 
     public static final String TAG = EditTaskDialogFragment.class.getSimpleName();
 
@@ -37,18 +39,18 @@ public class EditTaskDialogFragment extends DialogFragment {
     private long start_time = -1;
     private int adapterPosition = -1;
 
-    private FragmentEditTaskBinding binding;
+    private DialogFragmentEditTaskBinding binding;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStyle(DialogFragment.STYLE_NORMAL, R.style.Theme_App);
+        setStyle(BottomSheetDialogFragment.STYLE_NORMAL, R.style.Theme_App_BottomSheet_Modal);
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentEditTaskBinding.inflate(inflater, container, false);
+        binding = DialogFragmentEditTaskBinding.inflate(inflater, container, false);
 
         scheduleFragment = (ScheduleFragment) getParentFragment();
         return binding.getRoot();
@@ -58,7 +60,14 @@ public class EditTaskDialogFragment extends DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.toolbar.setNavigationOnClickListener(view1 -> this.dismiss());
+        if (getDialog() != null) {
+            getDialog().getWindow().getAttributes().windowAnimations = com.google.android.material.R.style.Animation_Design_BottomSheetDialog;
+        }
+
+        BottomSheetBehavior<View> bottomSheetBehavior = BottomSheetBehavior.from((View) view.getParent());
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
+        }
 
         binding.nameEditText.setText(taskModel.name);
         binding.instructionEditText.setText(taskModel.instruction);
