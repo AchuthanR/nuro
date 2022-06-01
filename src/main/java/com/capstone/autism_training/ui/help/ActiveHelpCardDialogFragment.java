@@ -1,5 +1,6 @@
 package com.capstone.autism_training.ui.help;
 
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +11,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.capstone.autism_training.databinding.DialogFragmentActiveHelpCardBinding;
-import com.capstone.autism_training.utilities.ImageHelper;
 
 public class ActiveHelpCardDialogFragment extends DialogFragment {
 
@@ -36,9 +36,7 @@ public class ActiveHelpCardDialogFragment extends DialogFragment {
 
         if (getArguments() != null) {
             byte[] image = getArguments().getByteArray("image");
-            String name = getArguments().getString("name");
-            binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(image));
-            binding.nameTextView.setText(name);
+            binding.imageView.setImageBitmap(BitmapFactory.decodeByteArray(image, 0, image.length));
         }
 
         binding.linearLayout.setOnClickListener(view1 -> ActiveHelpCardDialogFragment.this.dismiss());

@@ -78,6 +78,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/identify_question_text_view_text_fragment_word_identification"
+                            android:textStyle="bold"
+                            android:textColor="?attr/colorPrimary"
                             android:textAppearance="?attr/textAppearanceTitleLarge"
                             android:textAlignment="center" />
 
@@ -113,56 +115,70 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:text="@string/choose_answer_text_view_text_fragment_word_identification"
+                            android:textStyle="bold"
+                            android:textColor="?attr/colorPrimary"
                             android:textAppearance="?attr/textAppearanceTitleLarge"
                             android:labelFor="@id/buttonToggleGroup" />
 
-                        <com.google.android.material.button.MaterialButtonToggleGroup
-                            android:id="@+id/buttonToggleGroup"
+                        <RadioGroup
+                            android:id="@+id/radioGroup"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:minWidth="300dp"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="16dp"
-                            android:orientation="vertical"
-                            app:singleSelection="true"
-                            app:selectionRequired="true">
+                            android:minWidth="400dp">
 
-                            <com.google.android.material.button.MaterialButton
+                            <RadioButton
                                 android:id="@+id/option1"
-                                style="@style/Widget.Material3.Button.OutlinedButton"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:textAppearance="?attr/textAppearanceTitleLarge"
-                                android:insetTop="0dp"
-                                android:insetBottom="0dp" />
+                                android:layout_height="match_parent"
+                                android:paddingHorizontal="16dp"
+                                android:paddingVertical="12dp"
+                                android:button="@null"
+                                android:drawableStart="?android:attr/listChoiceIndicatorSingle"
+                                android:drawablePadding="10dp"
+                                android:background="@drawable/radio_button_background"
+                                android:textAppearance="?attr/textAppearanceTitleLarge" />
 
-                            <com.google.android.material.button.MaterialButton
+                            <RadioButton
                                 android:id="@+id/option2"
-                                style="@style/Widget.Material3.Button.OutlinedButton"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:textAppearance="?attr/textAppearanceTitleLarge"
-                                android:insetTop="0dp"
-                                android:insetBottom="0dp" />
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="8dp"
+                                android:paddingHorizontal="16dp"
+                                android:paddingVertical="12dp"
+                                android:button="@null"
+                                android:drawableStart="?android:attr/listChoiceIndicatorSingle"
+                                android:drawablePadding="10dp"
+                                android:background="@drawable/radio_button_background"
+                                android:textAppearance="?attr/textAppearanceTitleLarge" />
 
-                            <com.google.android.material.button.MaterialButton
+                            <RadioButton
                                 android:id="@+id/option3"
-                                style="@style/Widget.Material3.Button.OutlinedButton"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:textAppearance="?attr/textAppearanceTitleLarge"
-                                android:insetTop="0dp"
-                                android:insetBottom="0dp" />
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="8dp"
+                                android:paddingHorizontal="16dp"
+                                android:paddingVertical="12dp"
+                                android:button="@null"
+                                android:drawableStart="?android:attr/listChoiceIndicatorSingle"
+                                android:drawablePadding="10dp"
+                                android:background="@drawable/radio_button_background"
+                                android:textAppearance="?attr/textAppearanceTitleLarge" />
 
-                            <com.google.android.material.button.MaterialButton
+                            <RadioButton
                                 android:id="@+id/option4"
-                                style="@style/Widget.Material3.Button.OutlinedButton"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:textAppearance="?attr/textAppearanceTitleLarge"
-                                android:insetTop="0dp"
-                                android:insetBottom="0dp" />
-                        </com.google.android.material.button.MaterialButtonToggleGroup>
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="8dp"
+                                android:paddingHorizontal="16dp"
+                                android:paddingVertical="12dp"
+                                android:button="@null"
+                                android:drawableStart="?android:attr/listChoiceIndicatorSingle"
+                                android:drawablePadding="10dp"
+                                android:background="@drawable/radio_button_background"
+                                android:textAppearance="?attr/textAppearanceTitleLarge" />
+                        </RadioGroup>
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/submitButton"

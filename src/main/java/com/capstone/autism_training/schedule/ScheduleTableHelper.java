@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class ScheduleTableHelper extends SQLiteOpenHelper {
 
+    public static final String TABLE_NAME_PREFIX = "SCHEDULE_";
     public String TABLE_NAME;
 
     public static final String ID = "id";
@@ -25,7 +26,7 @@ public class ScheduleTableHelper extends SQLiteOpenHelper {
 
     public ScheduleTableHelper(Context context, String table_name) {
         super(context, DB_NAME, null, DB_VERSION);
-        TABLE_NAME = "\"" + table_name.toUpperCase().replace(" ", "_") + "\"";
+        TABLE_NAME = "\"" + TABLE_NAME_PREFIX + table_name.toUpperCase().replace(" ", "_") + "\"";
         CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
                 + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + NAME + " TEXT NOT NULL, "

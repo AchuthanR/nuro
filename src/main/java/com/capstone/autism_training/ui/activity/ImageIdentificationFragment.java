@@ -95,7 +95,7 @@ public class ImageIdentificationFragment extends Fragment {
         binding.chooseDeckAutoCompleteTextView.setOnItemClickListener((adapterView, view1, i, l) -> deckSelected(adapterView.getItemAtPosition(i).toString()));
 
         binding.submitButton.setOnClickListener(view1 -> {
-            int id = binding.buttonToggleGroup.getCheckedButtonId();
+            int id = binding.radioGroup.getCheckedRadioButtonId();
             if (id == View.NO_ID) {
                 Snackbar.make(view1, "Please select an answer", Snackbar.LENGTH_LONG)
                         .setAction("OKAY", view2 -> {}).show();
@@ -202,7 +202,7 @@ public class ImageIdentificationFragment extends Fragment {
     }
 
     private void nextQuestion() {
-        binding.buttonToggleGroup.clearChecked();
+        binding.radioGroup.clearCheck();
         binding.nextButton.setEnabled(false);
 
         Random random = new Random();

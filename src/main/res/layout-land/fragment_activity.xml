@@ -51,7 +51,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:layout_margin="2dp"
+                android:layout_margin="6dp"
                 android:clickable="true"
                 android:focusable="true">
 
@@ -77,6 +77,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/image_identification_activity_title_fragment_activity"
+                            android:textStyle="bold"
                             android:textAppearance="?attr/textAppearanceTitleLarge" />
 
                         <com.google.android.material.textview.MaterialTextView
@@ -96,7 +97,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:layout_margin="2dp"
+                android:layout_margin="6dp"
                 android:clickable="true"
                 android:focusable="true">
 
@@ -122,6 +123,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/word_identification_activity_title_fragment_activity"
+                            android:textStyle="bold"
                             android:textAppearance="?attr/textAppearanceTitleLarge" />
 
                         <com.google.android.material.textview.MaterialTextView

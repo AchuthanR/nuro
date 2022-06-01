@@ -8,12 +8,12 @@
     android:fitsSystemWindows="true"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
-    <com.google.android.material.divider.MaterialDivider
-        android:layout_width="30dp"
-        android:layout_height="wrap_content"
+    <View
+        android:layout_width="40dp"
+        android:layout_height="3dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginVertical="15dp"
-        app:dividerThickness="3dp" />
+        android:layout_marginVertical="16dp"
+        android:background="@drawable/bottom_sheet_tab_indicator" />
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"

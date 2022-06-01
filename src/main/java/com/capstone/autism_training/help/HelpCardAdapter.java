@@ -94,7 +94,6 @@ public class HelpCardAdapter extends RecyclerView.Adapter<HelpCardAdapter.ViewHo
             ActiveHelpCardDialogFragment activeHelpCardDialogFragment = new ActiveHelpCardDialogFragment();
             Bundle bundle = new Bundle();
             bundle.putByteArray("image", helpCards.get(viewHolder.getAdapterPosition()).image);
-            bundle.putString("name", helpCards.get(viewHolder.getAdapterPosition()).name);
             activeHelpCardDialogFragment.setArguments(bundle);
 
             FragmentTransaction transaction = fragmentManager.beginTransaction();

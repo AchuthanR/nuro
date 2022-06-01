@@ -93,6 +93,8 @@
                             android:id="@+id/questionTextView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:textColor="?attr/colorPrimary"
                             android:textAppearance="?attr/textAppearanceTitleLarge"
                             android:textAlignment="center" />
 
@@ -128,6 +130,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:text="@string/what_answer_text_view_text_fragment_train"
+                            android:textStyle="bold"
+                            android:textColor="?attr/colorPrimary"
                             android:textAppearance="?attr/textAppearanceTitleLarge" />
 
                         <com.google.android.material.button.MaterialButton
@@ -157,6 +161,7 @@
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="16dp"
                             android:text="@string/review_question_text_view_text_fragment_train"
+                            android:textColor="?android:attr/textColorSecondary"
                             android:textAppearance="?attr/textAppearanceTitleMedium"
                             android:visibility="gone" />
 

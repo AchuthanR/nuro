@@ -211,6 +211,7 @@ public class MainActivity extends AppCompatActivity {
         int size = getSupportFragmentManager().getBackStackEntryCount();
         if (size == 0) {
             super.onBackPressed();
+            this.finish();
             return;
         }
 
