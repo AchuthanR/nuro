@@ -50,6 +50,8 @@ public class ScheduleFragment extends Fragment {
     private SelectionTracker<Long> selectionTracker;
     private RecyclerView.AdapterDataObserver adapterDataObserver;
 
+    private boolean demoMode = false;
+
     private FragmentScheduleBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -62,8 +64,18 @@ public class ScheduleFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        binding.toolbar.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == R.id.action_help) {
+                binding.chooseDayAutoCompleteTextView.setText(getString(R.string.introduction_text_fragment_schedule), false);
+                demoMode = true;
+                daySelected("Introduction");
+                return true;
+            }
+            return false;
+        });
+
         binding.extendedFAB.setOnClickListener(view1 -> {
-            AddTaskDialogFragment addTaskDialogFragment = new AddTaskDialogFragment();
+            AddTaskDialogFragment addTaskDialogFragment = new AddTaskDialogFragment(demoMode);
 
             FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
@@ -115,7 +127,7 @@ public class ScheduleFragment extends Fragment {
                             if (viewHolder != null) {
                                 TaskModel taskModel = mAdapter.getItem(viewHolder.getAdapterPosition());
 
-                                EditTaskDialogFragment editTaskDialogFragment = new EditTaskDialogFragment();
+                                EditTaskDialogFragment editTaskDialogFragment = new EditTaskDialogFragment(demoMode);
                                 editTaskDialogFragment.setTaskModel(taskModel);
                                 editTaskDialogFragment.setAdapterPosition(viewHolder.getAdapterPosition());
 
@@ -138,7 +150,9 @@ public class ScheduleFragment extends Fragment {
                                         if (selectionTracker.hasSelection()) {
                                             long id = selectionTracker.getSelection().iterator().next();
                                             selectionTracker.clearSelection();
-                                            scheduleTableManager.deleteRow(id);
+                                            if (!demoMode) {
+                                                scheduleTableManager.deleteRow(id);
+                                            }
                                             mAdapter.removeItem(mRecyclerView.findViewHolderForItemId(id).getAdapterPosition());
                                             Snackbar.make(view, "Deleted the task", Snackbar.LENGTH_LONG)
                                                     .setAction("OKAY", view2 -> {}).show();
@@ -189,7 +203,10 @@ public class ScheduleFragment extends Fragment {
                 android.R.layout.simple_list_item_1, days);
         binding.chooseDayAutoCompleteTextView.setAdapter(adapter);
 
-        binding.chooseDayAutoCompleteTextView.setOnItemClickListener((adapterView, view1, i, l) -> daySelected(adapterView.getItemAtPosition(i).toString()));
+        binding.chooseDayAutoCompleteTextView.setOnItemClickListener((adapterView, view1, i, l) -> {
+            demoMode = false;
+            daySelected(adapterView.getItemAtPosition(i).toString());
+        });
 
         scheduleTableManager = new ScheduleTableManager(getContext());
         mAdapter.setVisualScheduleTableManager(scheduleTableManager);

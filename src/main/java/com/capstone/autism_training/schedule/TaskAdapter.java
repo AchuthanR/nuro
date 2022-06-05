@@ -21,7 +21,9 @@ import com.google.android.material.textview.MaterialTextView;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
@@ -274,6 +276,16 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     @Override
     public int getItemCount() {
         return tasks.size();
+    }
+
+    public long getMaxId() {
+        Optional<TaskModel> result = tasks.stream().max(Comparator.comparingLong(taskModel -> taskModel.id));
+        if (result.isPresent()) {
+            return result.get().id;
+        }
+        else {
+            return getItemCount();
+        }
     }
 
     public TaskModel getItem(int position) {

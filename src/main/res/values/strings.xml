@@ -9,6 +9,8 @@
     <string name="title_train">Train</string>
 
     <string name="page_title_fragment_schedule">Visual Scheduling</string>
+    <string name="action_help_fragment_schedule">Help</string>
+    <string name="introduction_text_fragment_schedule">Introduction</string>
     <string name="fab_text_fragment_schedule">Add task</string>
     <string name="choose_day_text_view_text_fragment_schedule">Choose day</string>
     <string name="empty_day_text_view_text_fragment_schedule">There are no tasks for this day of the week. Click the Add task button to add a new task.</string>
@@ -43,6 +45,7 @@
     <string name="edit_task_button_text_fragment_edit_task">Edit</string>
 
     <string name="page_title_fragment_deck">Decks</string>
+    <string name="action_help_fragment_deck">Help</string>
     <string name="fab_text_fragment_deck">Add deck</string>
     <string name="zero_deck_text_view_text_fragment_deck">There are no decks in the database. Click the Add deck button to add a new deck.</string>
 
@@ -89,26 +92,21 @@
     <string name="page_title_fragment_image_identification">Image identification</string>
     <string name="action_play_sound_fragment_image_identification">Play appreciation sounds</string>
     <string name="choose_deck_text_view_text_fragment_image_identification">Choose deck</string>
-    <string name="play_sound_check_box_text_fragment_image_identification">Play appreciation sounds for correct answers</string>
     <string name="identify_question_text_view_text_fragment_image_identification">Identify %1$s</string>
-    <string name="choose_answer_text_view_text_fragment_image_identification">Choose your answer</string>
-    <string name="first_button_text_fragment_image_identification">First image</string>
-    <string name="second_button_text_fragment_image_identification">Second image</string>
-    <string name="third_button_text_fragment_image_identification">Third image</string>
-    <string name="fourth_button_text_fragment_image_identification">Fourth image</string>
     <string name="submit_button_text_fragment_image_identification">Submit</string>
     <string name="next_button_text_fragment_image_identification">Next</string>
 
     <string name="page_title_fragment_word_identification">Word identification</string>
     <string name="action_play_sound_fragment_word_identification">Play appreciation sounds</string>
     <string name="choose_deck_text_view_text_fragment_word_identification">Choose deck</string>
-    <string name="play_sound_check_box_text_fragment_word_identification">Play appreciation sounds for correct answers</string>
     <string name="identify_question_text_view_text_fragment_word_identification">Identify the below image</string>
     <string name="choose_answer_text_view_text_fragment_word_identification">Choose your answer</string>
     <string name="submit_button_text_fragment_word_identification">Submit</string>
     <string name="next_button_text_fragment_word_identification">Next</string>
 
     <string name="page_title_fragment_help">Help</string>
+    <string name="action_help_fragment_help">Help</string>
+    <string name="introduction_text_fragment_help">Introduction</string>
     <string name="fab_text_fragment_help">Add help card</string>
     <string name="choose_deck_text_view_text_fragment_help">Choose deck</string>
     <string name="empty_deck_text_view_text_fragment_help">There are no help cards in this deck. Click the Add help card button to add a new help card.</string>
@@ -126,6 +124,7 @@
     <string name="edit_help_card_button_text_fragment_edit_help_card">Edit</string>
 
     <string name="page_title_fragment_train">Train</string>
+    <string name="action_help_fragment_train">Help</string>
     <string name="choose_deck_text_view_text_fragment_train">Choose deck</string>
     <string name="empty_deck_text_view_text_fragment_train">There are no cards to be reviewed in this deck now.</string>
     <string name="review_done_text_view_text_fragment_train">You\'ve successfully reviewed all cards in this deck.</string>

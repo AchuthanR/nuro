@@ -27,13 +27,18 @@ public class EditDeckDialogFragment extends BottomSheetDialogFragment {
 
     public static final String TAG = EditDeckDialogFragment.class.getSimpleName();
 
-    private ActivityResultLauncher<String> mGetContent;
     private DeckFragment deckFragment;
+    private final boolean demoMode;
+    private ActivityResultLauncher<String> mGetContent;
     private DeckModel deckModel;
     private byte[] image = null;
     private int adapterPosition = -1;
 
     private DialogFragmentEditDeckBinding binding;
+
+    public EditDeckDialogFragment(boolean demoMode) {
+        this.demoMode = demoMode;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -88,7 +93,13 @@ public class EditDeckDialogFragment extends BottomSheetDialogFragment {
             EditText descriptionEditText = binding.descriptionEditText;
 
             if (image != null && !nameEditText.getText().toString().isEmpty() && !descriptionEditText.getText().toString().isEmpty()) {
-                long rowsAffected = deckFragment.deckInfoTableManager.update(deckModel.id, deckModel.name, nameEditText.getText().toString(), image, descriptionEditText.getText().toString());
+                long rowsAffected;
+                if (demoMode) {
+                    rowsAffected = 1;
+                }
+                else {
+                    rowsAffected = deckFragment.deckInfoTableManager.update(deckModel.id, deckModel.name, nameEditText.getText().toString(), image, descriptionEditText.getText().toString());
+                }
                 if (rowsAffected > 0) {
                     DeckModel newDeckModel = new DeckModel(deckModel.id, image, nameEditText.getText().toString(), descriptionEditText.getText().toString());
                     deckFragment.mAdapter.changeItem(adapterPosition, newDeckModel);

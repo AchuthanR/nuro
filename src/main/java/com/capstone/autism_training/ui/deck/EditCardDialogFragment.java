@@ -27,13 +27,18 @@ public class EditCardDialogFragment extends BottomSheetDialogFragment {
 
     public static final String TAG = EditCardDialogFragment.class.getSimpleName();
 
-    private ActivityResultLauncher<String> mGetContent;
     private CardFragment cardFragment;
+    private final boolean demoMode;
+    private ActivityResultLauncher<String> mGetContent;
     private CardModel cardModel;
     private byte[] image = null;
     private int adapterPosition = -1;
 
     private DialogFragmentEditCardBinding binding;
+
+    public EditCardDialogFragment(boolean demoMode) {
+        this.demoMode = demoMode;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -88,7 +93,13 @@ public class EditCardDialogFragment extends BottomSheetDialogFragment {
             EditText shortAnswerEditText = binding.shortAnswerEditText;
 
             if (image != null && !captionEditText.getText().toString().isEmpty() && !shortAnswerEditText.getText().toString().isEmpty()) {
-                long rowsAffected = cardFragment.deckTableManager.update(cardModel.id, image, captionEditText.getText().toString(), shortAnswerEditText.getText().toString());
+                long rowsAffected;
+                if (demoMode) {
+                    rowsAffected = 1;
+                }
+                else {
+                    rowsAffected = cardFragment.deckTableManager.update(cardModel.id, image, captionEditText.getText().toString(), shortAnswerEditText.getText().toString());
+                }
                 if (rowsAffected > 0) {
                     CardModel newCardModel = new CardModel(cardModel.id, image, captionEditText.getText().toString(), shortAnswerEditText.getText().toString());
                     cardFragment.mAdapter.changeItem(adapterPosition, newCardModel);

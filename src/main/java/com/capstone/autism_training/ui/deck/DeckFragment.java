@@ -43,11 +43,19 @@ public class DeckFragment extends Fragment {
     private SelectionTracker<Long> selectionTracker;
     private RecyclerView.AdapterDataObserver adapterDataObserver;
 
+    private boolean demoMode = false;
+
     private FragmentDeckBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentDeckBinding.inflate(inflater, container, false);
+
+        if (getArguments() != null && getArguments().containsKey("demoMode") && getArguments().getBoolean("demoMode")) {
+            demoMode = true;
+            binding.toolbar.getMenu().removeItem(R.id.action_help);
+        }
+
         return binding.getRoot();
     }
 
@@ -55,8 +63,42 @@ public class DeckFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        if (demoMode) {
+            binding.toolbar.setNavigationIcon(R.drawable.ic_round_arrow_back_24);
+            binding.toolbar.setNavigationOnClickListener(view1 -> {
+                if (getActivity() != null) {
+                    getActivity().onBackPressed();
+                }
+            });
+        }
+        else {
+            binding.toolbar.setOnMenuItemClickListener(item -> {
+                if (item.getItemId() == R.id.action_help) {
+                    DeckFragment deckFragment = new DeckFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putBoolean("demoMode", true);
+                    deckFragment.setArguments(bundle);
+
+                    FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                    for (Fragment fragment : getParentFragmentManager().getFragments()) {
+                        if (fragment.isVisible()) {
+                            transaction.hide(fragment);
+                        }
+                    }
+
+                    transaction
+                            .add(R.id.nav_host_fragment_activity_main, deckFragment, DeckFragment.TAG)
+                            .addToBackStack(DeckFragment.TAG)
+                            .setReorderingAllowed(true);
+                    transaction.commit();
+                    return true;
+                }
+                return false;
+            });
+        }
+
         binding.extendedFAB.setOnClickListener(view1 -> {
-            AddDeckDialogFragment addDeckDialogFragment = new AddDeckDialogFragment();
+            AddDeckDialogFragment addDeckDialogFragment = new AddDeckDialogFragment(demoMode);
 
             FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
@@ -70,7 +112,7 @@ public class DeckFragment extends Fragment {
         else {
             mLayoutManager = new LinearLayoutManager(getContext());
         }
-        mAdapter = new DeckAdapter(getParentFragmentManager());
+        mAdapter = new DeckAdapter(getParentFragmentManager(), demoMode);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
@@ -108,7 +150,7 @@ public class DeckFragment extends Fragment {
                             if (viewHolder != null) {
                                 DeckModel deckModel = mAdapter.getItem(viewHolder.getAdapterPosition());
 
-                                EditDeckDialogFragment editDeckDialogFragment = new EditDeckDialogFragment();
+                                EditDeckDialogFragment editDeckDialogFragment = new EditDeckDialogFragment(demoMode);
                                 editDeckDialogFragment.setDeckModel(deckModel);
                                 editDeckDialogFragment.setAdapterPosition(viewHolder.getAdapterPosition());
 
@@ -131,7 +173,9 @@ public class DeckFragment extends Fragment {
                                         if (selectionTracker.hasSelection()) {
                                             long id = selectionTracker.getSelection().iterator().next();
                                             selectionTracker.clearSelection();
-                                            deckInfoTableManager.deleteRow(id);
+                                            if (!demoMode) {
+                                                deckInfoTableManager.deleteRow(id);
+                                            }
                                             mAdapter.removeItem(mRecyclerView.findViewHolderForItemId(id).getAdapterPosition());
                                             Snackbar.make(view, "Deleted the deck", Snackbar.LENGTH_LONG)
                                                     .setAction("OKAY", view2 -> {}).show();
@@ -174,7 +218,12 @@ public class DeckFragment extends Fragment {
         mAdapter.registerAdapterDataObserver(adapterDataObserver);
 
         deckInfoTableManager = new DeckInfoTableManager(getContext());
-        deckInfoTableManager.open();
+        if (demoMode) {
+            deckInfoTableManager.open("Introduction");
+        }
+        else {
+            deckInfoTableManager.open();
+        }
         Cursor cursor = deckInfoTableManager.fetch();
 
         int idIndex = cursor.getColumnIndex(DeckInfoTableHelper.ID);

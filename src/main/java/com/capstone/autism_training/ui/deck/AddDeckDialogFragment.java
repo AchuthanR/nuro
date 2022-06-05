@@ -25,11 +25,16 @@ public class AddDeckDialogFragment extends BottomSheetDialogFragment {
 
     public static final String TAG = AddDeckDialogFragment.class.getSimpleName();
 
-    private ActivityResultLauncher<String> mGetContent;
     private DeckFragment deckFragment;
+    private final boolean demoMode;
+    private ActivityResultLauncher<String> mGetContent;
     private byte[] image = null;
 
     private DialogFragmentAddDeckBinding binding;
+
+    public AddDeckDialogFragment(boolean demoMode) {
+        this.demoMode = demoMode;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,7 +80,13 @@ public class AddDeckDialogFragment extends BottomSheetDialogFragment {
             EditText descriptionEditText = binding.descriptionEditText;
 
             if (image != null && !nameEditText.getText().toString().isEmpty() && !descriptionEditText.getText().toString().isEmpty()) {
-                long rowNumber = deckFragment.deckInfoTableManager.insert(nameEditText.getText().toString(), image, descriptionEditText.getText().toString());
+                long rowNumber;
+                if (demoMode) {
+                    rowNumber = deckFragment.mAdapter.getMaxId() + 1;
+                }
+                else {
+                    rowNumber = deckFragment.deckInfoTableManager.insert(nameEditText.getText().toString(), image, descriptionEditText.getText().toString());
+                }
                 if (rowNumber != -1) {
                     DeckModel deckModel = new DeckModel(rowNumber, image, nameEditText.getText().toString(), descriptionEditText.getText().toString());
                     deckFragment.mAdapter.addItem(deckModel);

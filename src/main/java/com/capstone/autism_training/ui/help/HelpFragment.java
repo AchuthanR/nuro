@@ -48,6 +48,8 @@ public class HelpFragment extends Fragment {
     private RecyclerView.AdapterDataObserver adapterDataObserver;
     private ArrayList<String> decks;
 
+    private boolean demoMode = false;
+
     private FragmentHelpBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -60,8 +62,18 @@ public class HelpFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        binding.toolbar.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == R.id.action_help) {
+                binding.chooseDeckAutoCompleteTextView.setText(getString(R.string.introduction_text_fragment_help), false);
+                demoMode = true;
+                deckSelected("Introduction");
+                return true;
+            }
+            return false;
+        });
+
         binding.extendedFAB.setOnClickListener(view1 -> {
-            AddHelpCardDialogFragment addHelpCardDialogFragment = new AddHelpCardDialogFragment();
+            AddHelpCardDialogFragment addHelpCardDialogFragment = new AddHelpCardDialogFragment(demoMode);
 
             FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
@@ -113,7 +125,7 @@ public class HelpFragment extends Fragment {
                             if (viewHolder != null) {
                                 HelpCardModel helpCardModel = mAdapter.getItem(viewHolder.getAdapterPosition());
 
-                                EditHelpCardDialogFragment editHelpCardDialogFragment = new EditHelpCardDialogFragment();
+                                EditHelpCardDialogFragment editHelpCardDialogFragment = new EditHelpCardDialogFragment(demoMode);
                                 editHelpCardDialogFragment.setHelpCardModel(helpCardModel);
                                 editHelpCardDialogFragment.setAdapterPosition(viewHolder.getAdapterPosition());
 
@@ -136,7 +148,9 @@ public class HelpFragment extends Fragment {
                                         if (selectionTracker.hasSelection()) {
                                             long id = selectionTracker.getSelection().iterator().next();
                                             selectionTracker.clearSelection();
-                                            helpCardTableManager.deleteRow(id);
+                                            if (!demoMode) {
+                                                helpCardTableManager.deleteRow(id);
+                                            }
                                             mAdapter.removeItem(mRecyclerView.findViewHolderForItemId(id).getAdapterPosition());
                                             Snackbar.make(view, "Deleted the help card", Snackbar.LENGTH_LONG)
                                                     .setAction("OKAY", view2 -> {}).show();
@@ -185,7 +199,10 @@ public class HelpFragment extends Fragment {
                 android.R.layout.simple_list_item_1, decks);
         binding.chooseDeckAutoCompleteTextView.setAdapter(adapter);
 
-        binding.chooseDeckAutoCompleteTextView.setOnItemClickListener((adapterView, view1, i, l) -> deckSelected(adapterView.getItemAtPosition(i).toString()));
+        binding.chooseDeckAutoCompleteTextView.setOnItemClickListener((adapterView, view1, i, l) -> {
+            demoMode = false;
+            deckSelected(adapterView.getItemAtPosition(i).toString());
+        });
     }
 
     @Override

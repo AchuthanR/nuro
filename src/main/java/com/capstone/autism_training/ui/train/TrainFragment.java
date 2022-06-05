@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.capstone.autism_training.R;
 import com.capstone.autism_training.card.CardModel;
@@ -21,6 +22,7 @@ import com.capstone.autism_training.deck.DeckInfoTableManager;
 import com.capstone.autism_training.train.SuperMemoTableHelper;
 import com.capstone.autism_training.train.SuperMemoTableManager;
 import com.capstone.autism_training.train.TrainDeck;
+import com.capstone.autism_training.ui.deck.CardFragment;
 import com.capstone.autism_training.utilities.ImageHelper;
 
 import java.util.ArrayList;
@@ -44,6 +46,30 @@ public class TrainFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        binding.toolbar.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == R.id.action_help) {
+                CardFragment cardFragment = new CardFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("TABLE_NAME", "Introduction to Train");
+                bundle.putBoolean("readOnlyMode", true);
+                cardFragment.setArguments(bundle);
+
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                for (Fragment fragment : getParentFragmentManager().getFragments()) {
+                    if (fragment.isVisible()) {
+                        transaction.hide(fragment);
+                    }
+                }
+                transaction
+                        .add(R.id.nav_host_fragment_activity_main, cardFragment, CardFragment.TAG)
+                        .addToBackStack(TrainFragment.TAG)
+                        .setReorderingAllowed(true);
+                transaction.commit();
+                return true;
+            }
+            return false;
+        });
 
         superMemoTableManager = new SuperMemoTableManager(getContext());
         trainDeck = new TrainDeck();

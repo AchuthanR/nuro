@@ -23,10 +23,13 @@ import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Optional;
 
 public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
 
     private final ArrayList<DeckModel> decks;
+    private final boolean demoMode;
     private final FragmentManager fragmentManager;
     private SelectionTracker<Long> selectionTracker;
 
@@ -75,8 +78,9 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
         }
     }
 
-    public DeckAdapter(FragmentManager fragmentManager) {
+    public DeckAdapter(FragmentManager fragmentManager, boolean demoMode) {
         decks = new ArrayList<>();
+        this.demoMode = demoMode;
         this.fragmentManager = fragmentManager;
         setHasStableIds(true);
     }
@@ -102,13 +106,14 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
             CardFragment cardFragment = null;
             Bundle bundle = new Bundle();
             bundle.putString("TABLE_NAME", decks.get(viewHolder.getAdapterPosition()).name);
+            bundle.putBoolean("demoMode", demoMode);
 
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             for (Fragment fragment : fragmentManager.getFragments()) {
                 if (fragment.isVisible()) {
                     transaction.hide(fragment);
                 }
-                if (CardFragment.TAG.equals(fragment.getTag()) && fragment.isAdded()) {
+                if (!demoMode && CardFragment.TAG.equals(fragment.getTag()) && fragment.isAdded()) {
                     cardFragment = (CardFragment) fragment;
                     cardFragment.setArguments(bundle);
                 }
@@ -143,6 +148,16 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
     @Override
     public int getItemCount() {
         return decks.size();
+    }
+
+    public long getMaxId() {
+        Optional<DeckModel> result = decks.stream().max(Comparator.comparingLong(deckModel -> deckModel.id));
+        if (result.isPresent()) {
+            return result.get().id;
+        }
+        else {
+            return getItemCount();
+        }
     }
 
     public DeckModel getItem(int position) {

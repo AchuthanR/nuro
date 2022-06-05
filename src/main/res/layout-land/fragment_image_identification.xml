@@ -93,143 +93,96 @@
                                 android:layout_marginTop="8dp"
                                 android:orientation="horizontal">
 
-                                <com.google.android.material.imageview.ShapeableImageView
-                                    android:id="@+id/imageView1"
+                                <com.google.android.material.card.MaterialCardView
+                                    android:id="@+id/imageCard1"
+                                    style="@style/Widget.Material3.CardView.Outlined"
                                     android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="match_parent"
                                     android:layout_weight="1"
-                                    android:layout_gravity="center_vertical"
-                                    android:adjustViewBounds="true"
-                                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.ShapeableImageView" />
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    android:checkable="true"
+                                    app:checkedIconGravity="BOTTOM_END">
 
-                                <com.google.android.material.imageview.ShapeableImageView
-                                    android:id="@+id/imageView2"
+                                    <com.google.android.material.imageview.ShapeableImageView
+                                        android:id="@+id/imageView1"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginBottom="48dp"
+                                        android:adjustViewBounds="true"
+                                        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.ShapeableImageView" />
+                                </com.google.android.material.card.MaterialCardView>
+
+                                <com.google.android.material.card.MaterialCardView
+                                    android:id="@+id/imageCard2"
+                                    style="@style/Widget.Material3.CardView.Outlined"
                                     android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="match_parent"
                                     android:layout_weight="1"
                                     android:layout_marginStart="8dp"
-                                    android:layout_gravity="center_vertical"
-                                    android:adjustViewBounds="true"
-                                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.ShapeableImageView" />
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    android:checkable="true"
+                                    app:checkedIconGravity="BOTTOM_END">
+
+                                    <com.google.android.material.imageview.ShapeableImageView
+                                        android:id="@+id/imageView2"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginBottom="48dp"
+                                        android:adjustViewBounds="true"
+                                        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.ShapeableImageView" />
+                                </com.google.android.material.card.MaterialCardView>
                             </LinearLayout>
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="8dp"
+                                android:layout_marginTop="16dp"
                                 android:orientation="horizontal">
 
-                                <com.google.android.material.imageview.ShapeableImageView
-                                    android:id="@+id/imageView3"
+                                <com.google.android.material.card.MaterialCardView
+                                    android:id="@+id/imageCard3"
+                                    style="@style/Widget.Material3.CardView.Outlined"
                                     android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="match_parent"
                                     android:layout_weight="1"
-                                    android:layout_gravity="center_vertical"
-                                    android:adjustViewBounds="true"
-                                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.ShapeableImageView" />
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    android:checkable="true"
+                                    app:checkedIconGravity="BOTTOM_END">
 
-                                <com.google.android.material.imageview.ShapeableImageView
-                                    android:id="@+id/imageView4"
+                                    <com.google.android.material.imageview.ShapeableImageView
+                                        android:id="@+id/imageView3"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginBottom="48dp"
+                                        android:adjustViewBounds="true"
+                                        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.ShapeableImageView" />
+                                </com.google.android.material.card.MaterialCardView>
+
+                                <com.google.android.material.card.MaterialCardView
+                                    android:id="@+id/imageCard4"
+                                    style="@style/Widget.Material3.CardView.Outlined"
                                     android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="match_parent"
                                     android:layout_weight="1"
                                     android:layout_marginStart="8dp"
-                                    android:layout_gravity="center_vertical"
-                                    android:adjustViewBounds="true"
-                                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.ShapeableImageView" />
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    android:checkable="true"
+                                    app:checkedIconGravity="BOTTOM_END">
+
+                                    <com.google.android.material.imageview.ShapeableImageView
+                                        android:id="@+id/imageView4"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginBottom="48dp"
+                                        android:adjustViewBounds="true"
+                                        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.ShapeableImageView" />
+                                </com.google.android.material.card.MaterialCardView>
                             </LinearLayout>
                         </LinearLayout>
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    style="@style/Widget.Material3.CardView.Elevated"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="2dp"
-                    android:layout_marginHorizontal="2dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:paddingHorizontal="32dp"
-                        android:paddingVertical="24dp">
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:text="@string/choose_answer_text_view_text_fragment_image_identification"
-                            android:textStyle="bold"
-                            android:textColor="?attr/colorPrimary"
-                            android:textAppearance="?attr/textAppearanceTitleLarge"
-                            android:labelFor="@id/buttonToggleGroup" />
-
-                        <RadioGroup
-                            android:id="@+id/radioGroup"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="16dp"
-                            android:minWidth="400dp">
-
-                            <RadioButton
-                                android:id="@+id/option1"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:paddingHorizontal="16dp"
-                                android:paddingVertical="12dp"
-                                android:button="@null"
-                                android:drawableStart="?android:attr/listChoiceIndicatorSingle"
-                                android:drawablePadding="10dp"
-                                android:background="@drawable/radio_button_background"
-                                android:text="@string/first_button_text_fragment_image_identification"
-                                android:textAppearance="?attr/textAppearanceTitleLarge" />
-
-                            <RadioButton
-                                android:id="@+id/option2"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_marginTop="8dp"
-                                android:paddingHorizontal="16dp"
-                                android:paddingVertical="12dp"
-                                android:button="@null"
-                                android:drawableStart="?android:attr/listChoiceIndicatorSingle"
-                                android:drawablePadding="10dp"
-                                android:background="@drawable/radio_button_background"
-                                android:text="@string/second_button_text_fragment_image_identification"
-                                android:textAppearance="?attr/textAppearanceTitleLarge" />
-
-                            <RadioButton
-                                android:id="@+id/option3"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_marginTop="8dp"
-                                android:paddingHorizontal="16dp"
-                                android:paddingVertical="12dp"
-                                android:button="@null"
-                                android:drawableStart="?android:attr/listChoiceIndicatorSingle"
-                                android:drawablePadding="10dp"
-                                android:background="@drawable/radio_button_background"
-                                android:text="@string/third_button_text_fragment_image_identification"
-                                android:textAppearance="?attr/textAppearanceTitleLarge" />
-
-                            <RadioButton
-                                android:id="@+id/option4"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_marginTop="8dp"
-                                android:paddingHorizontal="16dp"
-                                android:paddingVertical="12dp"
-                                android:button="@null"
-                                android:drawableStart="?android:attr/listChoiceIndicatorSingle"
-                                android:drawablePadding="10dp"
-                                android:background="@drawable/radio_button_background"
-                                android:text="@string/fourth_button_text_fragment_image_identification"
-                                android:textAppearance="?attr/textAppearanceTitleLarge" />
-                        </RadioGroup>
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/submitButton"

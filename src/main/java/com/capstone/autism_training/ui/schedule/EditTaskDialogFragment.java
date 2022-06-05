@@ -33,6 +33,7 @@ public class EditTaskDialogFragment extends BottomSheetDialogFragment {
     public static final String TAG = EditTaskDialogFragment.class.getSimpleName();
 
     public ScheduleFragment scheduleFragment;
+    private final boolean demoMode;
     private ActivityResultLauncher<String> mGetContent;
     private TaskModel taskModel;
     private byte[] image = null;
@@ -40,6 +41,10 @@ public class EditTaskDialogFragment extends BottomSheetDialogFragment {
     private int adapterPosition = -1;
 
     private DialogFragmentEditTaskBinding binding;
+
+    public EditTaskDialogFragment(boolean demoMode) {
+        this.demoMode = demoMode;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -152,7 +157,13 @@ public class EditTaskDialogFragment extends BottomSheetDialogFragment {
                 }
 
                 long duration = TimeUnit.HOURS.toMillis(hour) + TimeUnit.MINUTES.toMillis(minute);
-                long rowsAffected = scheduleFragment.scheduleTableManager.update(taskModel.id, nameEditText.getText().toString(), image, instructionEditText.getText().toString(), start_time, duration);
+                long rowsAffected;
+                if (demoMode) {
+                    rowsAffected = 1;
+                }
+                else {
+                    rowsAffected = scheduleFragment.scheduleTableManager.update(taskModel.id, nameEditText.getText().toString(), image, instructionEditText.getText().toString(), start_time, duration);
+                }
                 if (rowsAffected > 0) {
                     TaskModel newTaskModel = new TaskModel(taskModel.id, nameEditText.getText().toString(), image, instructionEditText.getText().toString(), start_time, duration, taskModel.completed, taskModel.current_end_time);
                     scheduleFragment.mAdapter.changeItem(adapterPosition, newTaskModel);

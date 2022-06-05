@@ -21,6 +21,8 @@ import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Optional;
 
 public class HelpCardAdapter extends RecyclerView.Adapter<HelpCardAdapter.ViewHolder> {
 
@@ -115,6 +117,16 @@ public class HelpCardAdapter extends RecyclerView.Adapter<HelpCardAdapter.ViewHo
     @Override
     public int getItemCount() {
         return helpCards.size();
+    }
+
+    public long getMaxId() {
+        Optional<HelpCardModel> result = helpCards.stream().max(Comparator.comparingLong(helpCardModel -> helpCardModel.id));
+        if (result.isPresent()) {
+            return result.get().id;
+        }
+        else {
+            return getItemCount();
+        }
     }
 
     public HelpCardModel getItem(int position) {

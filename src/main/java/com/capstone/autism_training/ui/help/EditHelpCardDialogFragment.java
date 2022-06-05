@@ -28,12 +28,17 @@ public class EditHelpCardDialogFragment extends BottomSheetDialogFragment {
     public static final String TAG = EditHelpCardDialogFragment.class.getSimpleName();
 
     public HelpFragment helpFragment;
+    private final boolean demoMode;
     private ActivityResultLauncher<String> mGetContent;
     private HelpCardModel helpCardModel;
     private byte[] image = null;
     private int adapterPosition = -1;
 
     private DialogFragmentEditHelpCardBinding binding;
+
+    public EditHelpCardDialogFragment(boolean demoMode) {
+        this.demoMode = demoMode;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -86,7 +91,13 @@ public class EditHelpCardDialogFragment extends BottomSheetDialogFragment {
             EditText nameEditText = binding.nameEditText;
 
             if (image != null && !nameEditText.getText().toString().isEmpty()) {
-                long rowsAffected = helpFragment.helpCardTableManager.update(helpCardModel.id, nameEditText.getText().toString(), image);
+                long rowsAffected;
+                if (demoMode) {
+                    rowsAffected = 1;
+                }
+                else {
+                    rowsAffected = helpFragment.helpCardTableManager.update(helpCardModel.id, nameEditText.getText().toString(), image);
+                }
                 if (rowsAffected > 0) {
                     HelpCardModel newHelpCardModel = new HelpCardModel(helpCardModel.id, nameEditText.getText().toString(), image);
                     helpFragment.mAdapter.changeItem(adapterPosition, newHelpCardModel);

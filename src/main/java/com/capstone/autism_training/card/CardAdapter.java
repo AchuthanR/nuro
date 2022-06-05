@@ -10,6 +10,7 @@ import androidx.recyclerview.selection.SelectionTracker;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.capstone.autism_training.R;
+import com.capstone.autism_training.deck.DeckModel;
 import com.capstone.autism_training.utilities.ImageHelper;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
@@ -17,11 +18,13 @@ import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Optional;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
 
     private final ArrayList<CardModel> cards;
-    private SelectionTracker<Long> selectionTracker;
+    private SelectionTracker<Long> selectionTracker = null;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final MaterialCardView cardView;
@@ -110,12 +113,24 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         viewHolder.getCaptionTextView().setText(cards.get(position).caption);
         viewHolder.getShortAnswerTextView().setText(cards.get(position).short_answer);
 
-        viewHolder.getCardView().setChecked(selectionTracker.isSelected(cards.get(position).id));
+        if (selectionTracker != null) {
+            viewHolder.getCardView().setChecked(selectionTracker.isSelected(cards.get(position).id));
+        }
     }
 
     @Override
     public int getItemCount() {
         return cards.size();
+    }
+
+    public long getMaxId() {
+        Optional<CardModel> result = cards.stream().max(Comparator.comparingLong(cardModel -> cardModel.id));
+        if (result.isPresent()) {
+            return result.get().id;
+        }
+        else {
+            return getItemCount();
+        }
     }
 
     public CardModel getItem(int position) {

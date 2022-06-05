@@ -8,6 +8,7 @@ import com.capstone.autism_training.train.SuperMemoTableHelper;
 
 public class DeckTableHelper extends SQLiteOpenHelper {
 
+    public static final String TABLE_NAME_PREFIX = "DECK_";
     public String TABLE_NAME;
     public String SUPERMEMO_TABLE_NAME;
 
@@ -24,13 +25,13 @@ public class DeckTableHelper extends SQLiteOpenHelper {
 
     public DeckTableHelper(Context context, String table_name) {
         super(context, DB_NAME, null, DB_VERSION);
-        TABLE_NAME = "\"" + table_name.toUpperCase().replace(" ", "_") + "\"";
+        TABLE_NAME = "\"" + TABLE_NAME_PREFIX + table_name.toUpperCase().replace(" ", "_") + "\"";
         SUPERMEMO_TABLE_NAME = "\"" + SuperMemoTableHelper.TABLE_NAME_PREFIX + table_name.toUpperCase().replace(" ", "_") + "\"";
         CREATE_TABLE = createTableQuery(table_name);
     }
 
     public static String createTableQuery(String table_name) {
-        return "CREATE TABLE IF NOT EXISTS " + "\"" + table_name.toUpperCase().replace(" ", "_") + "\"" + "("
+        return "CREATE TABLE IF NOT EXISTS " + "\"" + TABLE_NAME_PREFIX + table_name.toUpperCase().replace(" ", "_") + "\"" + "("
                 + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + IMAGE + " BLOB NOT NULL, "
                 + CAPTION + " TEXT NOT NULL, "

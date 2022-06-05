@@ -6,7 +6,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DeckInfoTableHelper extends SQLiteOpenHelper {
 
-    public static String TABLE_NAME = "DECK_INFO";
+    public static final String TABLE_NAME_PREFIX = "COLLECTION_";
+    public String TABLE_NAME = TABLE_NAME_PREFIX + "INFO";
 
     public static final String ID = "id";
     public static final String NAME = "name";
@@ -17,14 +18,25 @@ public class DeckInfoTableHelper extends SQLiteOpenHelper {
 
     static final int DB_VERSION = 1;
 
-    public static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
-            + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + NAME + " TEXT NOT NULL, "
-            + IMAGE + " BLOB NOT NULL, "
-            + DESCRIPTION + " TEXT NOT NULL);";
+    public final String CREATE_TABLE;
 
     public DeckInfoTableHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
+        CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
+                + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + NAME + " TEXT NOT NULL, "
+                + IMAGE + " BLOB NOT NULL, "
+                + DESCRIPTION + " TEXT NOT NULL);";
+    }
+
+    public DeckInfoTableHelper(Context context, String table_name) {
+        super(context, DB_NAME, null, DB_VERSION);
+        TABLE_NAME = TABLE_NAME_PREFIX + table_name.toUpperCase().replace(" ", "_");
+        CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
+                + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + NAME + " TEXT NOT NULL, "
+                + IMAGE + " BLOB NOT NULL, "
+                + DESCRIPTION + " TEXT NOT NULL);";
     }
 
     @Override

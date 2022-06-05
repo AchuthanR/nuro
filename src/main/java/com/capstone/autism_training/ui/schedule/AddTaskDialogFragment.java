@@ -33,11 +33,16 @@ public class AddTaskDialogFragment extends BottomSheetDialogFragment {
     public static final String TAG = AddTaskDialogFragment.class.getSimpleName();
 
     public ScheduleFragment scheduleFragment;
+    private final boolean demoMode;
     private ActivityResultLauncher<String> mGetContent;
     private byte[] image = null;
     private long start_time = -1;
 
     private DialogFragmentAddTaskBinding binding;
+
+    public AddTaskDialogFragment(boolean demoMode) {
+        this.demoMode = demoMode;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -139,7 +144,13 @@ public class AddTaskDialogFragment extends BottomSheetDialogFragment {
                 }
 
                 long duration = TimeUnit.HOURS.toMillis(hour) + TimeUnit.MINUTES.toMillis(minute);
-                long rowNumber = scheduleFragment.scheduleTableManager.insert(nameEditText.getText().toString(), image, instructionEditText.getText().toString(), start_time, duration);
+                long rowNumber;
+                if (demoMode) {
+                    rowNumber = scheduleFragment.mAdapter.getMaxId() + 1;
+                }
+                else {
+                    rowNumber = scheduleFragment.scheduleTableManager.insert(nameEditText.getText().toString(), image, instructionEditText.getText().toString(), start_time, duration);
+                }
                 if (rowNumber != -1) {
                     TaskModel taskModel = new TaskModel(rowNumber, nameEditText.getText().toString(), image, instructionEditText.getText().toString(), start_time, duration, false, -1);
                     scheduleFragment.mAdapter.addItemAtRightPosition(taskModel);

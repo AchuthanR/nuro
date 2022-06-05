@@ -95,8 +95,7 @@ public class ImageIdentificationFragment extends Fragment {
         binding.chooseDeckAutoCompleteTextView.setOnItemClickListener((adapterView, view1, i, l) -> deckSelected(adapterView.getItemAtPosition(i).toString()));
 
         binding.submitButton.setOnClickListener(view1 -> {
-            int id = binding.radioGroup.getCheckedRadioButtonId();
-            if (id == View.NO_ID) {
+            if (!binding.imageCard1.isChecked() && !binding.imageCard2.isChecked() && !binding.imageCard3.isChecked() && !binding.imageCard4.isChecked()) {
                 Snackbar.make(view1, "Please select an answer", Snackbar.LENGTH_LONG)
                         .setAction("OKAY", view2 -> {}).show();
                 return;
@@ -107,22 +106,22 @@ public class ImageIdentificationFragment extends Fragment {
             boolean correctAnswer = false;
             switch (correctOption) {
                 case 0:
-                    if (id == R.id.option1) {
+                    if (binding.imageCard1.isChecked()) {
                         correctAnswer = true;
                     }
                     break;
                 case 1:
-                    if (id == R.id.option2) {
+                    if (binding.imageCard2.isChecked()) {
                         correctAnswer = true;
                     }
                     break;
                 case 2:
-                    if (id == R.id.option3) {
+                    if (binding.imageCard3.isChecked()) {
                         correctAnswer = true;
                     }
                     break;
                 case 3:
-                    if (id == R.id.option4) {
+                    if (binding.imageCard4.isChecked()) {
                         correctAnswer = true;
                     }
                     break;
@@ -155,6 +154,51 @@ public class ImageIdentificationFragment extends Fragment {
                 nextQuestion();
             }
             binding.nestedScrollView.fullScroll(View.FOCUS_UP);
+        });
+
+        binding.imageCard1.setOnClickListener(view1 -> {
+            if (binding.imageCard1.isChecked()) {
+                binding.imageCard1.setChecked(false);
+            }
+            else {
+                binding.imageCard2.setChecked(false);
+                binding.imageCard3.setChecked(false);
+                binding.imageCard4.setChecked(false);
+                binding.imageCard1.setChecked(true);
+            }
+        });
+        binding.imageCard2.setOnClickListener(view1 -> {
+            if (binding.imageCard2.isChecked()) {
+                binding.imageCard2.setChecked(false);
+            }
+            else {
+                binding.imageCard1.setChecked(false);
+                binding.imageCard3.setChecked(false);
+                binding.imageCard4.setChecked(false);
+                binding.imageCard2.setChecked(true);
+            }
+        });
+        binding.imageCard3.setOnClickListener(view1 -> {
+            if (binding.imageCard3.isChecked()) {
+                binding.imageCard3.setChecked(false);
+            }
+            else {
+                binding.imageCard1.setChecked(false);
+                binding.imageCard2.setChecked(false);
+                binding.imageCard4.setChecked(false);
+                binding.imageCard3.setChecked(true);
+            }
+        });
+        binding.imageCard4.setOnClickListener(view1 -> {
+            if (binding.imageCard4.isChecked()) {
+                binding.imageCard4.setChecked(false);
+            }
+            else {
+                binding.imageCard1.setChecked(false);
+                binding.imageCard2.setChecked(false);
+                binding.imageCard3.setChecked(false);
+                binding.imageCard4.setChecked(true);
+            }
         });
     }
 
@@ -202,7 +246,10 @@ public class ImageIdentificationFragment extends Fragment {
     }
 
     private void nextQuestion() {
-        binding.radioGroup.clearCheck();
+        binding.imageCard1.setChecked(false);
+        binding.imageCard2.setChecked(false);
+        binding.imageCard3.setChecked(false);
+        binding.imageCard4.setChecked(false);
         binding.nextButton.setEnabled(false);
 
         Random random = new Random();

@@ -26,7 +26,13 @@ public class DeckInfoTableManager {
     public void open() throws SQLException {
         deckInfoTableHelper = new DeckInfoTableHelper(context);
         database = deckInfoTableHelper.getWritableDatabase();
-        database.execSQL(DeckInfoTableHelper.CREATE_TABLE);
+        database.execSQL(deckInfoTableHelper.CREATE_TABLE);
+    }
+
+    public void open(String table_name) throws SQLException {
+        deckInfoTableHelper = new DeckInfoTableHelper(context, table_name);
+        database = deckInfoTableHelper.getWritableDatabase();
+        database.execSQL(deckInfoTableHelper.CREATE_TABLE);
     }
 
     public void close() {
@@ -47,12 +53,12 @@ public class DeckInfoTableManager {
         contentValues.put(DeckInfoTableHelper.NAME, name);
         contentValues.put(DeckInfoTableHelper.IMAGE, image);
         contentValues.put(DeckInfoTableHelper.DESCRIPTION, description);
-        return database.insert(DeckInfoTableHelper.TABLE_NAME, null, contentValues);
+        return database.insert(deckInfoTableHelper.TABLE_NAME, null, contentValues);
     }
 
     public Cursor fetch() {
         String[] columns = new String[] { DeckInfoTableHelper.ID, DeckInfoTableHelper.NAME, DeckInfoTableHelper.IMAGE, DeckInfoTableHelper.DESCRIPTION };
-        Cursor cursor = database.query(DeckInfoTableHelper.TABLE_NAME, columns, null, null, null, null, null);
+        Cursor cursor = database.query(deckInfoTableHelper.TABLE_NAME, columns, null, null, null, null, null);
         if (cursor != null) {
             cursor.moveToFirst();
         }
@@ -62,7 +68,7 @@ public class DeckInfoTableManager {
     public int update(long id, String oldName, String name, byte[] image, String description) {
         try {
             if (!oldName.toUpperCase().replace(" ", "_").equals(name.toUpperCase().replace(" ", "_"))) {
-                database.execSQL("ALTER TABLE " + "\"" + oldName.toUpperCase().replace(" ", "_") + "\"" + " RENAME TO " + "\"" + name.toUpperCase().replace(" ", "_") + "\"");
+                database.execSQL("ALTER TABLE " + "\"" + DeckTableHelper.TABLE_NAME_PREFIX + oldName.toUpperCase().replace(" ", "_") + "\"" + " RENAME TO " + "\"" + DeckTableHelper.TABLE_NAME_PREFIX + name.toUpperCase().replace(" ", "_") + "\"");
                 database.execSQL("ALTER TABLE " + "\"" + SuperMemoTableHelper.TABLE_NAME_PREFIX + oldName.toUpperCase().replace(" ", "_") + "\"" + " RENAME TO " + "\"" + SuperMemoTableHelper.TABLE_NAME_PREFIX + name.toUpperCase().replace(" ", "_") + "\"");
             }
         }
@@ -74,24 +80,24 @@ public class DeckInfoTableManager {
         contentValues.put(DeckInfoTableHelper.NAME, name);
         contentValues.put(DeckInfoTableHelper.IMAGE, image);
         contentValues.put(DeckInfoTableHelper.DESCRIPTION, description);
-        return database.update(DeckInfoTableHelper.TABLE_NAME, contentValues, DeckInfoTableHelper.ID + " = " + id, null);
+        return database.update(deckInfoTableHelper.TABLE_NAME, contentValues, DeckInfoTableHelper.ID + " = " + id, null);
     }
 
     public void deleteRow(long id) {
         String[] columns = new String[] { DeckInfoTableHelper.NAME };
-        Cursor cursor = database.query(DeckInfoTableHelper.TABLE_NAME, columns, DeckInfoTableHelper.ID + "=" + id, null, null, null, null);
+        Cursor cursor = database.query(deckInfoTableHelper.TABLE_NAME, columns, DeckInfoTableHelper.ID + "=" + id, null, null, null, null);
         if (cursor.getCount() != 0) {
             cursor.moveToFirst();
             DeckTableManager deckTableManager = new DeckTableManager(context);
             deckTableManager.open(cursor.getString(0));
             deckTableManager.deleteTable();
             deckTableManager.close();
-            database.delete(DeckInfoTableHelper.TABLE_NAME, DeckInfoTableHelper.ID + "=" + id, null);
+            database.delete(deckInfoTableHelper.TABLE_NAME, DeckInfoTableHelper.ID + "=" + id, null);
         }
         cursor.close();
     }
 
     public void deleteTable() {
-        database.execSQL("DROP TABLE IF EXISTS " + DeckInfoTableHelper.TABLE_NAME);
+        database.execSQL("DROP TABLE IF EXISTS " + deckInfoTableHelper.TABLE_NAME);
     }
 }

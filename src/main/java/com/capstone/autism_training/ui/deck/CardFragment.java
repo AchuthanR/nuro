@@ -48,6 +48,8 @@ public class CardFragment extends Fragment {
     private SelectionTracker<Long> selectionTracker;
     private RecyclerView.AdapterDataObserver adapterDataObserver;
 
+    private boolean demoMode = false;
+
     private FragmentCardBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -66,6 +68,14 @@ public class CardFragment extends Fragment {
             binding.toolbar.setTitle(tableNameBackStack.get(tableNameBackStack.size() - 1));
         }
 
+        if (getArguments() != null && getArguments().containsKey("readOnlyMode") && getArguments().getBoolean("readOnlyMode")) {
+            binding.extendedFAB.setVisibility(View.GONE);
+        }
+
+        if (getArguments() != null && getArguments().containsKey("demoMode")) {
+            demoMode = getArguments().getBoolean("demoMode");
+        }
+
         return binding.getRoot();
     }
 
@@ -80,7 +90,7 @@ public class CardFragment extends Fragment {
         });
 
         binding.extendedFAB.setOnClickListener(view1 -> {
-            AddCardDialogFragment addCardDialogFragment = new AddCardDialogFragment();
+            AddCardDialogFragment addCardDialogFragment = new AddCardDialogFragment(demoMode);
 
             FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
@@ -98,85 +108,90 @@ public class CardFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
-        selectionTracker = new SelectionTracker.Builder<>(
-                "selectionId",
-                mRecyclerView,
-                new CardItemKeyProvider(mRecyclerView),
-                new CardDetailsLookup(mRecyclerView),
-                StorageStrategy.createLongStorage())
-                .withSelectionPredicate(SelectionPredicates.createSelectSingleAnything())
-                .build();
+        if (getArguments() == null || !getArguments().containsKey("readOnlyMode") || !getArguments().getBoolean("readOnlyMode")) {
+            selectionTracker = new SelectionTracker.Builder<>(
+                    "selectionId",
+                    mRecyclerView,
+                    new CardItemKeyProvider(mRecyclerView),
+                    new CardDetailsLookup(mRecyclerView),
+                    StorageStrategy.createLongStorage())
+                    .withSelectionPredicate(SelectionPredicates.createSelectSingleAnything())
+                    .build();
 
-        selectionTracker.addObserver(new SelectionTracker.SelectionObserver<Long>() {
-            @Override
-            public void onSelectionChanged() {
-                super.onSelectionChanged();
-                if (!selectionTracker.getSelection().isEmpty() && getContext() != null) {
-                    BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
-                    bottomSheetDialog.setContentView(R.layout.layout_bottom_sheet_dialog);
-                    if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                        bottomSheetDialog.getBehavior().setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
+            selectionTracker.addObserver(new SelectionTracker.SelectionObserver<Long>() {
+                @Override
+                public void onSelectionChanged() {
+                    super.onSelectionChanged();
+                    if (!selectionTracker.getSelection().isEmpty() && getContext() != null) {
+                        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
+                        bottomSheetDialog.setContentView(R.layout.layout_bottom_sheet_dialog);
+                        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                            bottomSheetDialog.getBehavior().setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
+                        }
+                        bottomSheetDialog.setOnCancelListener(dialogInterface -> selectionTracker.clearSelection());
+
+                        MaterialTextView editTextView = bottomSheetDialog.findViewById(R.id.action_edit);
+                        if (editTextView != null) {
+                            editTextView.setOnClickListener(view1 -> {
+                                bottomSheetDialog.dismiss();
+                                if (!selectionTracker.hasSelection()) {
+                                    return;
+                                }
+                                long id = selectionTracker.getSelection().iterator().next();
+                                selectionTracker.clearSelection();
+                                RecyclerView.ViewHolder viewHolder = mRecyclerView.findViewHolderForItemId(id);
+                                if (viewHolder != null) {
+                                    CardModel cardModel = mAdapter.getItem(viewHolder.getAdapterPosition());
+
+                                    EditCardDialogFragment editCardDialogFragment = new EditCardDialogFragment(demoMode);
+                                    editCardDialogFragment.setCardModel(cardModel);
+                                    editCardDialogFragment.setAdapterPosition(viewHolder.getAdapterPosition());
+
+                                    FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+                                    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                                    editCardDialogFragment.show(transaction, EditCardDialogFragment.TAG);
+                                }
+                            });
+                        }
+
+                        MaterialTextView deleteTextView = bottomSheetDialog.findViewById(R.id.action_delete);
+                        if (deleteTextView != null) {
+                            deleteTextView.setOnClickListener(view1 -> {
+                                bottomSheetDialog.dismiss();
+                                new MaterialAlertDialogBuilder(getContext(), com.google.android.material.R.style.ThemeOverlay_Material3_MaterialAlertDialog_Centered)
+                                        .setIcon(R.drawable.ic_round_delete_24)
+                                        .setTitle("Delete card?")
+                                        .setMessage("The selected card will be deleted permanently.")
+                                        .setPositiveButton("Delete", (dialogInterface, i) -> {
+                                            if (selectionTracker.hasSelection()) {
+                                                long id = selectionTracker.getSelection().iterator().next();
+                                                selectionTracker.clearSelection();
+                                                if (!demoMode) {
+                                                    deckTableManager.deleteRow(id);
+                                                }
+                                                mAdapter.removeItem(mRecyclerView.findViewHolderForItemId(id).getAdapterPosition());
+                                                Snackbar.make(view, "Deleted the card", Snackbar.LENGTH_LONG)
+                                                        .setAction("OKAY", view2 -> {
+                                                        }).show();
+                                            }
+                                        })
+                                        .setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.cancel())
+                                        .setOnCancelListener(dialogInterface -> selectionTracker.clearSelection())
+                                        .show();
+                            });
+                        }
+
+                        MaterialTextView cancelTextView = bottomSheetDialog.findViewById(R.id.action_cancel);
+                        if (cancelTextView != null) {
+                            cancelTextView.setOnClickListener(view1 -> bottomSheetDialog.cancel());
+                        }
+
+                        bottomSheetDialog.show();
                     }
-                    bottomSheetDialog.setOnCancelListener(dialogInterface -> selectionTracker.clearSelection());
-
-                    MaterialTextView editTextView = bottomSheetDialog.findViewById(R.id.action_edit);
-                    if (editTextView != null) {
-                        editTextView.setOnClickListener(view1 -> {
-                            bottomSheetDialog.dismiss();
-                            if (!selectionTracker.hasSelection()) {
-                                return;
-                            }
-                            long id = selectionTracker.getSelection().iterator().next();
-                            selectionTracker.clearSelection();
-                            RecyclerView.ViewHolder viewHolder = mRecyclerView.findViewHolderForItemId(id);
-                            if (viewHolder != null) {
-                                CardModel cardModel = mAdapter.getItem(viewHolder.getAdapterPosition());
-
-                                EditCardDialogFragment editCardDialogFragment = new EditCardDialogFragment();
-                                editCardDialogFragment.setCardModel(cardModel);
-                                editCardDialogFragment.setAdapterPosition(viewHolder.getAdapterPosition());
-
-                                FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-                                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                                editCardDialogFragment.show(transaction, EditCardDialogFragment.TAG);
-                            }
-                        });
-                    }
-
-                    MaterialTextView deleteTextView = bottomSheetDialog.findViewById(R.id.action_delete);
-                    if (deleteTextView != null) {
-                        deleteTextView.setOnClickListener(view1 -> {
-                            bottomSheetDialog.dismiss();
-                            new MaterialAlertDialogBuilder(getContext(), com.google.android.material.R.style.ThemeOverlay_Material3_MaterialAlertDialog_Centered)
-                                    .setIcon(R.drawable.ic_round_delete_24)
-                                    .setTitle("Delete card?")
-                                    .setMessage("The selected card will be deleted permanently.")
-                                    .setPositiveButton("Delete", (dialogInterface, i) -> {
-                                        if (selectionTracker.hasSelection()) {
-                                            long id = selectionTracker.getSelection().iterator().next();
-                                            selectionTracker.clearSelection();
-                                            deckTableManager.deleteRow(id);
-                                            mAdapter.removeItem(mRecyclerView.findViewHolderForItemId(id).getAdapterPosition());
-                                            Snackbar.make(view, "Deleted the card", Snackbar.LENGTH_LONG)
-                                                    .setAction("OKAY", view2 -> {}).show();
-                                        }
-                                    })
-                                    .setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.cancel())
-                                    .setOnCancelListener(dialogInterface -> selectionTracker.clearSelection())
-                                    .show();
-                        });
-                    }
-
-                    MaterialTextView cancelTextView = bottomSheetDialog.findViewById(R.id.action_cancel);
-                    if (cancelTextView != null) {
-                        cancelTextView.setOnClickListener(view1 -> bottomSheetDialog.cancel());
-                    }
-
-                    bottomSheetDialog.show();
                 }
-            }
-        });
-        mAdapter.setSelectionTracker(selectionTracker);
+            });
+            mAdapter.setSelectionTracker(selectionTracker);
+        }
 
         adapterDataObserver = new RecyclerView.AdapterDataObserver() {
             @Override

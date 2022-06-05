@@ -1,0 +1,9 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <item
+        android:id="@+id/action_help"
+        android:title="@string/action_help_fragment_train"
+        android:icon="@drawable/ic_round_help_outline_24"
+        app:showAsAction="always" />
+</menu>

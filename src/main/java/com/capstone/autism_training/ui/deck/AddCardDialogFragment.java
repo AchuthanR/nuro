@@ -27,11 +27,16 @@ public class AddCardDialogFragment extends BottomSheetDialogFragment {
 
     public static final String TAG = AddCardDialogFragment.class.getSimpleName();
 
-    private ActivityResultLauncher<String> mGetContent;
     private CardFragment cardFragment;
+    private final boolean demoMode;
+    private ActivityResultLauncher<String> mGetContent;
     private byte[] image = null;
 
     private DialogFragmentAddCardBinding binding;
+
+    public AddCardDialogFragment(boolean demoMode) {
+        this.demoMode = demoMode;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,7 +87,13 @@ public class AddCardDialogFragment extends BottomSheetDialogFragment {
             EditText shortAnswerEditText = binding.shortAnswerEditText;
 
             if (image != null && !captionEditText.getText().toString().isEmpty() && !shortAnswerEditText.getText().toString().isEmpty()) {
-                long rowNumber = cardFragment.deckTableManager.insert(image, captionEditText.getText().toString(), shortAnswerEditText.getText().toString());
+                long rowNumber;
+                if (demoMode) {
+                    rowNumber = cardFragment.mAdapter.getMaxId() + 1;
+                }
+                else {
+                    rowNumber = cardFragment.deckTableManager.insert(image, captionEditText.getText().toString(), shortAnswerEditText.getText().toString());
+                }
                 if (rowNumber != -1) {
                     CardModel cardModel = new CardModel(rowNumber, image, captionEditText.getText().toString(), shortAnswerEditText.getText().toString());
                     cardFragment.mAdapter.addItem(cardModel);
