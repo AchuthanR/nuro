@@ -5,11 +5,11 @@
     </style>
 
     <style name="TextAppearance.App.CollapsingToolbar.Expanded" parent="TextAppearance.Material3.HeadlineLarge">
-        <item name="fontFamily">@font/gopher_bold</item>
+        <item name="fontFamily">@font/prompt_bold</item>
     </style>
 
     <style name="TextAppearance.App.CollapsingToolbar.Collapsed" parent="TextAppearance.Material3.TitleLarge">
-        <item name="fontFamily">@font/gopher_bold</item>
+        <item name="fontFamily">@font/prompt_bold</item>
     </style>
 
     <style name="Theme.App.BottomSheet.Modal" parent="Theme.App">

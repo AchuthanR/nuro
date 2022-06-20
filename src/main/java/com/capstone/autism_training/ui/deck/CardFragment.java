@@ -3,6 +3,7 @@ package com.capstone.autism_training.ui.deck;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,7 +70,7 @@ public class CardFragment extends Fragment {
         }
 
         if (getArguments() != null && getArguments().containsKey("readOnlyMode") && getArguments().getBoolean("readOnlyMode")) {
-            binding.extendedFAB.setVisibility(View.GONE);
+            binding.toolbar.getMenu().removeItem(R.id.action_add);
         }
 
         if (getArguments() != null && getArguments().containsKey("demoMode")) {
@@ -89,17 +90,24 @@ public class CardFragment extends Fragment {
             }
         });
 
-        binding.extendedFAB.setOnClickListener(view1 -> {
-            AddCardDialogFragment addCardDialogFragment = new AddCardDialogFragment(demoMode);
+        binding.toolbar.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == R.id.action_add && getChildFragmentManager().getFragments().isEmpty()) {
+                AddCardDialogFragment addCardDialogFragment = new AddCardDialogFragment(demoMode);
 
-            FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-            addCardDialogFragment.show(transaction, AddCardDialogFragment.TAG);
+                FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                addCardDialogFragment.show(transaction, AddCardDialogFragment.TAG);
+                return true;
+            }
+            return false;
         });
 
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+
         mRecyclerView = binding.recyclerView;
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            mLayoutManager = new GridLayoutManager(getContext(), 2);
+        if (dpWidth > 600) {
+            mLayoutManager = new GridLayoutManager(getContext(), (int) (dpWidth / 400));
         }
         else {
             mLayoutManager = new LinearLayoutManager(getContext());
@@ -126,7 +134,7 @@ public class CardFragment extends Fragment {
                         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
                         bottomSheetDialog.setContentView(R.layout.layout_bottom_sheet_dialog);
                         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                            bottomSheetDialog.getBehavior().setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
+                            bottomSheetDialog.getBehavior().setState(BottomSheetBehavior.STATE_EXPANDED);
                         }
                         bottomSheetDialog.setOnCancelListener(dialogInterface -> selectionTracker.clearSelection());
 

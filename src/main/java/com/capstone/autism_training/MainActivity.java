@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.nav_host_fragment_activity_main, scheduleFragment, ScheduleFragment.TAG)
+                    .replace(R.id.navHostFragmentActivityMain, scheduleFragment, ScheduleFragment.TAG)
                     .addToBackStack(ScheduleFragment.TAG)
                     .setReorderingAllowed(true)
                     .commit();
@@ -119,12 +119,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         navigationBarView.setOnItemSelectedListener(item -> {
+            getSupportFragmentManager().executePendingTransactions();
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
             if (item.getItemId() == R.id.navigation_schedule) {
                 if (!scheduleFragment.isAdded()) {
                     transaction
-                            .add(R.id.nav_host_fragment_activity_main, scheduleFragment, ScheduleFragment.TAG)
+                            .add(R.id.navHostFragmentActivityMain, scheduleFragment, ScheduleFragment.TAG)
                             .addToBackStack(ScheduleFragment.TAG)
                             .setReorderingAllowed(true);
                 }
@@ -135,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
             else if (item.getItemId() == R.id.navigation_deck) {
                 if (!deckFragment.isAdded()) {
                     transaction
-                            .add(R.id.nav_host_fragment_activity_main, deckFragment, DeckFragment.TAG)
+                            .add(R.id.navHostFragmentActivityMain, deckFragment, DeckFragment.TAG)
                             .addToBackStack(DeckFragment.TAG)
                             .setReorderingAllowed(true);
                 }
@@ -146,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
             else if (item.getItemId() == R.id.navigation_activity) {
                 if (!activityFragment.isAdded()) {
                     transaction
-                            .add(R.id.nav_host_fragment_activity_main, activityFragment, ActivityFragment.TAG)
+                            .add(R.id.navHostFragmentActivityMain, activityFragment, ActivityFragment.TAG)
                             .addToBackStack(ActivityFragment.TAG)
                             .setReorderingAllowed(true);
                 }
@@ -157,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
             else if (item.getItemId() == R.id.navigation_help) {
                 if (!helpFragment.isAdded()) {
                     transaction
-                            .add(R.id.nav_host_fragment_activity_main, helpFragment, HelpFragment.TAG)
+                            .add(R.id.navHostFragmentActivityMain, helpFragment, HelpFragment.TAG)
                             .addToBackStack(HelpFragment.TAG)
                             .setReorderingAllowed(true);
                 }
@@ -168,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
             else if (item.getItemId() == R.id.navigation_train) {
                 if (!trainFragment.isAdded()) {
                     transaction
-                            .add(R.id.nav_host_fragment_activity_main, trainFragment, TrainFragment.TAG)
+                            .add(R.id.navHostFragmentActivityMain, trainFragment, TrainFragment.TAG)
                             .addToBackStack(TrainFragment.TAG)
                             .setReorderingAllowed(true);
                 }

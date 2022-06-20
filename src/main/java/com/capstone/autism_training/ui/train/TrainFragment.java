@@ -1,7 +1,7 @@
 package com.capstone.autism_training.ui.train;
 
-import android.content.res.Configuration;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,6 +55,7 @@ public class TrainFragment extends Fragment {
                 bundle.putBoolean("readOnlyMode", true);
                 cardFragment.setArguments(bundle);
 
+                getParentFragmentManager().executePendingTransactions();
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
                 for (Fragment fragment : getParentFragmentManager().getFragments()) {
                     if (fragment.isVisible()) {
@@ -62,7 +63,7 @@ public class TrainFragment extends Fragment {
                     }
                 }
                 transaction
-                        .add(R.id.nav_host_fragment_activity_main, cardFragment, CardFragment.TAG)
+                        .add(R.id.navHostFragmentActivityMain, cardFragment, CardFragment.TAG)
                         .addToBackStack(TrainFragment.TAG)
                         .setReorderingAllowed(true);
                 transaction.commit();
@@ -74,6 +75,47 @@ public class TrainFragment extends Fragment {
         superMemoTableManager = new SuperMemoTableManager(getContext());
         trainDeck = new TrainDeck();
 
+        loadDecksFromDatabase();
+        binding.chooseDeckAutoCompleteTextView.setOnItemClickListener((adapterView, view1, i, l) -> deckSelected(adapterView.getItemAtPosition(i).toString()));
+
+        binding.showAnswerButton.setOnClickListener(view1 -> {
+            view1.setVisibility(View.GONE);
+            binding.shortAnswerTextView.setVisibility(View.VISIBLE);
+            binding.reviewQuestionTextView.setVisibility(View.VISIBLE);
+            binding.buttonToggleGroup.setVisibility(View.VISIBLE);
+        });
+
+        binding.buttonToggleGroup.addOnButtonCheckedListener((group, checkedId, isChecked) -> binding.nextButton.setEnabled(true));
+
+        binding.nextButton.setOnClickListener(view1 -> {
+            nextCard();
+            binding.nestedScrollView.fullScroll(View.FOCUS_UP);
+        });
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+
+        if (!binding.chooseDeckAutoCompleteTextView.getText().toString().isEmpty()) {
+            try {
+                deckSelected(binding.chooseDeckAutoCompleteTextView.getText().toString());
+            }
+            catch (SQLiteException ignored) {
+                binding.chooseDeckAutoCompleteTextView.setText("", false);
+            }
+        }
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            loadDecksFromDatabase();
+        }
+    }
+
+    private void loadDecksFromDatabase() {
         DeckInfoTableManager deckInfoTableManager = new DeckInfoTableManager(getContext());
         deckInfoTableManager.open();
         Cursor cursor = deckInfoTableManager.fetch();
@@ -89,26 +131,11 @@ public class TrainFragment extends Fragment {
         MyArrayAdapter adapter = new MyArrayAdapter(getContext(),
                 android.R.layout.simple_list_item_1, decks);
         binding.chooseDeckAutoCompleteTextView.setAdapter(adapter);
-        binding.chooseDeckAutoCompleteTextView.setOnItemClickListener((adapterView, view1, i, l) -> deckSelected(adapterView.getItemAtPosition(i).toString()));
 
-        binding.showAnswerButton.setOnClickListener(view1 -> {
-            view1.setVisibility(View.GONE);
-            binding.shortAnswerTextView.setVisibility(View.VISIBLE);
-            binding.reviewQuestionTextView.setVisibility(View.VISIBLE);
-            binding.buttonToggleGroup.setVisibility(View.VISIBLE);
-        });
-
-        binding.buttonToggleGroup.addOnButtonCheckedListener((group, checkedId, isChecked) -> binding.nextButton.setEnabled(true));
-
-        binding.nextButton.setOnClickListener(view1 -> nextCard());
-    }
-
-    @Override
-    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
-
-        if (!binding.chooseDeckAutoCompleteTextView.getText().toString().isEmpty()) {
-            deckSelected(binding.chooseDeckAutoCompleteTextView.getText().toString());
+        if (!decks.contains(binding.chooseDeckAutoCompleteTextView.getText().toString())) {
+            binding.chooseDeckAutoCompleteTextView.setText("", false);
+            binding.activityLinearLayout.setVisibility(View.GONE);
+            binding.reviewInfoTextView.setVisibility(View.GONE);
         }
     }
 
@@ -200,12 +227,7 @@ public class TrainFragment extends Fragment {
             binding.nextButton.setEnabled(false);
 
             binding.questionTextView.setText(currentCard.caption);
-            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-                binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(currentCard.image));
-            }
-            else {
-                binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(currentCard.image, 500));
-            }
+            binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(currentCard.image, getResources().getDisplayMetrics().density));
             binding.shortAnswerTextView.setText(currentCard.short_answer);
         }
     }

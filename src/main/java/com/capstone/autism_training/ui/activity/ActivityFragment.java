@@ -1,6 +1,7 @@
 package com.capstone.autism_training.ui.activity;
 
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.capstone.autism_training.R;
 import com.capstone.autism_training.databinding.FragmentActivityBinding;
-import com.capstone.autism_training.ui.deck.DeckFragment;
 
 public class ActivityFragment extends Fragment {
 
@@ -30,9 +30,21 @@ public class ActivityFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+        if (binding.gridLayout != null && dpWidth > 600) {
+            binding.gridLayout.setColumnCount((int) dpWidth / 400);
+            ViewGroup.LayoutParams layoutParams = binding.gridLayout.getLayoutParams();
+            int cardViewsInARow = Math.min(binding.gridLayout.getChildCount(), (int) dpWidth / 400);
+            // Subtracting 112dp to account for the navigation rail and activity_horizontal_margin
+            layoutParams.width = (int) ((dpWidth - 112) / ((int) dpWidth / 400) * cardViewsInARow * displayMetrics.density);
+            binding.gridLayout.setLayoutParams(layoutParams);
+        }
+
         binding.imageIdentificationCardView.setOnClickListener(view1 -> {
             ImageIdentificationFragment imageIdentificationFragment = null;
 
+            getParentFragmentManager().executePendingTransactions();
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
             for (Fragment fragment : getParentFragmentManager().getFragments()) {
                 if (fragment.isVisible()) {
@@ -49,7 +61,7 @@ public class ActivityFragment extends Fragment {
             else {
                 imageIdentificationFragment = new ImageIdentificationFragment();
                 transaction
-                        .add(R.id.nav_host_fragment_activity_main, imageIdentificationFragment, ImageIdentificationFragment.TAG)
+                        .add(R.id.navHostFragmentActivityMain, imageIdentificationFragment, ImageIdentificationFragment.TAG)
                         .addToBackStack(ActivityFragment.TAG)
                         .setReorderingAllowed(true);
             }
@@ -59,6 +71,7 @@ public class ActivityFragment extends Fragment {
         binding.wordIdentificationCardView.setOnClickListener(view1 -> {
             WordIdentificationFragment wordIdentificationFragment = null;
 
+            getParentFragmentManager().executePendingTransactions();
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
             for (Fragment fragment : getParentFragmentManager().getFragments()) {
                 if (fragment.isVisible()) {
@@ -75,7 +88,7 @@ public class ActivityFragment extends Fragment {
             else {
                 wordIdentificationFragment = new WordIdentificationFragment();
                 transaction
-                        .add(R.id.nav_host_fragment_activity_main, wordIdentificationFragment, WordIdentificationFragment.TAG)
+                        .add(R.id.navHostFragmentActivityMain, wordIdentificationFragment, WordIdentificationFragment.TAG)
                         .addToBackStack(ActivityFragment.TAG)
                         .setReorderingAllowed(true);
             }

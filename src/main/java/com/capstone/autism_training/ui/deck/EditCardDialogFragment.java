@@ -65,10 +65,10 @@ public class EditCardDialogFragment extends BottomSheetDialogFragment {
 
         BottomSheetBehavior<View> bottomSheetBehavior = BottomSheetBehavior.from((View) view.getParent());
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         }
 
-        binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(cardModel.image));
+        binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(cardModel.image, getResources().getDisplayMetrics().density));
         binding.captionEditText.setText(cardModel.caption);
         binding.shortAnswerEditText.setText(cardModel.short_answer);
 
@@ -77,7 +77,7 @@ public class EditCardDialogFragment extends BottomSheetDialogFragment {
                     try {
                         if (getContext() != null && uri != null) {
                             image = ImageHelper.getBitmapAsByteArray(BitmapFactory.decodeStream(getContext().getContentResolver().openInputStream(uri)));
-                            binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(image));
+                            binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(image, getResources().getDisplayMetrics().density));
                         }
                     } catch (FileNotFoundException e) {
                         Snackbar.make(view, "Image not found", Snackbar.LENGTH_LONG)

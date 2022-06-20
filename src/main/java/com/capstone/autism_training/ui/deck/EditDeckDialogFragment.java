@@ -65,19 +65,21 @@ public class EditDeckDialogFragment extends BottomSheetDialogFragment {
 
         BottomSheetBehavior<View> bottomSheetBehavior = BottomSheetBehavior.from((View) view.getParent());
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         }
 
-        binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(deckModel.image));
+        binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(deckModel.image, getResources().getDisplayMetrics().density));
         binding.nameEditText.setText(deckModel.name);
-        binding.descriptionEditText.setText(deckModel.description);
+        if (deckModel.description != null) {
+            binding.descriptionEditText.setText(deckModel.description);
+        }
 
         mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
                 uri -> {
                     try {
                         if (getContext() != null && uri != null) {
                             image = ImageHelper.getBitmapAsByteArray(BitmapFactory.decodeStream(getContext().getContentResolver().openInputStream(uri)));
-                            binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(image));
+                            binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(image, getResources().getDisplayMetrics().density));
                         }
                     } catch (FileNotFoundException e) {
                         Snackbar.make(view, "Image not found!", Snackbar.LENGTH_LONG)
@@ -92,7 +94,7 @@ public class EditDeckDialogFragment extends BottomSheetDialogFragment {
             EditText nameEditText = binding.nameEditText;
             EditText descriptionEditText = binding.descriptionEditText;
 
-            if (image != null && !nameEditText.getText().toString().isEmpty() && !descriptionEditText.getText().toString().isEmpty()) {
+            if (image != null && !nameEditText.getText().toString().isEmpty()) {
                 long rowsAffected;
                 if (demoMode) {
                     rowsAffected = 1;

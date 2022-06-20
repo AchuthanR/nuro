@@ -1,5 +1,6 @@
 package com.capstone.autism_training.card;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,6 @@ import androidx.recyclerview.selection.SelectionTracker;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.capstone.autism_training.R;
-import com.capstone.autism_training.deck.DeckModel;
 import com.capstone.autism_training.utilities.ImageHelper;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
@@ -27,6 +27,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
     private SelectionTracker<Long> selectionTracker = null;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        private final Context context;
         private final MaterialCardView cardView;
         private final ShapeableImageView imageView;
         private final MaterialTextView captionTextView;
@@ -36,12 +37,17 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
 
         public ViewHolder(View view) {
             super(view);
+            context = view.getContext();
             cardView = view.findViewById(R.id.cardView);
             imageView = view.findViewById(R.id.imageView);
             captionTextView = view.findViewById(R.id.captionTextView);
             showAnswerButton = view.findViewById(R.id.showAnswerButton);
             shortAnswerTextView = view.findViewById(R.id.shortAnswerTextView);
             cardItemDetails = new CardItemDetails();
+        }
+
+        public Context getContext() {
+            return context;
         }
 
         public MaterialCardView getCardView() {
@@ -109,7 +115,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
-        viewHolder.getImageView().setImageBitmap(ImageHelper.toCompressedBitmap(cards.get(position).image));
+        viewHolder.getImageView().setImageBitmap(ImageHelper.toCompressedBitmap(cards.get(position).image, viewHolder.getContext().getResources().getDisplayMetrics().density));
         viewHolder.getCaptionTextView().setText(cards.get(position).caption);
         viewHolder.getShortAnswerTextView().setText(cards.get(position).short_answer);
 

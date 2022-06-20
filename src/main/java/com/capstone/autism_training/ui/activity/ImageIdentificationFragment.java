@@ -2,10 +2,11 @@ package com.capstone.autism_training.ui.activity;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteException;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,6 +59,15 @@ public class ImageIdentificationFragment extends Fragment {
             }
         });
 
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+        // 864dp for the layout and 112dp for the navigation rail and activity_horizontal_margin
+        if (dpWidth > 976) {
+            ViewGroup.LayoutParams layoutParams = binding.activityLinearLayout.getLayoutParams();
+            layoutParams.width = (int) (864 * displayMetrics.density);
+            binding.activityLinearLayout.setLayoutParams(layoutParams);
+        }
+
         mediaPlayer = MediaPlayer.create(getContext(), R.raw.cheer);
         if (getContext() != null) {
             sharedPreferences = getContext().getSharedPreferences("activities", Context.MODE_PRIVATE);
@@ -74,24 +84,10 @@ public class ImageIdentificationFragment extends Fragment {
             return false;
         });
 
-        DeckInfoTableManager deckInfoTableManager = new DeckInfoTableManager(getContext());
-        deckInfoTableManager.open();
-        cursor = deckInfoTableManager.fetch();
-        cursor.moveToLast();
-        ArrayList<String> decks = new ArrayList<>();
-        while (!cursor.isBeforeFirst() || cursor.isLast()) {
-            int nameIndex = cursor.getColumnIndex(DeckInfoTableHelper.NAME);
-            decks.add(cursor.getString(nameIndex));
-            cursor.moveToPrevious();
-        }
-        cursor.close();
-
         deckTableManager = new DeckTableManager(getContext());
         cardPositions = new ArrayList<>();
 
-        MyArrayAdapter adapter = new MyArrayAdapter(getContext(),
-                android.R.layout.simple_list_item_1, decks);
-        binding.chooseDeckAutoCompleteTextView.setAdapter(adapter);
+        loadDecksFromDatabase();
         binding.chooseDeckAutoCompleteTextView.setOnItemClickListener((adapterView, view1, i, l) -> deckSelected(adapterView.getItemAtPosition(i).toString()));
 
         binding.submitButton.setOnClickListener(view1 -> {
@@ -147,7 +143,8 @@ public class ImageIdentificationFragment extends Fragment {
             }
             currentAnswerIndex++;
             if (currentAnswerIndex == cardPositions.size()) {
-                Snackbar.make(view1, "You have come to the end of the deck", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(view1, "You have come to the end of the deck", Snackbar.LENGTH_LONG)
+                        .setAction("OKAY", view2 -> {}).show();
                 binding.activityLinearLayout.setVisibility(View.GONE);
             }
             else {
@@ -207,13 +204,49 @@ public class ImageIdentificationFragment extends Fragment {
         super.onViewStateRestored(savedInstanceState);
 
         if (!binding.chooseDeckAutoCompleteTextView.getText().toString().isEmpty()) {
-            deckSelected(binding.chooseDeckAutoCompleteTextView.getText().toString());
+            try {
+                deckSelected(binding.chooseDeckAutoCompleteTextView.getText().toString());
+            }
+            catch (SQLiteException ignored) {
+                binding.chooseDeckAutoCompleteTextView.setText("", false);
+            }
+        }
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            loadDecksFromDatabase();
+        }
+    }
+
+    private void loadDecksFromDatabase() {
+        DeckInfoTableManager deckInfoTableManager = new DeckInfoTableManager(getContext());
+        deckInfoTableManager.open();
+        Cursor cursor = deckInfoTableManager.fetch();
+        cursor.moveToLast();
+        ArrayList<String> decks = new ArrayList<>();
+        while (!cursor.isBeforeFirst() || cursor.isLast()) {
+            int nameIndex = cursor.getColumnIndex(DeckInfoTableHelper.NAME);
+            decks.add(cursor.getString(nameIndex));
+            cursor.moveToPrevious();
+        }
+        cursor.close();
+
+        MyArrayAdapter adapter = new MyArrayAdapter(getContext(),
+                android.R.layout.simple_list_item_1, decks);
+        binding.chooseDeckAutoCompleteTextView.setAdapter(adapter);
+
+        if (!decks.contains(binding.chooseDeckAutoCompleteTextView.getText().toString())) {
+            binding.chooseDeckAutoCompleteTextView.setText("", false);
+            binding.activityLinearLayout.setVisibility(View.GONE);
         }
     }
 
     private void deckSelected(String deck) {
         deckTableManager.open(deck);
-        if (!cursor.isClosed()) {
+        if (cursor != null && !cursor.isClosed()) {
             cursor.close();
         }
         cursor = deckTableManager.fetch();
@@ -239,8 +272,7 @@ public class ImageIdentificationFragment extends Fragment {
             }
             if (getView() != null) {
                 Snackbar.make(getView(), "At least 4 cards are needed in a deck to perform this activity", Snackbar.LENGTH_INDEFINITE)
-                        .setAction("OKAY", view2 -> {
-                        }).show();
+                        .setAction("OKAY", view2 -> {}).show();
             }
         }
     }
@@ -273,25 +305,19 @@ public class ImageIdentificationFragment extends Fragment {
 
         binding.questionTextView.setText(String.format(getString(R.string.identify_question_text_view_text_fragment_image_identification), cursor.getString(answerColumnIndex)));
 
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            binding.imageView1.setImageBitmap(ImageHelper.toCompressedBitmap(images.get(0)));
-            binding.imageView2.setImageBitmap(ImageHelper.toCompressedBitmap(images.get(1)));
-            binding.imageView3.setImageBitmap(ImageHelper.toCompressedBitmap(images.get(2)));
-            binding.imageView4.setImageBitmap(ImageHelper.toCompressedBitmap(images.get(3)));
-        }
-        else {
-            binding.imageView1.setImageBitmap(ImageHelper.toCompressedBitmap(images.get(0), 500));
-            binding.imageView2.setImageBitmap(ImageHelper.toCompressedBitmap(images.get(1), 500));
-            binding.imageView3.setImageBitmap(ImageHelper.toCompressedBitmap(images.get(2), 500));
-            binding.imageView4.setImageBitmap(ImageHelper.toCompressedBitmap(images.get(3), 500));
-        }
+        binding.imageView1.setImageBitmap(ImageHelper.toCompressedBitmap(images.get(0), getResources().getDisplayMetrics().density));
+        binding.imageView2.setImageBitmap(ImageHelper.toCompressedBitmap(images.get(1), getResources().getDisplayMetrics().density));
+        binding.imageView3.setImageBitmap(ImageHelper.toCompressedBitmap(images.get(2), getResources().getDisplayMetrics().density));
+        binding.imageView4.setImageBitmap(ImageHelper.toCompressedBitmap(images.get(3), getResources().getDisplayMetrics().density));
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
-        cursor.close();
+        if (cursor != null && !cursor.isClosed()) {
+            cursor.close();
+        }
         mediaPlayer.stop();
     }
 }

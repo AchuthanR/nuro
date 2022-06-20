@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteException;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -74,24 +75,10 @@ public class WordIdentificationFragment extends Fragment {
             return false;
         });
 
-        DeckInfoTableManager deckInfoTableManager = new DeckInfoTableManager(getContext());
-        deckInfoTableManager.open();
-        cursor = deckInfoTableManager.fetch();
-        cursor.moveToLast();
-        ArrayList<String> decks = new ArrayList<>();
-        while (!cursor.isBeforeFirst() || cursor.isLast()) {
-            int nameIndex = cursor.getColumnIndex(DeckInfoTableHelper.NAME);
-            decks.add(cursor.getString(nameIndex));
-            cursor.moveToPrevious();
-        }
-        cursor.close();
-
         deckTableManager = new DeckTableManager(getContext());
         cardPositions = new ArrayList<>();
 
-        MyArrayAdapter adapter = new MyArrayAdapter(getContext(),
-                android.R.layout.simple_list_item_1, decks);
-        binding.chooseDeckAutoCompleteTextView.setAdapter(adapter);
+        loadDecksFromDatabase();
         binding.chooseDeckAutoCompleteTextView.setOnItemClickListener((adapterView, view1, i, l) -> deckSelected(adapterView.getItemAtPosition(i).toString()));
 
         binding.submitButton.setOnClickListener(view1 -> {
@@ -148,7 +135,8 @@ public class WordIdentificationFragment extends Fragment {
             }
             currentAnswerIndex++;
             if (currentAnswerIndex == cardPositions.size()) {
-                Snackbar.make(view1, "You have come to the end of the deck", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(view1, "You have come to the end of the deck", Snackbar.LENGTH_INDEFINITE)
+                        .setAction("OKAY", view2 -> {}).show();
                 binding.activityLinearLayout.setVisibility(View.GONE);
             }
             else {
@@ -163,13 +151,49 @@ public class WordIdentificationFragment extends Fragment {
         super.onViewStateRestored(savedInstanceState);
 
         if (!binding.chooseDeckAutoCompleteTextView.getText().toString().isEmpty()) {
-            deckSelected(binding.chooseDeckAutoCompleteTextView.getText().toString());
+            try {
+                deckSelected(binding.chooseDeckAutoCompleteTextView.getText().toString());
+            }
+            catch (SQLiteException ignored) {
+                binding.chooseDeckAutoCompleteTextView.setText("", false);
+            }
+        }
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            loadDecksFromDatabase();
+        }
+    }
+
+    private void loadDecksFromDatabase() {
+        DeckInfoTableManager deckInfoTableManager = new DeckInfoTableManager(getContext());
+        deckInfoTableManager.open();
+        Cursor cursor = deckInfoTableManager.fetch();
+        cursor.moveToLast();
+        ArrayList<String> decks = new ArrayList<>();
+        while (!cursor.isBeforeFirst() || cursor.isLast()) {
+            int nameIndex = cursor.getColumnIndex(DeckInfoTableHelper.NAME);
+            decks.add(cursor.getString(nameIndex));
+            cursor.moveToPrevious();
+        }
+        cursor.close();
+
+        MyArrayAdapter adapter = new MyArrayAdapter(getContext(),
+                android.R.layout.simple_list_item_1, decks);
+        binding.chooseDeckAutoCompleteTextView.setAdapter(adapter);
+
+        if (!decks.contains(binding.chooseDeckAutoCompleteTextView.getText().toString())) {
+            binding.chooseDeckAutoCompleteTextView.setText("", false);
+            binding.activityLinearLayout.setVisibility(View.GONE);
         }
     }
 
     private void deckSelected(String deck) {
         deckTableManager.open(deck);
-        if (!cursor.isClosed()) {
+        if (cursor != null && !cursor.isClosed()) {
             cursor.close();
         }
         cursor = deckTableManager.fetch();
@@ -195,8 +219,7 @@ public class WordIdentificationFragment extends Fragment {
             }
             if (getView() != null) {
                 Snackbar.make(getView(), "At least 4 cards are needed in a deck to perform this activity", Snackbar.LENGTH_INDEFINITE)
-                        .setAction("OKAY", view2 -> {
-                        }).show();
+                        .setAction("OKAY", view2 -> {}).show();
             }
         }
     }
@@ -225,7 +248,7 @@ public class WordIdentificationFragment extends Fragment {
         answers.add(correctOption, cursor.getString(answerColumnIndex));
         byte[] image = cursor.getBlob(imageColumnIndex);
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(image));
+            binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(image, getResources().getDisplayMetrics().density));
         }
         else {
             binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(image, 500));
@@ -244,7 +267,9 @@ public class WordIdentificationFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
-        cursor.close();
+        if (cursor != null && !cursor.isClosed()) {
+            cursor.close();
+        }
         mediaPlayer.stop();
     }
 }

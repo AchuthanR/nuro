@@ -3,6 +3,7 @@ package com.capstone.autism_training.ui.deck;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +55,7 @@ public class DeckFragment extends Fragment {
         if (getArguments() != null && getArguments().containsKey("demoMode") && getArguments().getBoolean("demoMode")) {
             demoMode = true;
             binding.toolbar.getMenu().removeItem(R.id.action_help);
+            binding.logoButton.setVisibility(View.GONE);
         }
 
         return binding.getRoot();
@@ -70,15 +72,35 @@ public class DeckFragment extends Fragment {
                     getActivity().onBackPressed();
                 }
             });
+            binding.toolbar.setOnMenuItemClickListener(item -> {
+                if (item.getItemId() == R.id.action_add && getChildFragmentManager().getFragments().isEmpty()) {
+                    AddDeckDialogFragment addDeckDialogFragment = new AddDeckDialogFragment(demoMode);
+
+                    FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+                    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                    addDeckDialogFragment.show(transaction, AddDeckDialogFragment.TAG);
+                    return true;
+                }
+                return false;
+            });
         }
         else {
             binding.toolbar.setOnMenuItemClickListener(item -> {
-                if (item.getItemId() == R.id.action_help) {
+                if (item.getItemId() == R.id.action_add && getChildFragmentManager().getFragments().isEmpty()) {
+                    AddDeckDialogFragment addDeckDialogFragment = new AddDeckDialogFragment(demoMode);
+
+                    FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+                    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                    addDeckDialogFragment.show(transaction, AddDeckDialogFragment.TAG);
+                    return true;
+                }
+                else if (item.getItemId() == R.id.action_help) {
                     DeckFragment deckFragment = new DeckFragment();
                     Bundle bundle = new Bundle();
                     bundle.putBoolean("demoMode", true);
                     deckFragment.setArguments(bundle);
 
+                    getParentFragmentManager().executePendingTransactions();
                     FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
                     for (Fragment fragment : getParentFragmentManager().getFragments()) {
                         if (fragment.isVisible()) {
@@ -87,7 +109,7 @@ public class DeckFragment extends Fragment {
                     }
 
                     transaction
-                            .add(R.id.nav_host_fragment_activity_main, deckFragment, DeckFragment.TAG)
+                            .add(R.id.navHostFragmentActivityMain, deckFragment, DeckFragment.TAG)
                             .addToBackStack(DeckFragment.TAG)
                             .setReorderingAllowed(true);
                     transaction.commit();
@@ -97,17 +119,12 @@ public class DeckFragment extends Fragment {
             });
         }
 
-        binding.extendedFAB.setOnClickListener(view1 -> {
-            AddDeckDialogFragment addDeckDialogFragment = new AddDeckDialogFragment(demoMode);
-
-            FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-            addDeckDialogFragment.show(transaction, AddDeckDialogFragment.TAG);
-        });
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
 
         mRecyclerView = binding.recyclerView;
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            mLayoutManager = new GridLayoutManager(getContext(), 2);
+        if (dpWidth > 600) {
+            mLayoutManager = new GridLayoutManager(getContext(), (int) (dpWidth / 400));
         }
         else {
             mLayoutManager = new LinearLayoutManager(getContext());
@@ -133,7 +150,7 @@ public class DeckFragment extends Fragment {
                     BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
                     bottomSheetDialog.setContentView(R.layout.layout_bottom_sheet_dialog);
                     if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                        bottomSheetDialog.getBehavior().setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
+                        bottomSheetDialog.getBehavior().setState(BottomSheetBehavior.STATE_EXPANDED);
                     }
                     bottomSheetDialog.setOnCancelListener(dialogInterface -> selectionTracker.clearSelection());
 

@@ -1,5 +1,6 @@
 package com.capstone.autism_training.ui.deck;
 
+import android.content.res.Configuration;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import com.capstone.autism_training.R;
 import com.capstone.autism_training.databinding.DialogFragmentAddDeckBinding;
 import com.capstone.autism_training.deck.DeckModel;
 import com.capstone.autism_training.utilities.ImageHelper;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -59,12 +61,17 @@ public class AddDeckDialogFragment extends BottomSheetDialogFragment {
             getDialog().getWindow().getAttributes().windowAnimations = com.google.android.material.R.style.Animation_Design_BottomSheetDialog;
         }
 
+        BottomSheetBehavior<View> bottomSheetBehavior = BottomSheetBehavior.from((View) view.getParent());
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        }
+
         mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
                 uri -> {
                     try {
                         if (getContext() != null && uri != null) {
                             image = ImageHelper.getBitmapAsByteArray(BitmapFactory.decodeStream(getContext().getContentResolver().openInputStream(uri)));
-                            binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(image));
+                            binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(image, getResources().getDisplayMetrics().density));
                         }
                     } catch (FileNotFoundException e) {
                         Snackbar.make(view, "Image not found!", Snackbar.LENGTH_LONG)
@@ -79,7 +86,7 @@ public class AddDeckDialogFragment extends BottomSheetDialogFragment {
             EditText nameEditText = binding.nameEditText;
             EditText descriptionEditText = binding.descriptionEditText;
 
-            if (image != null && !nameEditText.getText().toString().isEmpty() && !descriptionEditText.getText().toString().isEmpty()) {
+            if (image != null && !nameEditText.getText().toString().isEmpty()) {
                 long rowNumber;
                 if (demoMode) {
                     rowNumber = deckFragment.mAdapter.getMaxId() + 1;

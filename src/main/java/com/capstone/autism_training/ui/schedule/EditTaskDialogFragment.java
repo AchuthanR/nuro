@@ -71,11 +71,13 @@ public class EditTaskDialogFragment extends BottomSheetDialogFragment {
 
         BottomSheetBehavior<View> bottomSheetBehavior = BottomSheetBehavior.from((View) view.getParent());
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         }
 
         binding.nameEditText.setText(taskModel.name);
-        binding.instructionEditText.setText(taskModel.instruction);
+        if (taskModel.instruction != null) {
+            binding.instructionEditText.setText(taskModel.instruction);
+        }
         DateFormat dateFormat1 = DateFormat.getTimeInstance(DateFormat.SHORT);
         dateFormat1.setTimeZone(TimeZone.getTimeZone("UTC"));
         binding.startTimeTextView.setText(String.format("Selected start time: %1$s", dateFormat1.format(start_time)));
@@ -83,14 +85,14 @@ public class EditTaskDialogFragment extends BottomSheetDialogFragment {
         long minutes = TimeUnit.MILLISECONDS.toMinutes(taskModel.duration) - hours * 60;
         binding.durationHourEditText.setText(String.valueOf(hours));
         binding.durationMinuteEditText.setText(String.valueOf(minutes));
-        binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(taskModel.image));
+        binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(taskModel.image, getResources().getDisplayMetrics().density));
 
         mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
                 uri -> {
                     try {
                         if (getContext() != null && uri != null) {
                             image = ImageHelper.getBitmapAsByteArray(BitmapFactory.decodeStream(getContext().getContentResolver().openInputStream(uri)));
-                            binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(image));
+                            binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(image, getResources().getDisplayMetrics().density));
                         }
                     } catch (FileNotFoundException e) {
                         Snackbar.make(view, "Image not found!", Snackbar.LENGTH_LONG)
@@ -133,7 +135,7 @@ public class EditTaskDialogFragment extends BottomSheetDialogFragment {
             EditText durationHourEditText = binding.durationHourEditText;
             EditText durationMinuteEditText = binding.durationMinuteEditText;
 
-            if (image != null && start_time != -1 && !nameEditText.getText().toString().isEmpty() && !instructionEditText.getText().toString().isEmpty() && !durationHourEditText.getText().toString().isEmpty() && !durationMinuteEditText.getText().toString().isEmpty()) {
+            if (image != null && start_time != -1 && !nameEditText.getText().toString().isEmpty() && !durationHourEditText.getText().toString().isEmpty() && !durationMinuteEditText.getText().toString().isEmpty()) {
                 long hour;
                 long minute;
                 try {

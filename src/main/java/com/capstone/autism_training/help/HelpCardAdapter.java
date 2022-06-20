@@ -108,7 +108,7 @@ public class HelpCardAdapter extends RecyclerView.Adapter<HelpCardAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
-        viewHolder.getImageView().setImageBitmap(ImageHelper.toCompressedBitmap(helpCards.get(position).image));
+        viewHolder.getImageView().setImageBitmap(ImageHelper.toCompressedBitmap(helpCards.get(position).image, viewHolder.getContext().getResources().getDisplayMetrics().density));
         viewHolder.getNameTextView().setText(helpCards.get(position).name);
 
         viewHolder.getCardView().setChecked(selectionTracker.isSelected(helpCards.get(position).id));

@@ -65,10 +65,10 @@ public class EditHelpCardDialogFragment extends BottomSheetDialogFragment {
 
         BottomSheetBehavior<View> bottomSheetBehavior = BottomSheetBehavior.from((View) view.getParent());
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         }
 
-        binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(helpCardModel.image));
+        binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(helpCardModel.image, getResources().getDisplayMetrics().density));
         binding.nameEditText.setText(helpCardModel.name);
 
         mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
@@ -76,7 +76,7 @@ public class EditHelpCardDialogFragment extends BottomSheetDialogFragment {
                     try {
                         if (getContext() != null && uri != null) {
                             image = ImageHelper.getBitmapAsByteArray(BitmapFactory.decodeStream(getContext().getContentResolver().openInputStream(uri)));
-                            binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(image));
+                            binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(image, getResources().getDisplayMetrics().density));
                         }
                     } catch (FileNotFoundException e) {
                         Snackbar.make(view, "Image not found!", Snackbar.LENGTH_LONG)

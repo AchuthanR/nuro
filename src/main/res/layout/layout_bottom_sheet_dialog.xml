@@ -15,6 +15,17 @@
         android:background="@drawable/bottom_sheet_tab_indicator" />
 
     <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="16dp"
+        android:paddingHorizontal="24dp"
+        android:text="@string/options_text_view_text_layout_bottom_sheet_dialog"
+        android:textAppearance="?attr/textAppearanceTitleLarge"
+        android:textStyle="bold"
+        android:clickable="true"
+        android:focusable="true" />
+
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/action_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

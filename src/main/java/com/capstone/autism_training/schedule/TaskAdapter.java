@@ -229,9 +229,15 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
-        viewHolder.getImageView().setImageBitmap(ImageHelper.toCompressedBitmap(tasks.get(position).image));
+        viewHolder.getImageView().setImageBitmap(ImageHelper.toCompressedBitmap(tasks.get(position).image, viewHolder.getContext().getResources().getDisplayMetrics().density));
         viewHolder.getNameTextView().setText(tasks.get(position).name);
-        viewHolder.getInstructionTextView().setText(tasks.get(position).instruction);
+        if (tasks.get(position).instruction == null || tasks.get(position).instruction.isEmpty()) {
+            viewHolder.getInstructionTextView().setVisibility(View.GONE);
+        }
+        else {
+            viewHolder.getInstructionTextView().setText(tasks.get(position).instruction);
+            viewHolder.getInstructionTextView().setVisibility(View.VISIBLE);
+        }
         DateFormat dateFormat = DateFormat.getTimeInstance(DateFormat.SHORT);
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
         viewHolder.getStartTimeTextView().setText(dateFormat.format(tasks.get(position).start_time));

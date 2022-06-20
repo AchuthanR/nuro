@@ -20,7 +20,7 @@
             app:title="@string/page_title_fragment_image_identification"
             app:menu="@menu/menu_image_identification"
             app:navigationIcon="@drawable/ic_round_arrow_back_24"
-            app:layout_scrollFlags="scroll|enterAlwaysCollapsed" />
+            app:layout_scrollFlags="scroll|exitUntilCollapsed" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -37,10 +37,10 @@
             android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:placeholderText="@string/choose_deck_text_view_text_fragment_image_identification"
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+                app:placeholderText="@string/choose_deck_text_view_text_fragment_image_identification">
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:id="@+id/chooseDeckAutoCompleteTextView"
@@ -74,11 +74,11 @@
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/questionTextView"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
                             android:textStyle="bold"
                             android:textColor="?attr/colorPrimary"
-                            android:textAlignment="center"
                             android:textAppearance="?attr/textAppearanceTitleLarge" />
 
                         <LinearLayout
@@ -184,7 +184,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:layout_marginTop="16dp"
-                    android:layout_marginBottom="56dp"
                     android:layout_marginEnd="2dp"
                     android:text="@string/next_button_text_fragment_image_identification"
                     android:textAllCaps="true"

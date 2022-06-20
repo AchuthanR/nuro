@@ -108,6 +108,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
             bundle.putString("TABLE_NAME", decks.get(viewHolder.getAdapterPosition()).name);
             bundle.putBoolean("demoMode", demoMode);
 
+            fragmentManager.executePendingTransactions();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             for (Fragment fragment : fragmentManager.getFragments()) {
                 if (fragment.isVisible()) {
@@ -126,7 +127,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
                 cardFragment = new CardFragment();
                 cardFragment.setArguments(bundle);
                 transaction
-                        .add(R.id.nav_host_fragment_activity_main, cardFragment, CardFragment.TAG)
+                        .add(R.id.navHostFragmentActivityMain, cardFragment, CardFragment.TAG)
                         .addToBackStack(DeckFragment.TAG)
                         .setReorderingAllowed(true);
             }
@@ -138,9 +139,15 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
-        viewHolder.getImageView().setImageBitmap(ImageHelper.toCompressedBitmap(decks.get(position).image));
+        viewHolder.getImageView().setImageBitmap(ImageHelper.toCompressedBitmap(decks.get(position).image, viewHolder.getContext().getResources().getDisplayMetrics().density));
         viewHolder.getTitleTextView().setText(decks.get(position).name);
-        viewHolder.getDescriptionTextView().setText(decks.get(position).description);
+        if (decks.get(position).description == null || decks.get(position).description.isEmpty()) {
+            viewHolder.getDescriptionTextView().setVisibility(View.GONE);
+        }
+        else {
+            viewHolder.getDescriptionTextView().setText(decks.get(position).description);
+            viewHolder.getDescriptionTextView().setVisibility(View.VISIBLE);
+        }
 
         viewHolder.getCardView().setChecked(selectionTracker.isSelected(decks.get(position).id));
     }

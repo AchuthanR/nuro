@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:toolbarId="@+id/toolbar">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/toolbar_background"
+            android:elevation="0dp"
+            app:title="@string/page_title_fragment_image_identification"
+            app:menu="@menu/menu_image_identification"
+            app:navigationIcon="@drawable/ic_round_arrow_back_24"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:layout_marginVertical="@dimen/activity_vertical_margin"
+            android:orientation="vertical">
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                android:layout_width="400dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                app:placeholderText="@string/choose_deck_text_view_text_fragment_image_identification">
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/chooseDeckAutoCompleteTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="@string/choose_deck_text_view_text_fragment_image_identification"
+                    android:inputType="none"
+                    android:textAppearance="?attr/textAppearanceTitleLarge" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:id="@+id/activityLinearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardView"
+                    style="@style/Widget.Material3.CardView.Elevated"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginHorizontal="2dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="24dp">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/questionTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:textStyle="bold"
+                            android:textColor="?attr/colorPrimary"
+                            android:textAppearance="?attr/textAppearanceTitleLarge" />
+
+                        <GridLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="24dp"
+                            android:columnCount="2">
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:id="@+id/imageCard1"
+                                style="@style/Widget.Material3.CardView.Outlined"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_columnWeight="1"
+                                android:layout_rowWeight="1"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:checkable="true"
+                                app:checkedIconGravity="BOTTOM_END">
+
+                                <com.google.android.material.imageview.ShapeableImageView
+                                    android:id="@+id/imageView1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="48dp"
+                                    android:adjustViewBounds="true"
+                                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.ShapeableImageView" />
+                            </com.google.android.material.card.MaterialCardView>
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:id="@+id/imageCard2"
+                                style="@style/Widget.Material3.CardView.Outlined"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_columnWeight="1"
+                                android:layout_rowWeight="1"
+                                android:layout_marginStart="12dp"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:checkable="true"
+                                app:checkedIconGravity="BOTTOM_END">
+
+                                <com.google.android.material.imageview.ShapeableImageView
+                                    android:id="@+id/imageView2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="48dp"
+                                    android:adjustViewBounds="true"
+                                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.ShapeableImageView" />
+                            </com.google.android.material.card.MaterialCardView>
+
+                            <Space
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginVertical="6dp"
+                                android:layout_columnSpan="2"
+                                android:layout_rowWeight="1" />
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:id="@+id/imageCard3"
+                                style="@style/Widget.Material3.CardView.Outlined"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_columnWeight="1"
+                                android:layout_rowWeight="1"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:checkable="true"
+                                app:checkedIconGravity="BOTTOM_END">
+
+                                <com.google.android.material.imageview.ShapeableImageView
+                                    android:id="@+id/imageView3"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="48dp"
+                                    android:adjustViewBounds="true"
+                                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.ShapeableImageView" />
+                            </com.google.android.material.card.MaterialCardView>
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:id="@+id/imageCard4"
+                                style="@style/Widget.Material3.CardView.Outlined"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_columnWeight="1"
+                                android:layout_rowWeight="1"
+                                android:layout_marginStart="12dp"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:checkable="true"
+                                app:checkedIconGravity="BOTTOM_END">
+
+                                <com.google.android.material.imageview.ShapeableImageView
+                                    android:id="@+id/imageView4"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="48dp"
+                                    android:adjustViewBounds="true"
+                                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.ShapeableImageView" />
+                            </com.google.android.material.card.MaterialCardView>
+                        </GridLayout>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/submitButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="16dp"
+                            android:text="@string/submit_button_text_fragment_image_identification" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/nextButton"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="2dp"
+                    android:text="@string/next_button_text_fragment_image_identification"
+                    android:textAllCaps="true"
+                    android:enabled="false" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -31,7 +31,7 @@ public class ScheduleTableHelper extends SQLiteOpenHelper {
                 + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + NAME + " TEXT NOT NULL, "
                 + IMAGE + " BLOB NOT NULL, "
-                + INSTRUCTION + " TEXT NOT NULL, "
+                + INSTRUCTION + " TEXT, "
                 + START_TIME + " INTEGER NOT NULL, "
                 + DURATION + " INTEGER NOT NULL, "
                 + COMPLETED + " BOOLEAN NOT NULL, "
@@ -45,7 +45,6 @@ public class ScheduleTableHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
-        onCreate(db);
+
     }
 }

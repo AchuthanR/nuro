@@ -9,11 +9,11 @@
     <string name="title_train">Train</string>
 
     <string name="page_title_fragment_schedule">Visual Scheduling</string>
+    <string name="action_add_fragment_schedule">Add task</string>
     <string name="action_help_fragment_schedule">Help</string>
     <string name="introduction_text_fragment_schedule">Introduction</string>
-    <string name="fab_text_fragment_schedule">Add task</string>
     <string name="choose_day_text_view_text_fragment_schedule">Choose day</string>
-    <string name="empty_day_text_view_text_fragment_schedule">There are no tasks for this day of the week. Click the Add task button to add a new task.</string>
+    <string name="empty_day_text_view_text_fragment_schedule">There are no tasks for this day of the week. Click the Plus button in the top app bar to add a new task.</string>
     <string name="mark_all_as_pending_task_button_text_fragment_schedule">Mark all as pending</string>
     <string name="start_task_button_text_fragment_schedule">Start task</string>
     <string name="pause_task_button_text_fragment_schedule">Pause task</string>
@@ -24,48 +24,48 @@
 
     <string name="page_title_fragment_add_task">Add task</string>
     <string name="name_edit_text_hint_fragment_add_task">Name</string>
-    <string name="instruction_edit_text_hint_fragment_add_task">Instruction</string>
+    <string name="instruction_edit_text_hint_fragment_add_task">Instruction (optional)</string>
     <string name="select_start_time_button_text_fragment_add_task">Select start time</string>
     <string name="duration_text_view_text_fragment_add_task">Enter the duration</string>
-    <string name="duration_hour_edit_text_hint_fragment_add_task">No. of hrs</string>
-    <string name="duration_minute_edit_text_hint_fragment_add_task">No. of mins</string>
+    <string name="duration_hour_edit_text_hint_fragment_add_task">No. of hrs (0\-23)</string>
+    <string name="duration_minute_edit_text_hint_fragment_add_task">No. of mins (0\-59)</string>
     <string name="select_image_button_text_fragment_add_task">Select image</string>
     <string name="image_view_content_description_fragment_add_task">Image for the new task</string>
     <string name="add_task_button_text_fragment_add_task">Add</string>
 
     <string name="page_title_fragment_edit_task">Edit task</string>
     <string name="name_edit_text_hint_fragment_edit_task">Name</string>
-    <string name="instruction_edit_text_hint_fragment_edit_task">Instruction</string>
+    <string name="instruction_edit_text_hint_fragment_edit_task">Instruction (optional)</string>
     <string name="select_start_time_button_text_fragment_edit_task">Select start time</string>
     <string name="duration_text_view_text_fragment_edit_task">Enter the duration</string>
-    <string name="duration_hour_edit_text_hint_fragment_edit_task">No. of hrs</string>
-    <string name="duration_minute_edit_text_hint_fragment_edit_task">No. of mins</string>
+    <string name="duration_hour_edit_text_hint_fragment_edit_task">No. of hrs (0\-23)</string>
+    <string name="duration_minute_edit_text_hint_fragment_edit_task">No. of mins (0\-59)</string>
     <string name="select_image_button_text_fragment_edit_task">Select image</string>
     <string name="image_view_content_description_fragment_edit_task">Image for the task</string>
-    <string name="edit_task_button_text_fragment_edit_task">Edit</string>
+    <string name="save_task_button_text_fragment_edit_task">Save</string>
 
     <string name="page_title_fragment_deck">Decks</string>
+    <string name="action_add_fragment_deck">Add deck</string>
     <string name="action_help_fragment_deck">Help</string>
-    <string name="fab_text_fragment_deck">Add deck</string>
-    <string name="zero_deck_text_view_text_fragment_deck">There are no decks in the database. Click the Add deck button to add a new deck.</string>
+    <string name="zero_deck_text_view_text_fragment_deck">There are no decks in the database. Click the Plus button in the top app bar to add a new deck.</string>
 
     <string name="page_title_fragment_add_deck">Add deck</string>
     <string name="name_edit_text_hint_fragment_add_deck">Name</string>
-    <string name="description_edit_text_hint_fragment_add_deck">Description</string>
+    <string name="description_edit_text_hint_fragment_add_deck">Description (optional)</string>
     <string name="select_image_button_text_fragment_add_deck">Select cover image</string>
     <string name="image_view_content_description_fragment_add_deck">Cover image for the new deck</string>
     <string name="add_deck_button_text_fragment_add_deck">Add</string>
 
     <string name="page_title_fragment_edit_deck">Edit deck</string>
     <string name="name_edit_text_hint_fragment_edit_deck">Name</string>
-    <string name="description_edit_text_hint_fragment_edit_deck">Description</string>
+    <string name="description_edit_text_hint_fragment_edit_deck">Description (optional)</string>
     <string name="select_image_button_text_fragment_edit_deck">Select cover image</string>
     <string name="image_view_content_description_fragment_edit_deck">Cover image for the deck</string>
-    <string name="edit_deck_button_text_fragment_edit_deck">Edit</string>
+    <string name="save_deck_button_text_fragment_edit_deck">Save</string>
 
     <string name="page_title_fragment_card">Flash cards</string>
-    <string name="fab_text_fragment_card">Add card</string>
-    <string name="empty_deck_text_view_text_fragment_card">There are no cards in this deck. Click the Add card button to add a new flash card.</string>
+    <string name="action_add_fragment_card">Add card</string>
+    <string name="empty_deck_text_view_text_fragment_card">There are no cards in this deck. Click the Plus button in the top app bar to add a new flash card.</string>
     <string name="show_answer_button_text_fragment_card">Show answer</string>
     <string name="hide_answer_button_text_fragment_card">Hide answer</string>
 
@@ -81,7 +81,7 @@
     <string name="short_answer_edit_text_hint_fragment_edit_card">Short answer</string>
     <string name="select_image_button_text_fragment_edit_card">Select image</string>
     <string name="image_view_content_description_fragment_edit_card">Image for the flash card</string>
-    <string name="edit_card_button_text_fragment_edit_card">Edit</string>
+    <string name="save_card_button_text_fragment_edit_card">Save</string>
 
     <string name="page_title_fragment_activity">Activities</string>
     <string name="image_identification_activity_title_fragment_activity">Image identification activity</string>
@@ -105,11 +105,11 @@
     <string name="next_button_text_fragment_word_identification">Next</string>
 
     <string name="page_title_fragment_help">Help</string>
+    <string name="action_add_fragment_help">Add help card</string>
     <string name="action_help_fragment_help">Help</string>
     <string name="introduction_text_fragment_help">Introduction</string>
-    <string name="fab_text_fragment_help">Add help card</string>
     <string name="choose_deck_text_view_text_fragment_help">Choose deck</string>
-    <string name="empty_deck_text_view_text_fragment_help">There are no help cards in this deck. Click the Add help card button to add a new help card.</string>
+    <string name="empty_deck_text_view_text_fragment_help">There are no help cards in this deck. Click the Plus button in the top app bar to add a new help card.</string>
 
     <string name="page_title_fragment_add_help_card">Add help card</string>
     <string name="name_edit_text_hint_fragment_add_help_card">Name</string>
@@ -121,7 +121,7 @@
     <string name="name_edit_text_hint_fragment_edit_help_card">Name</string>
     <string name="select_image_button_text_fragment_edit_help_card">Select image</string>
     <string name="image_view_content_description_fragment_edit_help_card">Image for the help card</string>
-    <string name="edit_help_card_button_text_fragment_edit_help_card">Edit</string>
+    <string name="save_help_card_button_text_fragment_edit_help_card">Save</string>
 
     <string name="page_title_fragment_train">Train</string>
     <string name="action_help_fragment_train">Help</string>
@@ -137,6 +137,8 @@
     <string name="option4_button_text_fragment_train">Good</string>
     <string name="option5_button_text_fragment_train">Easy</string>
     <string name="next_button_text_fragment_train">Next</string>
+
+    <string name="options_text_view_text_layout_bottom_sheet_dialog">Options</string>
 
     <!-- Common strings -->
     <string name="action_edit_text">Edit</string>

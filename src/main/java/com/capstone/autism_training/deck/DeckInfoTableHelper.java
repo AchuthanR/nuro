@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DeckInfoTableHelper extends SQLiteOpenHelper {
 
     public static final String TABLE_NAME_PREFIX = "COLLECTION_";
-    public String TABLE_NAME = TABLE_NAME_PREFIX + "INFO";
+    public String TABLE_NAME = TABLE_NAME_PREFIX + "GENERAL";
 
     public static final String ID = "id";
     public static final String NAME = "name";
@@ -26,7 +26,7 @@ public class DeckInfoTableHelper extends SQLiteOpenHelper {
                 + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + NAME + " TEXT NOT NULL, "
                 + IMAGE + " BLOB NOT NULL, "
-                + DESCRIPTION + " TEXT NOT NULL);";
+                + DESCRIPTION + " TEXT);";
     }
 
     public DeckInfoTableHelper(Context context, String table_name) {
@@ -36,7 +36,7 @@ public class DeckInfoTableHelper extends SQLiteOpenHelper {
                 + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + NAME + " TEXT NOT NULL, "
                 + IMAGE + " BLOB NOT NULL, "
-                + DESCRIPTION + " TEXT NOT NULL);";
+                + DESCRIPTION + " TEXT);";
     }
 
     @Override
@@ -46,7 +46,6 @@ public class DeckInfoTableHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
-        onCreate(db);
+
     }
 }
