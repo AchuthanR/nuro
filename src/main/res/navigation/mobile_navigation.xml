@@ -6,31 +6,31 @@
 
     <fragment
         android:id="@+id/navigation_schedule"
-        android:name="com.capstone.autism_training.ui.schedule.ScheduleFragment"
+        android:name="com.technophile.nuro.ui.schedule.ScheduleFragment"
         android:label="@string/page_title_fragment_schedule"
         tools:layout="@layout/fragment_schedule" />
 
     <fragment
         android:id="@+id/navigation_deck"
-        android:name="com.capstone.autism_training.ui.deck.DeckFragment"
+        android:name="com.technophile.nuro.ui.deck.DeckFragment"
         android:label="@string/page_title_fragment_deck"
         tools:layout="@layout/fragment_deck" />
 
     <fragment
         android:id="@+id/navigation_activity"
-        android:name="com.capstone.autism_training.ui.activity.ActivityFragment"
+        android:name="com.technophile.nuro.ui.activity.ActivityFragment"
         android:label="@string/page_title_fragment_activity"
         tools:layout="@layout/fragment_activity" />
 
     <fragment
         android:id="@+id/navigation_help"
-        android:name="com.capstone.autism_training.ui.help.HelpFragment"
+        android:name="com.technophile.nuro.ui.help.HelpFragment"
         android:label="@string/page_title_fragment_help"
         tools:layout="@layout/fragment_help" />
 
     <fragment
         android:id="@+id/navigation_train"
-        android:name="com.capstone.autism_training.ui.train.TrainFragment"
+        android:name="com.technophile.nuro.ui.train.TrainFragment"
         android:label="@string/page_title_fragment_train"
         tools:layout="@layout/fragment_train" />
 </navigation>
