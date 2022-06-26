@@ -7,6 +7,10 @@ public class DeckModel {
     public String name;
     public String description;
 
+    public DeckModel() {
+
+    }
+
     public DeckModel(long id, byte[] image, String name, String description) {
         this.id = id;
         this.image = image;

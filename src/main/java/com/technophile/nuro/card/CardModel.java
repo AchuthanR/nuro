@@ -11,6 +11,10 @@ public class CardModel {
     public double easiness;
     public long nextPracticeTime;
 
+    public CardModel() {
+
+    }
+
     public CardModel(long id, byte[] image, String caption, String short_answer, int repetitions, int interval, double easiness, long nextPracticeTime) {
         this.id = id;
         this.image = image;

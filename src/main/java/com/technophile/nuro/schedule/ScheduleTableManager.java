@@ -79,8 +79,8 @@ public class ScheduleTableManager {
         return database.update(scheduleTableHelper.TABLE_NAME, contentValues, null, null);
     }
 
-    public void deleteRow(long id) {
-        database.delete(scheduleTableHelper.TABLE_NAME, ScheduleTableHelper.ID + "=" + id, null);
+    public int deleteRow(long id) {
+        return database.delete(scheduleTableHelper.TABLE_NAME, ScheduleTableHelper.ID + "=" + id, null);
     }
 
     public void deleteTable() {

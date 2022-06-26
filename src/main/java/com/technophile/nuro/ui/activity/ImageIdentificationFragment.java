@@ -20,8 +20,8 @@ import com.technophile.nuro.card.DeckTableHelper;
 import com.technophile.nuro.card.DeckTableManager;
 import com.technophile.nuro.common.MyArrayAdapter;
 import com.technophile.nuro.databinding.FragmentImageIdentificationBinding;
-import com.technophile.nuro.deck.DeckInfoTableHelper;
-import com.technophile.nuro.deck.DeckInfoTableManager;
+import com.technophile.nuro.deck.CollectionTableHelper;
+import com.technophile.nuro.deck.CollectionTableManager;
 import com.technophile.nuro.utilities.ImageHelper;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -222,13 +222,13 @@ public class ImageIdentificationFragment extends Fragment {
     }
 
     private void loadDecksFromDatabase() {
-        DeckInfoTableManager deckInfoTableManager = new DeckInfoTableManager(getContext());
-        deckInfoTableManager.open();
-        Cursor cursor = deckInfoTableManager.fetch();
+        CollectionTableManager collectionTableManager = new CollectionTableManager(getContext());
+        collectionTableManager.open();
+        Cursor cursor = collectionTableManager.fetch();
         cursor.moveToLast();
         ArrayList<String> decks = new ArrayList<>();
         while (!cursor.isBeforeFirst() || cursor.isLast()) {
-            int nameIndex = cursor.getColumnIndex(DeckInfoTableHelper.NAME);
+            int nameIndex = cursor.getColumnIndex(CollectionTableHelper.NAME);
             decks.add(cursor.getString(nameIndex));
             cursor.moveToPrevious();
         }

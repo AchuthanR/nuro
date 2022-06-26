@@ -31,11 +31,15 @@ public class DeckTableHelper extends SQLiteOpenHelper {
     }
 
     public static String createTableQuery(String table_name) {
-        return "CREATE TABLE IF NOT EXISTS " + "\"" + TABLE_NAME_PREFIX + table_name.toUpperCase().replace(" ", "_") + "\"" + "("
+        return "CREATE TABLE IF NOT EXISTS " + "\"" + TABLE_NAME_PREFIX + table_name.toUpperCase().replace(" ", "_") + "\"" + " ("
                 + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + IMAGE + " BLOB NOT NULL, "
                 + CAPTION + " TEXT NOT NULL, "
                 + SHORT_ANSWER + " TEXT NOT NULL);";
+    }
+
+    public static String deleteTableQuery(String table_name) {
+        return "DROP TABLE IF EXISTS " + "\"" + DeckTableHelper.TABLE_NAME_PREFIX + table_name.toUpperCase().replace(" ", "_") + "\"";
     }
 
     @Override

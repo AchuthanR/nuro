@@ -28,11 +28,15 @@ public class AddDeckDialogFragment extends BottomSheetDialogFragment {
     public static final String TAG = AddDeckDialogFragment.class.getSimpleName();
 
     private DeckFragment deckFragment;
-    private final boolean demoMode;
+    private boolean demoMode;
     private ActivityResultLauncher<String> mGetContent;
     private byte[] image = null;
 
     private DialogFragmentAddDeckBinding binding;
+
+    public AddDeckDialogFragment() {
+
+    }
 
     public AddDeckDialogFragment(boolean demoMode) {
         this.demoMode = demoMode;
@@ -48,6 +52,10 @@ public class AddDeckDialogFragment extends BottomSheetDialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = DialogFragmentAddDeckBinding.inflate(inflater, container, false);
+
+        if (savedInstanceState != null && savedInstanceState.containsKey("demoMode")) {
+            demoMode = savedInstanceState.getBoolean("demoMode");
+        }
 
         deckFragment = (DeckFragment) getParentFragment();
         return binding.getRoot();
@@ -92,7 +100,7 @@ public class AddDeckDialogFragment extends BottomSheetDialogFragment {
                     rowNumber = deckFragment.mAdapter.getMaxId() + 1;
                 }
                 else {
-                    rowNumber = deckFragment.deckInfoTableManager.insert(nameEditText.getText().toString(), image, descriptionEditText.getText().toString());
+                    rowNumber = deckFragment.collectionTableManager.insert(nameEditText.getText().toString(), image, descriptionEditText.getText().toString());
                 }
                 if (rowNumber != -1) {
                     DeckModel deckModel = new DeckModel(rowNumber, image, nameEditText.getText().toString(), descriptionEditText.getText().toString());
@@ -113,6 +121,12 @@ public class AddDeckDialogFragment extends BottomSheetDialogFragment {
                         .setAction("OKAY", view2 -> {}).show();
             }
         });
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("demoMode", demoMode);
     }
 
     @Override

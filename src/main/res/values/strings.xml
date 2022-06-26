@@ -139,9 +139,7 @@
     <string name="next_button_text_fragment_train">Next</string>
 
     <string name="options_text_view_text_layout_bottom_sheet_dialog">Options</string>
-
-    <!-- Common strings -->
-    <string name="action_edit_text">Edit</string>
-    <string name="action_delete_text">Delete</string>
-    <string name="action_cancel_text">Cancel</string>
+    <string name="edit_text_view_text_layout_bottom_sheet_dialog">Edit</string>
+    <string name="delete_text_view_text_layout_bottom_sheet_dialog">Delete</string>
+    <string name="cancel_text_view_text_layout_bottom_sheet_dialog">Cancel</string>
 </resources>

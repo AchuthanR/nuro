@@ -33,7 +33,7 @@ public class EditTaskDialogFragment extends BottomSheetDialogFragment {
     public static final String TAG = EditTaskDialogFragment.class.getSimpleName();
 
     public ScheduleFragment scheduleFragment;
-    private final boolean demoMode;
+    private boolean demoMode;
     private ActivityResultLauncher<String> mGetContent;
     private TaskModel taskModel;
     private byte[] image = null;
@@ -42,6 +42,10 @@ public class EditTaskDialogFragment extends BottomSheetDialogFragment {
 
     private DialogFragmentEditTaskBinding binding;
 
+    public EditTaskDialogFragment() {
+
+    }
+
     public EditTaskDialogFragment(boolean demoMode) {
         this.demoMode = demoMode;
     }
@@ -49,6 +53,11 @@ public class EditTaskDialogFragment extends BottomSheetDialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (taskModel == null || adapterPosition == -1) {
+            this.dismiss();
+        }
+
         setStyle(BottomSheetDialogFragment.STYLE_NORMAL, R.style.Theme_App_BottomSheet_Modal);
     }
 
@@ -56,6 +65,10 @@ public class EditTaskDialogFragment extends BottomSheetDialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = DialogFragmentEditTaskBinding.inflate(inflater, container, false);
+
+        if (savedInstanceState != null && savedInstanceState.containsKey("demoMode")) {
+            demoMode = savedInstanceState.getBoolean("demoMode");
+        }
 
         scheduleFragment = (ScheduleFragment) getParentFragment();
         return binding.getRoot();
@@ -80,7 +93,7 @@ public class EditTaskDialogFragment extends BottomSheetDialogFragment {
         }
         DateFormat dateFormat1 = DateFormat.getTimeInstance(DateFormat.SHORT);
         dateFormat1.setTimeZone(TimeZone.getTimeZone("UTC"));
-        binding.startTimeTextView.setText(String.format("Selected start time: %1$s", dateFormat1.format(start_time)));
+        binding.startTimeTextView.setText(String.format("Selected start time: %1$s", dateFormat1.format(taskModel.start_time)));
         long hours = TimeUnit.MILLISECONDS.toHours(taskModel.duration);
         long minutes = TimeUnit.MILLISECONDS.toMinutes(taskModel.duration) - hours * 60;
         binding.durationHourEditText.setText(String.valueOf(hours));
@@ -185,6 +198,12 @@ public class EditTaskDialogFragment extends BottomSheetDialogFragment {
                         .setAction("OKAY", view2 -> {}).show();
             }
         });
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("demoMode", demoMode);
     }
 
     public void setTaskModel(TaskModel taskModel) {

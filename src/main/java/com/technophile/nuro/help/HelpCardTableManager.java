@@ -53,8 +53,8 @@ public class HelpCardTableManager {
         return database.update(helpCardTableHelper.TABLE_NAME, contentValues, HelpCardTableHelper.ID + " = " + id, null);
     }
 
-    public void deleteRow(long id) {
-        database.delete(helpCardTableHelper.TABLE_NAME, HelpCardTableHelper.ID + "=" + id, null);
+    public int deleteRow(long id) {
+        return database.delete(helpCardTableHelper.TABLE_NAME, HelpCardTableHelper.ID + "=" + id, null);
     }
 
     public void deleteTable() {

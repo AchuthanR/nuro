@@ -23,8 +23,8 @@ import com.technophile.nuro.R;
 import com.technophile.nuro.databinding.FragmentDeckBinding;
 import com.technophile.nuro.deck.DeckAdapter;
 import com.technophile.nuro.deck.DeckDetailsLookup;
-import com.technophile.nuro.deck.DeckInfoTableHelper;
-import com.technophile.nuro.deck.DeckInfoTableManager;
+import com.technophile.nuro.deck.CollectionTableHelper;
+import com.technophile.nuro.deck.CollectionTableManager;
 import com.technophile.nuro.deck.DeckItemKeyProvider;
 import com.technophile.nuro.deck.DeckModel;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -40,7 +40,7 @@ public class DeckFragment extends Fragment {
     protected RecyclerView mRecyclerView;
     protected DeckAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
-    public DeckInfoTableManager deckInfoTableManager;
+    public CollectionTableManager collectionTableManager;
     private SelectionTracker<Long> selectionTracker;
     private RecyclerView.AdapterDataObserver adapterDataObserver;
 
@@ -190,10 +190,11 @@ public class DeckFragment extends Fragment {
                                         if (selectionTracker.hasSelection()) {
                                             long id = selectionTracker.getSelection().iterator().next();
                                             selectionTracker.clearSelection();
+                                            int position = mRecyclerView.findViewHolderForItemId(id).getAdapterPosition();
                                             if (!demoMode) {
-                                                deckInfoTableManager.deleteRow(id);
+                                                collectionTableManager.deleteRow(id, mAdapter.getItem(position).name);
                                             }
-                                            mAdapter.removeItem(mRecyclerView.findViewHolderForItemId(id).getAdapterPosition());
+                                            mAdapter.removeItem(position);
                                             Snackbar.make(view, "Deleted the deck", Snackbar.LENGTH_LONG)
                                                     .setAction("OKAY", view2 -> {}).show();
                                         }
@@ -234,19 +235,19 @@ public class DeckFragment extends Fragment {
         };
         mAdapter.registerAdapterDataObserver(adapterDataObserver);
 
-        deckInfoTableManager = new DeckInfoTableManager(getContext());
+        collectionTableManager = new CollectionTableManager(getContext());
         if (demoMode) {
-            deckInfoTableManager.open("Introduction");
+            collectionTableManager.open("Introduction");
         }
         else {
-            deckInfoTableManager.open();
+            collectionTableManager.open();
         }
-        Cursor cursor = deckInfoTableManager.fetch();
+        Cursor cursor = collectionTableManager.fetch();
 
-        int idIndex = cursor.getColumnIndex(DeckInfoTableHelper.ID);
-        int imageIndex = cursor.getColumnIndex(DeckInfoTableHelper.IMAGE);
-        int nameIndex = cursor.getColumnIndex(DeckInfoTableHelper.NAME);
-        int descriptionIndex = cursor.getColumnIndex(DeckInfoTableHelper.DESCRIPTION);
+        int idIndex = cursor.getColumnIndex(CollectionTableHelper.ID);
+        int imageIndex = cursor.getColumnIndex(CollectionTableHelper.IMAGE);
+        int nameIndex = cursor.getColumnIndex(CollectionTableHelper.NAME);
+        int descriptionIndex = cursor.getColumnIndex(CollectionTableHelper.DESCRIPTION);
         while (!cursor.isAfterLast() || cursor.isFirst()) {
             DeckModel deckModel = new DeckModel(cursor.getInt(idIndex), cursor.getBlob(imageIndex), cursor.getString(nameIndex), cursor.getString(descriptionIndex));
             mAdapter.addItem(deckModel);
@@ -259,7 +260,7 @@ public class DeckFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
-        deckInfoTableManager.close();
+        collectionTableManager.close();
         mAdapter.unregisterAdapterDataObserver(adapterDataObserver);
     }
 }

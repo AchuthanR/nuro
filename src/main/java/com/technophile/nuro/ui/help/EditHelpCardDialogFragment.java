@@ -13,13 +13,13 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.android.material.snackbar.Snackbar;
 import com.technophile.nuro.R;
 import com.technophile.nuro.databinding.DialogFragmentEditHelpCardBinding;
 import com.technophile.nuro.help.HelpCardModel;
 import com.technophile.nuro.utilities.ImageHelper;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.io.FileNotFoundException;
 
@@ -28,13 +28,17 @@ public class EditHelpCardDialogFragment extends BottomSheetDialogFragment {
     public static final String TAG = EditHelpCardDialogFragment.class.getSimpleName();
 
     public HelpFragment helpFragment;
-    private final boolean demoMode;
+    private boolean demoMode;
     private ActivityResultLauncher<String> mGetContent;
     private HelpCardModel helpCardModel;
     private byte[] image = null;
     private int adapterPosition = -1;
 
     private DialogFragmentEditHelpCardBinding binding;
+
+    public EditHelpCardDialogFragment() {
+
+    }
 
     public EditHelpCardDialogFragment(boolean demoMode) {
         this.demoMode = demoMode;
@@ -43,6 +47,11 @@ public class EditHelpCardDialogFragment extends BottomSheetDialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (helpCardModel == null || adapterPosition == -1) {
+            this.dismiss();
+        }
+
         setStyle(BottomSheetDialogFragment.STYLE_NORMAL, R.style.Theme_App_BottomSheet_Modal);
     }
 
@@ -50,6 +59,10 @@ public class EditHelpCardDialogFragment extends BottomSheetDialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = DialogFragmentEditHelpCardBinding.inflate(inflater, container, false);
+
+        if (savedInstanceState != null && savedInstanceState.containsKey("demoMode")) {
+            demoMode = savedInstanceState.getBoolean("demoMode");
+        }
 
         helpFragment = (HelpFragment) getParentFragment();
         return binding.getRoot();
@@ -117,6 +130,12 @@ public class EditHelpCardDialogFragment extends BottomSheetDialogFragment {
                         .setAction("OKAY", view2 -> {}).show();
             }
         });
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("demoMode", demoMode);
     }
 
     public void setHelpCardModel(HelpCardModel helpCardModel) {

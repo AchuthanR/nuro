@@ -13,13 +13,13 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.android.material.snackbar.Snackbar;
 import com.technophile.nuro.R;
 import com.technophile.nuro.card.CardModel;
 import com.technophile.nuro.databinding.DialogFragmentEditCardBinding;
 import com.technophile.nuro.utilities.ImageHelper;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.io.FileNotFoundException;
 
@@ -28,13 +28,17 @@ public class EditCardDialogFragment extends BottomSheetDialogFragment {
     public static final String TAG = EditCardDialogFragment.class.getSimpleName();
 
     private CardFragment cardFragment;
-    private final boolean demoMode;
+    private boolean demoMode;
     private ActivityResultLauncher<String> mGetContent;
     private CardModel cardModel;
     private byte[] image = null;
     private int adapterPosition = -1;
 
     private DialogFragmentEditCardBinding binding;
+
+    public EditCardDialogFragment() {
+
+    }
 
     public EditCardDialogFragment(boolean demoMode) {
         this.demoMode = demoMode;
@@ -43,6 +47,11 @@ public class EditCardDialogFragment extends BottomSheetDialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (cardModel == null || adapterPosition == -1) {
+            this.dismiss();
+        }
+
         setStyle(BottomSheetDialogFragment.STYLE_NORMAL, R.style.Theme_App_BottomSheet_Modal);
     }
 
@@ -50,6 +59,10 @@ public class EditCardDialogFragment extends BottomSheetDialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = DialogFragmentEditCardBinding.inflate(inflater, container, false);
+
+        if (savedInstanceState != null && savedInstanceState.containsKey("demoMode")) {
+            demoMode = savedInstanceState.getBoolean("demoMode");
+        }
 
         cardFragment = (CardFragment) getParentFragment();
         return binding.getRoot();
@@ -119,6 +132,12 @@ public class EditCardDialogFragment extends BottomSheetDialogFragment {
                         .setAction("OKAY", view2 -> {}).show();
             }
         });
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("demoMode", demoMode);
     }
 
     public void setCardModel(CardModel cardModel) {

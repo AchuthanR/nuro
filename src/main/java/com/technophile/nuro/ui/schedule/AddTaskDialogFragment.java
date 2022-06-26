@@ -33,12 +33,16 @@ public class AddTaskDialogFragment extends BottomSheetDialogFragment {
     public static final String TAG = AddTaskDialogFragment.class.getSimpleName();
 
     public ScheduleFragment scheduleFragment;
-    private final boolean demoMode;
+    private boolean demoMode;
     private ActivityResultLauncher<String> mGetContent;
     private byte[] image = null;
     private long start_time = -1;
 
     private DialogFragmentAddTaskBinding binding;
+
+    public AddTaskDialogFragment() {
+
+    }
 
     public AddTaskDialogFragment(boolean demoMode) {
         this.demoMode = demoMode;
@@ -54,6 +58,10 @@ public class AddTaskDialogFragment extends BottomSheetDialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = DialogFragmentAddTaskBinding.inflate(inflater, container, false);
+
+        if (savedInstanceState != null && savedInstanceState.containsKey("demoMode")) {
+            demoMode = savedInstanceState.getBoolean("demoMode");
+        }
 
         scheduleFragment = (ScheduleFragment) getParentFragment();
         return binding.getRoot();
@@ -170,6 +178,29 @@ public class AddTaskDialogFragment extends BottomSheetDialogFragment {
                         .setAction("OKAY", view2 -> {}).show();
             }
         });
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            if (savedInstanceState.containsKey("start_time")) {
+                start_time = savedInstanceState.getLong("start_time");
+                DateFormat dateFormat = DateFormat.getTimeInstance(DateFormat.SHORT);
+                dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+                binding.startTimeTextView.setText(String.format("Selected start time: %1$s", dateFormat.format(start_time)));
+            }
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("demoMode", demoMode);
+        if (start_time != -1) {
+            outState.putLong("start_time", start_time);
+        }
     }
 
     @Override

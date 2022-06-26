@@ -13,13 +13,13 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.android.material.snackbar.Snackbar;
 import com.technophile.nuro.R;
 import com.technophile.nuro.databinding.DialogFragmentAddHelpCardBinding;
 import com.technophile.nuro.help.HelpCardModel;
 import com.technophile.nuro.utilities.ImageHelper;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.io.FileNotFoundException;
 
@@ -28,11 +28,15 @@ public class AddHelpCardDialogFragment extends BottomSheetDialogFragment {
     public static final String TAG = AddHelpCardDialogFragment.class.getSimpleName();
 
     public HelpFragment helpFragment;
-    private final boolean demoMode;
+    private boolean demoMode;
     private ActivityResultLauncher<String> mGetContent;
     private byte[] image = null;
 
     private DialogFragmentAddHelpCardBinding binding;
+
+    public AddHelpCardDialogFragment() {
+
+    }
 
     public AddHelpCardDialogFragment(boolean demoMode) {
         this.demoMode = demoMode;
@@ -48,6 +52,10 @@ public class AddHelpCardDialogFragment extends BottomSheetDialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = DialogFragmentAddHelpCardBinding.inflate(inflater, container, false);
+
+        if (savedInstanceState != null && savedInstanceState.containsKey("demoMode")) {
+            demoMode = savedInstanceState.getBoolean("demoMode");
+        }
 
         helpFragment = (HelpFragment) getParentFragment();
         return binding.getRoot();
@@ -112,6 +120,12 @@ public class AddHelpCardDialogFragment extends BottomSheetDialogFragment {
                         .setAction("OKAY", view2 -> {}).show();
             }
         });
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("demoMode", demoMode);
     }
 
     @Override

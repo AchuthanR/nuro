@@ -6,6 +6,10 @@ public class HelpCardModel {
     public String name;
     public byte[] image;
 
+    public HelpCardModel() {
+
+    }
+
     public HelpCardModel(long id, String name, byte[] image) {
         this.id = id;
         this.name = name;

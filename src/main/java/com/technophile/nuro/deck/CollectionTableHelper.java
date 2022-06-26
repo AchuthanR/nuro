@@ -4,7 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class DeckInfoTableHelper extends SQLiteOpenHelper {
+public class CollectionTableHelper extends SQLiteOpenHelper {
 
     public static final String TABLE_NAME_PREFIX = "COLLECTION_";
     public String TABLE_NAME = TABLE_NAME_PREFIX + "GENERAL";
@@ -20,19 +20,19 @@ public class DeckInfoTableHelper extends SQLiteOpenHelper {
 
     public final String CREATE_TABLE;
 
-    public DeckInfoTableHelper(Context context) {
+    public CollectionTableHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
-        CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
+        CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " ("
                 + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + NAME + " TEXT NOT NULL, "
                 + IMAGE + " BLOB NOT NULL, "
                 + DESCRIPTION + " TEXT);";
     }
 
-    public DeckInfoTableHelper(Context context, String table_name) {
+    public CollectionTableHelper(Context context, String table_name) {
         super(context, DB_NAME, null, DB_VERSION);
         TABLE_NAME = TABLE_NAME_PREFIX + table_name.toUpperCase().replace(" ", "_");
-        CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
+        CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " ("
                 + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + NAME + " TEXT NOT NULL, "
                 + IMAGE + " BLOB NOT NULL, "

@@ -32,12 +32,16 @@ public class SuperMemoTableHelper extends SQLiteOpenHelper {
     }
 
     public static String createTableQuery(String table_name) {
-        return "CREATE TABLE IF NOT EXISTS " + "\"" + SuperMemoTableHelper.TABLE_NAME_PREFIX + table_name.toUpperCase().replace(" ", "_") + "\"" + "("
+        return "CREATE TABLE IF NOT EXISTS " + "\"" + SuperMemoTableHelper.TABLE_NAME_PREFIX + table_name.toUpperCase().replace(" ", "_") + "\"" + " ("
                 + ID + " INTEGER PRIMARY KEY, "
                 + REPETITIONS + " INTEGER NOT NULL, "
                 + INTERVAL + " INTEGER NOT NULL, "
                 + EASINESS + " REAL NOT NULL, "
                 + NEXT_PRACTICE_TIME + " INTEGER NOT NULL);";
+    }
+
+    public static String deleteTableQuery(String table_name) {
+        return "DROP TABLE IF EXISTS " + "\"" + SuperMemoTableHelper.TABLE_NAME_PREFIX + table_name.toUpperCase().replace(" ", "_") + "\"";
     }
 
     @Override

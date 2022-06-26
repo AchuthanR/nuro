@@ -11,6 +11,10 @@ public class TaskModel {
     public boolean completed;
     public long current_end_time;
 
+    public TaskModel() {
+
+    }
+
     public TaskModel(long id, String name, byte[] image, String instruction, long start_time, long duration, boolean completed, long current_end_time) {
         this.id = id;
         this.name = name;

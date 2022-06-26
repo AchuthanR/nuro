@@ -24,8 +24,6 @@ public class DeckTableManager {
         deckTableHelper = new DeckTableHelper(context, table_name);
         database = deckTableHelper.getWritableDatabase();
         database.execSQL(deckTableHelper.CREATE_TABLE);
-
-        database.execSQL(SuperMemoTableHelper.createTableQuery(table_name));
     }
 
     public void close() {
@@ -82,9 +80,9 @@ public class DeckTableManager {
         return rowsAffected;
     }
 
-    public void deleteRow(long id) {
-        database.delete(deckTableHelper.TABLE_NAME, DeckTableHelper.ID + "=" + id, null);
+    public int deleteRow(long id) {
         database.delete(deckTableHelper.SUPERMEMO_TABLE_NAME, SuperMemoTableHelper.ID + "=" + id, null);
+        return database.delete(deckTableHelper.TABLE_NAME, DeckTableHelper.ID + "=" + id, null);
     }
 
     public void deleteTable() {

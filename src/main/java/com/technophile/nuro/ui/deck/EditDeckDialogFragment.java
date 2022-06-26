@@ -13,13 +13,13 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.android.material.snackbar.Snackbar;
 import com.technophile.nuro.R;
 import com.technophile.nuro.databinding.DialogFragmentEditDeckBinding;
 import com.technophile.nuro.deck.DeckModel;
 import com.technophile.nuro.utilities.ImageHelper;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.io.FileNotFoundException;
 
@@ -28,13 +28,17 @@ public class EditDeckDialogFragment extends BottomSheetDialogFragment {
     public static final String TAG = EditDeckDialogFragment.class.getSimpleName();
 
     private DeckFragment deckFragment;
-    private final boolean demoMode;
+    private boolean demoMode;
     private ActivityResultLauncher<String> mGetContent;
     private DeckModel deckModel;
     private byte[] image = null;
     private int adapterPosition = -1;
 
     private DialogFragmentEditDeckBinding binding;
+
+    public EditDeckDialogFragment() {
+
+    }
 
     public EditDeckDialogFragment(boolean demoMode) {
         this.demoMode = demoMode;
@@ -43,6 +47,11 @@ public class EditDeckDialogFragment extends BottomSheetDialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (deckModel == null || adapterPosition == -1) {
+            this.dismiss();
+        }
+
         setStyle(BottomSheetDialogFragment.STYLE_NORMAL, R.style.Theme_App_BottomSheet_Modal);
     }
 
@@ -50,6 +59,10 @@ public class EditDeckDialogFragment extends BottomSheetDialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = DialogFragmentEditDeckBinding.inflate(inflater, container, false);
+
+        if (savedInstanceState != null && savedInstanceState.containsKey("demoMode")) {
+            demoMode = savedInstanceState.getBoolean("demoMode");
+        }
 
         deckFragment = (DeckFragment) getParentFragment();
         return binding.getRoot();
@@ -68,11 +81,11 @@ public class EditDeckDialogFragment extends BottomSheetDialogFragment {
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         }
 
-        binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(deckModel.image, getResources().getDisplayMetrics().density));
         binding.nameEditText.setText(deckModel.name);
         if (deckModel.description != null) {
             binding.descriptionEditText.setText(deckModel.description);
         }
+        binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(deckModel.image, getResources().getDisplayMetrics().density));
 
         mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
                 uri -> {
@@ -100,7 +113,7 @@ public class EditDeckDialogFragment extends BottomSheetDialogFragment {
                     rowsAffected = 1;
                 }
                 else {
-                    rowsAffected = deckFragment.deckInfoTableManager.update(deckModel.id, deckModel.name, nameEditText.getText().toString(), image, descriptionEditText.getText().toString());
+                    rowsAffected = deckFragment.collectionTableManager.update(deckModel.id, deckModel.name, nameEditText.getText().toString(), image, descriptionEditText.getText().toString());
                 }
                 if (rowsAffected > 0) {
                     DeckModel newDeckModel = new DeckModel(deckModel.id, image, nameEditText.getText().toString(), descriptionEditText.getText().toString());
@@ -121,6 +134,12 @@ public class EditDeckDialogFragment extends BottomSheetDialogFragment {
                         .setAction("OKAY", view2 -> {}).show();
             }
         });
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("demoMode", demoMode);
     }
 
     public void setDeckModel(DeckModel deckModel) {
