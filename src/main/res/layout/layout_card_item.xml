@@ -45,11 +45,13 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/showAnswerButton"
-                    style="@style/Widget.Material3.Button.TextButton"
+                    style="@style/Widget.Material3.Button.TextButton.Icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_gravity="center_horizontal"
+                    app:icon="@drawable/ic_baseline_remove_red_eye_24"
+                    app:iconPadding="5dp"
                     android:text="@string/show_answer_button_text_fragment_card" />
 
                 <com.google.android.material.textview.MaterialTextView

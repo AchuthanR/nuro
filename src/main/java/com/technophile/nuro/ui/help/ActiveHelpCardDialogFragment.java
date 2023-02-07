@@ -1,6 +1,5 @@
 package com.technophile.nuro.ui.help;
 
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.technophile.nuro.databinding.DialogFragmentActiveHelpCardBinding;
+import com.technophile.nuro.utils.ImageHelper;
 
 public class ActiveHelpCardDialogFragment extends DialogFragment {
 
@@ -36,7 +36,7 @@ public class ActiveHelpCardDialogFragment extends DialogFragment {
 
         if (getArguments() != null) {
             byte[] image = getArguments().getByteArray("image");
-            binding.imageView.setImageBitmap(BitmapFactory.decodeByteArray(image, 0, image.length));
+            binding.imageView.setImageBitmap(ImageHelper.toBitmap(image));
         }
 
         binding.linearLayout.setOnClickListener(view1 -> ActiveHelpCardDialogFragment.this.dismiss());

@@ -1,6 +1,5 @@
 package com.technophile.nuro.help;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,12 +12,12 @@ import androidx.recyclerview.selection.ItemDetailsLookup;
 import androidx.recyclerview.selection.SelectionTracker;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.technophile.nuro.R;
-import com.technophile.nuro.ui.help.ActiveHelpCardDialogFragment;
-import com.technophile.nuro.utilities.ImageHelper;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textview.MaterialTextView;
+import com.technophile.nuro.R;
+import com.technophile.nuro.ui.help.ActiveHelpCardDialogFragment;
+import com.technophile.nuro.utils.ImageHelper;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -31,7 +30,6 @@ public class HelpCardAdapter extends RecyclerView.Adapter<HelpCardAdapter.ViewHo
     private SelectionTracker<Long> selectionTracker;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private final Context context;
         private final MaterialCardView cardView;
         private final ShapeableImageView imageView;
         private final MaterialTextView nameTextView;
@@ -39,15 +37,10 @@ public class HelpCardAdapter extends RecyclerView.Adapter<HelpCardAdapter.ViewHo
 
         public ViewHolder(View view) {
             super(view);
-            context = view.getContext();
             cardView = view.findViewById(R.id.cardView);
             imageView = view.findViewById(R.id.imageView);
             nameTextView = view.findViewById(R.id.nameTextView);
             helpCardItemDetails = new HelpCardItemDetails();
-        }
-
-        public Context getContext() {
-            return context;
         }
 
         public MaterialCardView getCardView() {
@@ -108,7 +101,7 @@ public class HelpCardAdapter extends RecyclerView.Adapter<HelpCardAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
-        viewHolder.getImageView().setImageBitmap(ImageHelper.toCompressedBitmap(helpCards.get(position).image, viewHolder.getContext().getResources().getDisplayMetrics().density));
+        viewHolder.getImageView().setImageBitmap(ImageHelper.toBitmap(helpCards.get(position).image));
         viewHolder.getNameTextView().setText(helpCards.get(position).name);
 
         viewHolder.getCardView().setChecked(selectionTracker.isSelected(helpCards.get(position).id));

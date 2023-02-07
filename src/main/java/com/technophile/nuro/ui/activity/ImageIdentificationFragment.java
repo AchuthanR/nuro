@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.technophile.nuro.R;
 import com.technophile.nuro.card.DeckTableHelper;
 import com.technophile.nuro.card.DeckTableManager;
@@ -22,8 +23,7 @@ import com.technophile.nuro.common.MyArrayAdapter;
 import com.technophile.nuro.databinding.FragmentImageIdentificationBinding;
 import com.technophile.nuro.deck.CollectionTableHelper;
 import com.technophile.nuro.deck.CollectionTableManager;
-import com.technophile.nuro.utilities.ImageHelper;
-import com.google.android.material.snackbar.Snackbar;
+import com.technophile.nuro.utils.ImageHelper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -305,10 +305,10 @@ public class ImageIdentificationFragment extends Fragment {
 
         binding.questionTextView.setText(String.format(getString(R.string.identify_question_text_view_text_fragment_image_identification), cursor.getString(answerColumnIndex)));
 
-        binding.imageView1.setImageBitmap(ImageHelper.toCompressedBitmap(images.get(0), getResources().getDisplayMetrics().density));
-        binding.imageView2.setImageBitmap(ImageHelper.toCompressedBitmap(images.get(1), getResources().getDisplayMetrics().density));
-        binding.imageView3.setImageBitmap(ImageHelper.toCompressedBitmap(images.get(2), getResources().getDisplayMetrics().density));
-        binding.imageView4.setImageBitmap(ImageHelper.toCompressedBitmap(images.get(3), getResources().getDisplayMetrics().density));
+        binding.imageView1.setImageBitmap(ImageHelper.toBitmap(images.get(0)));
+        binding.imageView2.setImageBitmap(ImageHelper.toBitmap(images.get(1)));
+        binding.imageView3.setImageBitmap(ImageHelper.toBitmap(images.get(2)));
+        binding.imageView4.setImageBitmap(ImageHelper.toBitmap(images.get(3)));
     }
 
     @Override

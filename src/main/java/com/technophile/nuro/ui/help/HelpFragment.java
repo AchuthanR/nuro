@@ -26,8 +26,8 @@ import com.technophile.nuro.help.HelpCardAdapter;
 import com.technophile.nuro.help.HelpCardDetailsLookup;
 import com.technophile.nuro.help.HelpCardItemKeyProvider;
 import com.technophile.nuro.help.HelpCardModel;
-import com.technophile.nuro.help.HelpCardTableHelper;
-import com.technophile.nuro.help.HelpCardTableManager;
+import com.technophile.nuro.help.HelpTableHelper;
+import com.technophile.nuro.help.HelpTableManager;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -44,9 +44,10 @@ public class HelpFragment extends Fragment {
     protected RecyclerView mRecyclerView;
     protected HelpCardAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
-    public HelpCardTableManager helpCardTableManager;
+    public HelpTableManager helpTableManager;
     private SelectionTracker<Long> selectionTracker;
     private RecyclerView.AdapterDataObserver adapterDataObserver;
+    private BottomSheetDialog bottomSheetDialog;
     private ArrayList<String> decks;
 
     private boolean demoMode = false;
@@ -109,7 +110,7 @@ public class HelpFragment extends Fragment {
             public void onSelectionChanged() {
                 super.onSelectionChanged();
                 if (!selectionTracker.getSelection().isEmpty() && getContext() != null) {
-                    BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
+                    bottomSheetDialog = new BottomSheetDialog(getContext());
                     bottomSheetDialog.setContentView(R.layout.layout_bottom_sheet_dialog);
                     if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
                         bottomSheetDialog.getBehavior().setState(BottomSheetBehavior.STATE_EXPANDED);
@@ -153,7 +154,7 @@ public class HelpFragment extends Fragment {
                                             long id = selectionTracker.getSelection().iterator().next();
                                             selectionTracker.clearSelection();
                                             if (!demoMode) {
-                                                helpCardTableManager.deleteRow(id);
+                                                helpTableManager.deleteRow(id);
                                             }
                                             mAdapter.removeItem(mRecyclerView.findViewHolderForItemId(id).getAdapterPosition());
                                             Snackbar.make(view, "Deleted the help card", Snackbar.LENGTH_LONG)
@@ -196,7 +197,7 @@ public class HelpFragment extends Fragment {
         };
         mAdapter.registerAdapterDataObserver(adapterDataObserver);
 
-        helpCardTableManager = new HelpCardTableManager(getContext());
+        helpTableManager = new HelpTableManager(getContext());
 
         decks = new ArrayList<>(Arrays.asList("Requests", "Responses", "Emotions", "Problems"));
         MyArrayAdapter adapter = new MyArrayAdapter(getContext(),
@@ -225,15 +226,15 @@ public class HelpFragment extends Fragment {
     private void deckSelected(String deck) {
         mAdapter.clearAll();
 
-        helpCardTableManager.close();
-        helpCardTableManager.open(deck);
-        Cursor cursor = helpCardTableManager.fetch();
+        helpTableManager.close();
+        helpTableManager.open(deck);
+        Cursor cursor = helpTableManager.fetch();
 
-        int idIndex = cursor.getColumnIndex(HelpCardTableHelper.ID);
-        int nameIndex = cursor.getColumnIndex(HelpCardTableHelper.NAME);
-        int imageIndex = cursor.getColumnIndex(HelpCardTableHelper.IMAGE);
+        int idIndex = cursor.getColumnIndex(HelpTableHelper.ID);
+        int nameIndex = cursor.getColumnIndex(HelpTableHelper.NAME);
+        int imageIndex = cursor.getColumnIndex(HelpTableHelper.IMAGE);
         while (!cursor.isAfterLast() || cursor.isFirst()) {
-            HelpCardModel helpCardModel = new HelpCardModel(cursor.getInt(idIndex), cursor.getString(nameIndex), cursor.getBlob(imageIndex));
+            HelpCardModel helpCardModel = new HelpCardModel(cursor.getLong(idIndex), cursor.getString(nameIndex), cursor.getBlob(imageIndex));
             mAdapter.addItem(helpCardModel);
             cursor.moveToNext();
         }
@@ -244,7 +245,10 @@ public class HelpFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
-        helpCardTableManager.close();
+        helpTableManager.close();
         mAdapter.unregisterAdapterDataObserver(adapterDataObserver);
+        if (bottomSheetDialog != null && bottomSheetDialog.isShowing()) {
+            bottomSheetDialog.cancel();
+        }
     }
 }

@@ -50,6 +50,7 @@ public class ScheduleFragment extends Fragment {
     public ScheduleTableManager scheduleTableManager;
     private SelectionTracker<Long> selectionTracker;
     private RecyclerView.AdapterDataObserver adapterDataObserver;
+    private BottomSheetDialog bottomSheetDialog;
 
     private boolean demoMode = false;
 
@@ -111,7 +112,7 @@ public class ScheduleFragment extends Fragment {
             public void onSelectionChanged() {
                 super.onSelectionChanged();
                 if (!selectionTracker.getSelection().isEmpty() && getContext() != null) {
-                    BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
+                    bottomSheetDialog = new BottomSheetDialog(getContext());
                     bottomSheetDialog.setContentView(R.layout.layout_bottom_sheet_dialog);
                     if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
                         bottomSheetDialog.getBehavior().setState(BottomSheetBehavior.STATE_EXPANDED);
@@ -213,7 +214,7 @@ public class ScheduleFragment extends Fragment {
         });
 
         scheduleTableManager = new ScheduleTableManager(getContext());
-        mAdapter.setVisualScheduleTableManager(scheduleTableManager);
+        mAdapter.setScheduleTableManager(scheduleTableManager);
 
         binding.markAllAsPendingButton.setOnClickListener(view1 -> {
             scheduleTableManager.markAllAsPending();
@@ -252,7 +253,7 @@ public class ScheduleFragment extends Fragment {
         int completedIndex = cursor.getColumnIndex(ScheduleTableHelper.COMPLETED);
         int currentEndTimeIndex = cursor.getColumnIndex(ScheduleTableHelper.CURRENT_END_TIME);
         while (!cursor.isAfterLast() || cursor.isFirst()) {
-            TaskModel taskModel = new TaskModel(cursor.getInt(idIndex), cursor.getString(nameIndex), cursor.getBlob(imageIndex), cursor.getString(instructionIndex), cursor.getLong(startTimeIndex), cursor.getLong(durationIndex), cursor.getInt(completedIndex) > 0, cursor.getLong(currentEndTimeIndex));
+            TaskModel taskModel = new TaskModel(cursor.getLong(idIndex), cursor.getString(nameIndex), cursor.getBlob(imageIndex), cursor.getString(instructionIndex), cursor.getLong(startTimeIndex), cursor.getLong(durationIndex), cursor.getInt(completedIndex) > 0, cursor.getLong(currentEndTimeIndex));
             mAdapter.addItem(taskModel);
             cursor.moveToNext();
         }
@@ -263,6 +264,10 @@ public class ScheduleFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+        scheduleTableManager.close();
         mAdapter.unregisterAdapterDataObserver(adapterDataObserver);
+        if (bottomSheetDialog != null && bottomSheetDialog.isShowing()) {
+            bottomSheetDialog.cancel();
+        }
     }
 }

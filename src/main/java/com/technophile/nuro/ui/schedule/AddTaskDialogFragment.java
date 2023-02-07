@@ -1,6 +1,7 @@
 package com.technophile.nuro.ui.schedule;
 
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,7 +17,7 @@ import androidx.annotation.Nullable;
 import com.technophile.nuro.R;
 import com.technophile.nuro.databinding.DialogFragmentAddTaskBinding;
 import com.technophile.nuro.schedule.TaskModel;
-import com.technophile.nuro.utilities.ImageHelper;
+import com.technophile.nuro.utils.ImageHelper;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.snackbar.Snackbar;
@@ -36,7 +37,7 @@ public class AddTaskDialogFragment extends BottomSheetDialogFragment {
     private boolean demoMode;
     private ActivityResultLauncher<String> mGetContent;
     private byte[] image = null;
-    private long start_time = -1;
+    private long start_time = 12 * 60 * 60 * 1000;
 
     private DialogFragmentAddTaskBinding binding;
 
@@ -80,12 +81,23 @@ public class AddTaskDialogFragment extends BottomSheetDialogFragment {
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         }
 
+        DateFormat dateFormat1 = DateFormat.getTimeInstance(DateFormat.SHORT);
+        dateFormat1.setTimeZone(TimeZone.getTimeZone("UTC"));
+        binding.startTimeTextView.setText(String.format("Selected start time: %1$s", dateFormat1.format(start_time)));
+
         mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
                 uri -> {
                     try {
                         if (getContext() != null && uri != null) {
-                            image = ImageHelper.getBitmapAsByteArray(BitmapFactory.decodeStream(getContext().getContentResolver().openInputStream(uri)));
-                            binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(image, getResources().getDisplayMetrics().density));
+                            Bitmap bitmap = BitmapFactory.decodeStream(getContext().getContentResolver().openInputStream(uri));
+                            if (bitmap == null) {
+                                Snackbar.make(view, "Could not process the image", Snackbar.LENGTH_LONG)
+                                        .setAction("OKAY", view1 -> {}).show();
+                                return ;
+                            }
+                            Bitmap compressedBitmap = ImageHelper.compress(bitmap);
+                            binding.imageView.setImageBitmap(compressedBitmap);
+                            image = ImageHelper.toByteArray(compressedBitmap);
                         }
                     } catch (FileNotFoundException e) {
                         Snackbar.make(view, "Image not found!", Snackbar.LENGTH_LONG)

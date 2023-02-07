@@ -1,6 +1,5 @@
 package com.technophile.nuro.schedule;
 
-import android.content.Context;
 import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,13 +10,13 @@ import androidx.recyclerview.selection.ItemDetailsLookup;
 import androidx.recyclerview.selection.SelectionTracker;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.technophile.nuro.R;
-import com.technophile.nuro.utilities.ImageHelper;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textview.MaterialTextView;
+import com.technophile.nuro.R;
+import com.technophile.nuro.utils.ImageHelper;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -34,7 +33,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     private SelectionTracker<Long> selectionTracker;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private final Context context;
         private final MaterialCardView cardView;
         private final ShapeableImageView imageView;
         private final MaterialTextView nameTextView;
@@ -50,7 +48,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
         public ViewHolder(View view) {
             super(view);
-            context = view.getContext();
             cardView = view.findViewById(R.id.cardView);
             imageView = view.findViewById(R.id.imageView);
             nameTextView = view.findViewById(R.id.nameTextView);
@@ -61,10 +58,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             resetButton = view.findViewById(R.id.resetButton);
             markAsDoneCheckBox = view.findViewById(R.id.markAsDoneCheckBox);
             taskItemDetails = new TaskItemDetails();
-        }
-
-        public Context getContext() {
-            return context;
         }
 
         public MaterialCardView getCardView() {
@@ -120,7 +113,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         return tasks.get(position).id;
     }
 
-    public void setVisualScheduleTableManager(ScheduleTableManager scheduleTableManager) {
+    public void setScheduleTableManager(ScheduleTableManager scheduleTableManager) {
         this.scheduleTableManager = scheduleTableManager;
     }
 
@@ -229,7 +222,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
-        viewHolder.getImageView().setImageBitmap(ImageHelper.toCompressedBitmap(tasks.get(position).image, viewHolder.getContext().getResources().getDisplayMetrics().density));
+        viewHolder.getImageView().setImageBitmap(ImageHelper.toBitmap(tasks.get(position).image));
         viewHolder.getNameTextView().setText(tasks.get(position).name);
         if (tasks.get(position).instruction == null || tasks.get(position).instruction.isEmpty()) {
             viewHolder.getInstructionTextView().setVisibility(View.GONE);

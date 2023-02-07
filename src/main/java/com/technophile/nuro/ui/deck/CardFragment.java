@@ -48,13 +48,14 @@ public class CardFragment extends Fragment {
     public DeckTableManager deckTableManager;
     private SelectionTracker<Long> selectionTracker;
     private RecyclerView.AdapterDataObserver adapterDataObserver;
+    private BottomSheetDialog bottomSheetDialog;
 
     private boolean demoMode = false;
 
     private FragmentCardBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+            ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentCardBinding.inflate(inflater, container, false);
 
         if (getArguments() != null && getArguments().containsKey("TABLE_NAME")) {
@@ -131,7 +132,7 @@ public class CardFragment extends Fragment {
                 public void onSelectionChanged() {
                     super.onSelectionChanged();
                     if (!selectionTracker.getSelection().isEmpty() && getContext() != null) {
-                        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
+                        bottomSheetDialog = new BottomSheetDialog(getContext());
                         bottomSheetDialog.setContentView(R.layout.layout_bottom_sheet_dialog);
                         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
                             bottomSheetDialog.getBehavior().setState(BottomSheetBehavior.STATE_EXPANDED);
@@ -274,7 +275,7 @@ public class CardFragment extends Fragment {
         int captionIndex = cursor.getColumnIndex(DeckTableHelper.CAPTION);
         int shortAnswerIndex = cursor.getColumnIndex(DeckTableHelper.SHORT_ANSWER);
         while (!cursor.isAfterLast() || cursor.isFirst()) {
-            CardModel cardModel = new CardModel(cursor.getInt(idIndex), cursor.getBlob(imageIndex), cursor.getString(captionIndex), cursor.getString(shortAnswerIndex));
+            CardModel cardModel = new CardModel(cursor.getLong(idIndex), cursor.getBlob(imageIndex), cursor.getString(captionIndex), cursor.getString(shortAnswerIndex));
             mAdapter.addItem(cardModel);
             cursor.moveToNext();
         }
@@ -293,5 +294,8 @@ public class CardFragment extends Fragment {
         binding = null;
         deckTableManager.close();
         mAdapter.unregisterAdapterDataObserver(adapterDataObserver);
+        if (bottomSheetDialog != null && bottomSheetDialog.isShowing()) {
+            bottomSheetDialog.cancel();
+        }
     }
 }

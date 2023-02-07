@@ -43,6 +43,7 @@ public class DeckFragment extends Fragment {
     public CollectionTableManager collectionTableManager;
     private SelectionTracker<Long> selectionTracker;
     private RecyclerView.AdapterDataObserver adapterDataObserver;
+    private BottomSheetDialog bottomSheetDialog;
 
     private boolean demoMode = false;
 
@@ -147,7 +148,7 @@ public class DeckFragment extends Fragment {
             public void onSelectionChanged() {
                 super.onSelectionChanged();
                 if (!selectionTracker.getSelection().isEmpty() && getContext() != null) {
-                    BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
+                    bottomSheetDialog = new BottomSheetDialog(getContext());
                     bottomSheetDialog.setContentView(R.layout.layout_bottom_sheet_dialog);
                     if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
                         bottomSheetDialog.getBehavior().setState(BottomSheetBehavior.STATE_EXPANDED);
@@ -249,7 +250,7 @@ public class DeckFragment extends Fragment {
         int nameIndex = cursor.getColumnIndex(CollectionTableHelper.NAME);
         int descriptionIndex = cursor.getColumnIndex(CollectionTableHelper.DESCRIPTION);
         while (!cursor.isAfterLast() || cursor.isFirst()) {
-            DeckModel deckModel = new DeckModel(cursor.getInt(idIndex), cursor.getBlob(imageIndex), cursor.getString(nameIndex), cursor.getString(descriptionIndex));
+            DeckModel deckModel = new DeckModel(cursor.getLong(idIndex), cursor.getBlob(imageIndex), cursor.getString(nameIndex), cursor.getString(descriptionIndex));
             mAdapter.addItem(deckModel);
             cursor.moveToNext();
         }
@@ -262,5 +263,8 @@ public class DeckFragment extends Fragment {
         binding = null;
         collectionTableManager.close();
         mAdapter.unregisterAdapterDataObserver(adapterDataObserver);
+        if (bottomSheetDialog != null && bottomSheetDialog.isShowing()) {
+            bottomSheetDialog.cancel();
+        }
     }
 }

@@ -2,7 +2,6 @@ package com.technophile.nuro.ui.activity;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
 import android.media.MediaPlayer;
@@ -15,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.technophile.nuro.R;
 import com.technophile.nuro.card.DeckTableHelper;
 import com.technophile.nuro.card.DeckTableManager;
@@ -22,8 +22,7 @@ import com.technophile.nuro.common.MyArrayAdapter;
 import com.technophile.nuro.databinding.FragmentWordIdentificationBinding;
 import com.technophile.nuro.deck.CollectionTableHelper;
 import com.technophile.nuro.deck.CollectionTableManager;
-import com.technophile.nuro.utilities.ImageHelper;
-import com.google.android.material.snackbar.Snackbar;
+import com.technophile.nuro.utils.ImageHelper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -247,12 +246,7 @@ public class WordIdentificationFragment extends Fragment {
         correctOption = random.nextInt(4);
         answers.add(correctOption, cursor.getString(answerColumnIndex));
         byte[] image = cursor.getBlob(imageColumnIndex);
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(image, getResources().getDisplayMetrics().density));
-        }
-        else {
-            binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(image, 500));
-        }
+        binding.imageView.setImageBitmap(ImageHelper.toBitmap(image));
 
         binding.option1.setText(answers.get(0));
 

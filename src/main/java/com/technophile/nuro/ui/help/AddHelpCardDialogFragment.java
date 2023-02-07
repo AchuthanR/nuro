@@ -1,6 +1,7 @@
 package com.technophile.nuro.ui.help;
 
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,7 +20,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.technophile.nuro.R;
 import com.technophile.nuro.databinding.DialogFragmentAddHelpCardBinding;
 import com.technophile.nuro.help.HelpCardModel;
-import com.technophile.nuro.utilities.ImageHelper;
+import com.technophile.nuro.utils.ImageHelper;
 
 import java.io.FileNotFoundException;
 
@@ -78,8 +79,15 @@ public class AddHelpCardDialogFragment extends BottomSheetDialogFragment {
                 uri -> {
                     try {
                         if (getContext() != null && uri != null) {
-                            image = ImageHelper.getBitmapAsByteArray(BitmapFactory.decodeStream(getContext().getContentResolver().openInputStream(uri)));
-                            binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(image, getResources().getDisplayMetrics().density));
+                            Bitmap bitmap = BitmapFactory.decodeStream(getContext().getContentResolver().openInputStream(uri));
+                            if (bitmap == null) {
+                                Snackbar.make(view, "Could not process the image", Snackbar.LENGTH_LONG)
+                                        .setAction("OKAY", view1 -> {}).show();
+                                return ;
+                            }
+                            Bitmap compressedBitmap = ImageHelper.compress(bitmap);
+                            binding.imageView.setImageBitmap(compressedBitmap);
+                            image = ImageHelper.toByteArray(compressedBitmap);
                         }
                     } catch (FileNotFoundException e) {
                         Snackbar.make(view, "Image not found!", Snackbar.LENGTH_LONG)
@@ -99,7 +107,7 @@ public class AddHelpCardDialogFragment extends BottomSheetDialogFragment {
                     rowNumber = helpFragment.mAdapter.getMaxId() + 1;
                 }
                 else {
-                    rowNumber = helpFragment.helpCardTableManager.insert(nameEditText.getText().toString(), image);
+                    rowNumber = helpFragment.helpTableManager.insert(nameEditText.getText().toString(), image);
                 }
                 if (rowNumber != -1) {
                     HelpCardModel helpCardModel = new HelpCardModel(rowNumber, nameEditText.getText().toString(), image);

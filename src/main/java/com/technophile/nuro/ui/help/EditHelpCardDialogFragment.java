@@ -1,6 +1,7 @@
 package com.technophile.nuro.ui.help;
 
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,7 +20,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.technophile.nuro.R;
 import com.technophile.nuro.databinding.DialogFragmentEditHelpCardBinding;
 import com.technophile.nuro.help.HelpCardModel;
-import com.technophile.nuro.utilities.ImageHelper;
+import com.technophile.nuro.utils.ImageHelper;
 
 import java.io.FileNotFoundException;
 
@@ -81,15 +82,22 @@ public class EditHelpCardDialogFragment extends BottomSheetDialogFragment {
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         }
 
-        binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(helpCardModel.image, getResources().getDisplayMetrics().density));
+        binding.imageView.setImageBitmap(ImageHelper.toBitmap(helpCardModel.image));
         binding.nameEditText.setText(helpCardModel.name);
 
         mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
                 uri -> {
                     try {
                         if (getContext() != null && uri != null) {
-                            image = ImageHelper.getBitmapAsByteArray(BitmapFactory.decodeStream(getContext().getContentResolver().openInputStream(uri)));
-                            binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(image, getResources().getDisplayMetrics().density));
+                            Bitmap bitmap = BitmapFactory.decodeStream(getContext().getContentResolver().openInputStream(uri));
+                            if (bitmap == null) {
+                                Snackbar.make(view, "Could not process the image", Snackbar.LENGTH_LONG)
+                                        .setAction("OKAY", view1 -> {}).show();
+                                return ;
+                            }
+                            Bitmap compressedBitmap = ImageHelper.compress(bitmap);
+                            binding.imageView.setImageBitmap(compressedBitmap);
+                            image = ImageHelper.toByteArray(compressedBitmap);
                         }
                     } catch (FileNotFoundException e) {
                         Snackbar.make(view, "Image not found!", Snackbar.LENGTH_LONG)
@@ -109,7 +117,7 @@ public class EditHelpCardDialogFragment extends BottomSheetDialogFragment {
                     rowsAffected = 1;
                 }
                 else {
-                    rowsAffected = helpFragment.helpCardTableManager.update(helpCardModel.id, nameEditText.getText().toString(), image);
+                    rowsAffected = helpFragment.helpTableManager.update(helpCardModel.id, nameEditText.getText().toString(), image);
                 }
                 if (rowsAffected > 0) {
                     HelpCardModel newHelpCardModel = new HelpCardModel(helpCardModel.id, nameEditText.getText().toString(), image);

@@ -23,7 +23,7 @@ import com.technophile.nuro.train.SuperMemoTableHelper;
 import com.technophile.nuro.train.SuperMemoTableManager;
 import com.technophile.nuro.train.TrainDeck;
 import com.technophile.nuro.ui.deck.CardFragment;
-import com.technophile.nuro.utilities.ImageHelper;
+import com.technophile.nuro.utils.ImageHelper;
 
 import java.util.ArrayList;
 
@@ -63,7 +63,7 @@ public class TrainFragment extends Fragment {
                     }
                 }
                 transaction
-                        .add(R.id.navHostFragmentActivityMain, cardFragment, CardFragment.TAG)
+                        .add(R.id.navHostFragmentActivityMain, cardFragment, null)
                         .addToBackStack(TrainFragment.TAG)
                         .setReorderingAllowed(true);
                 transaction.commit();
@@ -156,7 +156,7 @@ public class TrainFragment extends Fragment {
         int easinessIndex = cursor.getColumnIndex(SuperMemoTableHelper.EASINESS);
         int nextPracticeTimeIndex = cursor.getColumnIndex(SuperMemoTableHelper.NEXT_PRACTICE_TIME);
         while (!cursor.isAfterLast() || cursor.isFirst()) {
-            CardModel cardModel = new CardModel(cursor.getInt(idIndex), cursor.getBlob(imageIndex), cursor.getString(captionIndex), cursor.getString(answerIndex), cursor.getInt(repetitionsIndex), cursor.getInt(intervalIndex), cursor.getDouble(easinessIndex), cursor.getLong(nextPracticeTimeIndex));
+            CardModel cardModel = new CardModel(cursor.getLong(idIndex), cursor.getBlob(imageIndex), cursor.getString(captionIndex), cursor.getString(answerIndex), cursor.getInt(repetitionsIndex), cursor.getInt(intervalIndex), cursor.getDouble(easinessIndex), cursor.getLong(nextPracticeTimeIndex));
             trainDeck.addCard(cardModel);
             cursor.moveToNext();
         }
@@ -227,7 +227,7 @@ public class TrainFragment extends Fragment {
             binding.nextButton.setEnabled(false);
 
             binding.questionTextView.setText(currentCard.caption);
-            binding.imageView.setImageBitmap(ImageHelper.toCompressedBitmap(currentCard.image, getResources().getDisplayMetrics().density));
+            binding.imageView.setImageBitmap(ImageHelper.toBitmap(currentCard.image));
             binding.shortAnswerTextView.setText(currentCard.short_answer);
         }
     }
@@ -236,5 +236,6 @@ public class TrainFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+        superMemoTableManager.close();
     }
 }

@@ -6,19 +6,15 @@
     android:orientation="vertical"
     android:paddingBottom="16dp">
 
-    <View
-        android:layout_width="40dp"
-        android:layout_height="3dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/bottom_sheet_tab_indicator" />
+    <com.google.android.material.bottomsheet.BottomSheetDragHandleView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingVertical="16dp"
-        android:paddingHorizontal="24dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginBottom="16dp"
         android:text="@string/options_text_view_text_layout_bottom_sheet_dialog"
         android:textAppearance="?attr/textAppearanceTitleLarge"
         android:textStyle="bold"
@@ -35,47 +31,47 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/action_edit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingVertical="16dp"
-            android:paddingHorizontal="24dp"
-            android:text="@string/edit_text_view_text_layout_bottom_sheet_dialog"
-            android:textAppearance="?attr/textAppearanceTitleLarge"
-            android:background="?attr/selectableItemBackground"
-            android:drawableStart="@drawable/ic_outline_edit_24"
-            android:drawablePadding="24dp"
-            android:clickable="true"
-            android:focusable="true" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/action_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="16dp"
+                android:paddingHorizontal="24dp"
+                android:text="@string/edit_text_view_text_layout_bottom_sheet_dialog"
+                android:textAppearance="?attr/textAppearanceTitleLarge"
+                android:background="?attr/selectableItemBackground"
+                android:drawableStart="@drawable/ic_outline_edit_24"
+                android:drawablePadding="24dp"
+                android:clickable="true"
+                android:focusable="true" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/action_delete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingVertical="16dp"
-            android:paddingHorizontal="24dp"
-            android:text="@string/delete_text_view_text_layout_bottom_sheet_dialog"
-            android:textAppearance="?attr/textAppearanceTitleLarge"
-            android:background="?attr/selectableItemBackground"
-            android:drawableStart="@drawable/ic_round_delete_outline_24"
-            android:drawablePadding="24dp"
-            android:clickable="true"
-            android:focusable="true" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/action_delete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="16dp"
+                android:paddingHorizontal="24dp"
+                android:text="@string/delete_text_view_text_layout_bottom_sheet_dialog"
+                android:textAppearance="?attr/textAppearanceTitleLarge"
+                android:background="?attr/selectableItemBackground"
+                android:drawableStart="@drawable/ic_round_delete_outline_24"
+                android:drawablePadding="24dp"
+                android:clickable="true"
+                android:focusable="true" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/action_cancel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingVertical="16dp"
-            android:paddingHorizontal="24dp"
-            android:text="@string/cancel_text_view_text_layout_bottom_sheet_dialog"
-            android:textAppearance="?attr/textAppearanceTitleLarge"
-            android:background="?attr/selectableItemBackground"
-            android:drawableStart="@drawable/ic_round_close_24"
-            android:drawablePadding="24dp"
-            android:clickable="true"
-            android:focusable="true" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/action_cancel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="16dp"
+                android:paddingHorizontal="24dp"
+                android:text="@string/cancel_text_view_text_layout_bottom_sheet_dialog"
+                android:textAppearance="?attr/textAppearanceTitleLarge"
+                android:background="?attr/selectableItemBackground"
+                android:drawableStart="@drawable/ic_round_close_24"
+                android:drawablePadding="24dp"
+                android:clickable="true"
+                android:focusable="true" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>

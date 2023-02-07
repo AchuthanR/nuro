@@ -1,6 +1,5 @@
 package com.technophile.nuro.deck;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,13 +13,13 @@ import androidx.recyclerview.selection.ItemDetailsLookup;
 import androidx.recyclerview.selection.SelectionTracker;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.technophile.nuro.R;
-import com.technophile.nuro.ui.deck.CardFragment;
-import com.technophile.nuro.ui.deck.DeckFragment;
-import com.technophile.nuro.utilities.ImageHelper;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textview.MaterialTextView;
+import com.technophile.nuro.R;
+import com.technophile.nuro.ui.deck.CardFragment;
+import com.technophile.nuro.ui.deck.DeckFragment;
+import com.technophile.nuro.utils.ImageHelper;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -34,7 +33,6 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
     private SelectionTracker<Long> selectionTracker;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private final Context context;
         private final MaterialCardView cardView;
         private final ShapeableImageView imageView;
         private final MaterialTextView titleTextView;
@@ -43,16 +41,11 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
 
         public ViewHolder(View view) {
             super(view);
-            context = view.getContext();
             cardView = view.findViewById(R.id.cardView);
             imageView = view.findViewById(R.id.imageView);
             titleTextView = view.findViewById(R.id.titleTextView);
             descriptionTextView = view.findViewById(R.id.descriptionTextView);
             deckItemDetails = new DeckItemDetails();
-        }
-
-        public Context getContext() {
-            return context;
         }
 
         public MaterialCardView getCardView() {
@@ -139,7 +132,7 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int position) {
-        viewHolder.getImageView().setImageBitmap(ImageHelper.toCompressedBitmap(decks.get(position).image, viewHolder.getContext().getResources().getDisplayMetrics().density));
+        viewHolder.getImageView().setImageBitmap(ImageHelper.toBitmap(decks.get(position).image));
         viewHolder.getTitleTextView().setText(decks.get(position).name);
         if (decks.get(position).description == null || decks.get(position).description.isEmpty()) {
             viewHolder.getDescriptionTextView().setVisibility(View.GONE);

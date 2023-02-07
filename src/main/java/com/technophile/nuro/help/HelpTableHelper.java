@@ -4,7 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class HelpCardTableHelper extends SQLiteOpenHelper {
+public class HelpTableHelper extends SQLiteOpenHelper {
 
     public static final String TABLE_NAME_PREFIX = "HELP_";
     public String TABLE_NAME;
@@ -19,7 +19,7 @@ public class HelpCardTableHelper extends SQLiteOpenHelper {
 
     public String CREATE_TABLE;
 
-    public HelpCardTableHelper(Context context, String table_name) {
+    public HelpTableHelper(Context context, String table_name) {
         super(context, DB_NAME, null, DB_VERSION);
         TABLE_NAME = "\"" + TABLE_NAME_PREFIX + table_name.toUpperCase().replace(" ", "_") + "\"";
         CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " ("
