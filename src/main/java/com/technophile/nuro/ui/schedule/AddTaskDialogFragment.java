@@ -1,5 +1,6 @@
 package com.technophile.nuro.ui.schedule;
 
+import android.app.Activity;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -14,15 +16,15 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.technophile.nuro.R;
-import com.technophile.nuro.databinding.DialogFragmentAddTaskBinding;
-import com.technophile.nuro.schedule.TaskModel;
-import com.technophile.nuro.utils.ImageHelper;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.timepicker.MaterialTimePicker;
 import com.google.android.material.timepicker.TimeFormat;
+import com.technophile.nuro.R;
+import com.technophile.nuro.databinding.DialogFragmentAddTaskBinding;
+import com.technophile.nuro.schedule.TaskModel;
+import com.technophile.nuro.utils.ImageHelper;
 
 import java.io.FileNotFoundException;
 import java.text.DateFormat;
@@ -186,9 +188,12 @@ public class AddTaskDialogFragment extends BottomSheetDialogFragment {
                 }
             }
             else {
-                Snackbar.make(view, "All fields are necessary", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Please fill all the mandatory fields", Snackbar.LENGTH_LONG)
                         .setAction("OKAY", view2 -> {}).show();
             }
+
+            InputMethodManager imm = (InputMethodManager) requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         });
     }
 

@@ -18,6 +18,7 @@
         android:text="@string/options_text_view_text_layout_bottom_sheet_dialog"
         android:textAppearance="?attr/textAppearanceTitleLarge"
         android:textStyle="bold"
+        android:textColor="?attr/colorPrimary"
         android:clickable="true"
         android:focusable="true" />
 

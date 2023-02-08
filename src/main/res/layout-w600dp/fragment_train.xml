@@ -136,7 +136,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:orientation="vertical"
                         android:paddingHorizontal="32dp"
                         android:paddingVertical="24dp">
@@ -159,7 +159,7 @@
                             android:layout_marginTop="16dp"
                             android:text="@string/show_answer_button_text_fragment_train"
                             android:textColor="?attr/colorOnSurface"
-                            app:icon="@drawable/ic_baseline_remove_red_eye_24"
+                            app:icon="@drawable/round_visibility_24"
                             app:iconTint="?attr/colorOnSurface"
                             app:iconPadding="5dp" />
 
@@ -189,7 +189,6 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="16dp"
-                            android:layout_marginBottom="8dp"
                             android:orientation="vertical"
                             android:visibility="gone"
                             app:singleSelection="true"

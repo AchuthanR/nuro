@@ -96,10 +96,12 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
             if (viewHolder.shortAnswerTextView.getVisibility() == View.GONE) {
                 viewHolder.shortAnswerTextView.setVisibility(View.VISIBLE);
                 viewHolder.getShowAnswerButton().setText(R.string.hide_answer_button_text_fragment_card);
+                viewHolder.getShowAnswerButton().setIconResource(R.drawable.round_visibility_off_24);
             }
             else {
                 viewHolder.shortAnswerTextView.setVisibility(View.GONE);
                 viewHolder.getShowAnswerButton().setText(R.string.show_answer_button_text_fragment_card);
+                viewHolder.getShowAnswerButton().setIconResource(R.drawable.round_visibility_24);
             }
         });
 

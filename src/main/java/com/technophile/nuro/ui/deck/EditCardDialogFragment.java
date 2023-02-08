@@ -1,5 +1,6 @@
 package com.technophile.nuro.ui.deck;
 
+import android.app.Activity;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -136,9 +138,12 @@ public class EditCardDialogFragment extends BottomSheetDialogFragment {
                 }
             }
             else {
-                Snackbar.make(view, "All fields are necessary", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Please fill all the mandatory fields", Snackbar.LENGTH_LONG)
                         .setAction("OKAY", view2 -> {}).show();
             }
+
+            InputMethodManager imm = (InputMethodManager) requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         });
     }
 
