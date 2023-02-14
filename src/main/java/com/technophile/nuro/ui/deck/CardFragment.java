@@ -19,6 +19,11 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textview.MaterialTextView;
 import com.technophile.nuro.R;
 import com.technophile.nuro.card.CardAdapter;
 import com.technophile.nuro.card.CardDetailsLookup;
@@ -27,20 +32,12 @@ import com.technophile.nuro.card.CardModel;
 import com.technophile.nuro.card.DeckTableHelper;
 import com.technophile.nuro.card.DeckTableManager;
 import com.technophile.nuro.databinding.FragmentCardBinding;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textview.MaterialTextView;
-
-import java.util.ArrayList;
 
 public class CardFragment extends Fragment {
 
     public static final String TAG = CardFragment.class.getSimpleName();
 
     private String TABLE_NAME = "";
-    public final ArrayList<String> tableNameBackStack = new ArrayList<>();
 
     protected RecyclerView mRecyclerView;
     protected CardAdapter mAdapter;
@@ -51,31 +48,38 @@ public class CardFragment extends Fragment {
     private BottomSheetDialog bottomSheetDialog;
 
     private boolean demoMode = false;
+    private boolean readOnlyMode = false;
 
     private FragmentCardBinding binding;
+
+    public CardFragment() {
+
+    }
+
+    public CardFragment(String table_name) {
+        this.TABLE_NAME = table_name;
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
             ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentCardBinding.inflate(inflater, container, false);
 
-        if (getArguments() != null && getArguments().containsKey("TABLE_NAME")) {
-            TABLE_NAME = getArguments().getString("TABLE_NAME");
-            binding.toolbar.setTitle(getArguments().getString("TABLE_NAME"));
-            tableNameBackStack.add(getArguments().getString("TABLE_NAME"));
-            getArguments().remove("TABLE_NAME");
+        if (savedInstanceState != null && savedInstanceState.containsKey("TABLE_NAME")) {
+            TABLE_NAME = savedInstanceState.getString("TABLE_NAME");
         }
-        else {
-            tableNameBackStack.addAll(savedInstanceState.getStringArrayList("tableNameBackStack"));
-            TABLE_NAME = tableNameBackStack.get(tableNameBackStack.size() - 1);
-            binding.toolbar.setTitle(tableNameBackStack.get(tableNameBackStack.size() - 1));
-        }
+        binding.toolbar.setTitle(TABLE_NAME);
 
-        if (getArguments() != null && getArguments().containsKey("readOnlyMode") && getArguments().getBoolean("readOnlyMode")) {
-            binding.toolbar.getMenu().removeItem(R.id.action_add);
-        }
+        if (getArguments() != null) {
+            if (getArguments().containsKey("demoMode")) {
+                demoMode = getArguments().getBoolean("demoMode");
+            }
 
-        if (getArguments() != null && getArguments().containsKey("demoMode")) {
-            demoMode = getArguments().getBoolean("demoMode");
+            if (getArguments().containsKey("readOnlyMode")) {
+                readOnlyMode = getArguments().getBoolean("readOnlyMode");
+                if (readOnlyMode) {
+                    binding.toolbar.getMenu().removeItem(R.id.action_add);
+                }
+            }
         }
 
         return binding.getRoot();
@@ -117,7 +121,7 @@ public class CardFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
-        if (getArguments() == null || !getArguments().containsKey("readOnlyMode") || !getArguments().getBoolean("readOnlyMode")) {
+        if (!readOnlyMode) {
             selectionTracker = new SelectionTracker.Builder<>(
                     "selectionId",
                     mRecyclerView,
@@ -225,45 +229,6 @@ public class CardFragment extends Fragment {
         fetchFromTable();
     }
 
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (!hidden) {
-            if (getArguments() != null) {
-                if (getArguments().containsKey("TABLE_NAME")) {
-                    TABLE_NAME = getArguments().getString("TABLE_NAME");
-                    binding.toolbar.setTitle(getArguments().getString("TABLE_NAME"));
-                    tableNameBackStack.add(getArguments().getString("TABLE_NAME"));
-                    getArguments().remove("TABLE_NAME");
-
-                    fetchFromTable();
-                }
-                else if (getArguments().containsKey("BACK_STACK_TABLE_NAME")) {
-                    TABLE_NAME = getArguments().getString("BACK_STACK_TABLE_NAME");
-                    binding.toolbar.setTitle(getArguments().getString("BACK_STACK_TABLE_NAME"));
-                    getArguments().remove("BACK_STACK_TABLE_NAME");
-
-                    fetchFromTable();
-                }
-            }
-        }
-        else {
-            if (getArguments() != null) {
-                if (getArguments().containsKey("ON_BACK_PRESSED")) {
-                    if (tableNameBackStack.size() > 0) {
-                        tableNameBackStack.remove(tableNameBackStack.size() - 1);
-                    }
-
-                    if (tableNameBackStack.size() > 0) {
-                        getArguments().putString("BACK_STACK_TABLE_NAME", tableNameBackStack.get(tableNameBackStack.size() - 1));
-                    }
-
-                    getArguments().remove("ON_BACK_PRESSED");
-                }
-            }
-        }
-    }
-
     private void fetchFromTable() {
         deckTableManager.close();
         mAdapter.clearAll();
@@ -285,7 +250,7 @@ public class CardFragment extends Fragment {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putStringArrayList("tableNameBackStack", tableNameBackStack);
+        outState.putString("TABLE_NAME", TABLE_NAME);
     }
 
     @Override

@@ -49,9 +49,8 @@ public class TrainFragment extends Fragment {
 
         binding.toolbar.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == R.id.action_help) {
-                CardFragment cardFragment = new CardFragment();
+                CardFragment cardFragment = new CardFragment("Introduction to Train");
                 Bundle bundle = new Bundle();
-                bundle.putString("TABLE_NAME", "Introduction to Train");
                 bundle.putBoolean("readOnlyMode", true);
                 cardFragment.setArguments(bundle);
 
@@ -65,8 +64,8 @@ public class TrainFragment extends Fragment {
                 transaction
                         .add(R.id.navHostFragmentActivityMain, cardFragment, null)
                         .addToBackStack(TrainFragment.TAG)
-                        .setReorderingAllowed(true);
-                transaction.commit();
+                        .setReorderingAllowed(true)
+                        .commit();
                 return true;
             }
             return false;
@@ -127,6 +126,7 @@ public class TrainFragment extends Fragment {
             cursor.moveToPrevious();
         }
         cursor.close();
+        collectionTableManager.close();
 
         MyArrayAdapter adapter = new MyArrayAdapter(getContext(),
                 android.R.layout.simple_list_item_1, decks);

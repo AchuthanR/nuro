@@ -8,14 +8,13 @@ import androidx.core.splashscreen.SplashScreen;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.material.navigation.NavigationBarView;
 import com.technophile.nuro.databinding.ActivityMainBinding;
 import com.technophile.nuro.ui.activity.ActivityFragment;
-import com.technophile.nuro.ui.deck.CardFragment;
 import com.technophile.nuro.ui.deck.DeckFragment;
 import com.technophile.nuro.ui.help.HelpFragment;
 import com.technophile.nuro.ui.schedule.ScheduleFragment;
 import com.technophile.nuro.ui.train.TrainFragment;
-import com.google.android.material.navigation.NavigationBarView;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -198,16 +197,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (DeckFragment.TAG.equals(getSupportFragmentManager().getBackStackEntryAt(getSupportFragmentManager().getBackStackEntryCount() - 1).getName())) {
-            Fragment fragment = getSupportFragmentManager().findFragmentByTag(CardFragment.TAG);
-            if (fragment != null && fragment.isVisible()) {
-                if (fragment.getArguments() == null) {
-                    fragment.setArguments(new Bundle());
-                }
-                fragment.getArguments().putBoolean("ON_BACK_PRESSED", true);
-            }
-        }
-
         super.onBackPressed();
         int size = getSupportFragmentManager().getBackStackEntryCount();
         if (size == 0) {

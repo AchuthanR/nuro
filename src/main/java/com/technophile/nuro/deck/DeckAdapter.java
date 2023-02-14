@@ -96,9 +96,8 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
         ViewHolder viewHolder = new ViewHolder(view);
 
         viewHolder.getCardView().setOnClickListener(view1 -> {
-            CardFragment cardFragment = null;
+            CardFragment cardFragment = new CardFragment(decks.get(viewHolder.getAdapterPosition()).name);
             Bundle bundle = new Bundle();
-            bundle.putString("TABLE_NAME", decks.get(viewHolder.getAdapterPosition()).name);
             bundle.putBoolean("demoMode", demoMode);
 
             fragmentManager.executePendingTransactions();
@@ -107,24 +106,14 @@ public class DeckAdapter extends RecyclerView.Adapter<DeckAdapter.ViewHolder> {
                 if (fragment.isVisible()) {
                     transaction.hide(fragment);
                 }
-                if (!demoMode && CardFragment.TAG.equals(fragment.getTag()) && fragment.isAdded()) {
-                    cardFragment = (CardFragment) fragment;
-                    cardFragment.setArguments(bundle);
-                }
             }
 
-            if (cardFragment != null) {
-                transaction.show(cardFragment).addToBackStack(DeckFragment.TAG).setReorderingAllowed(true);
-            }
-            else {
-                cardFragment = new CardFragment();
-                cardFragment.setArguments(bundle);
-                transaction
-                        .add(R.id.navHostFragmentActivityMain, cardFragment, CardFragment.TAG)
-                        .addToBackStack(DeckFragment.TAG)
-                        .setReorderingAllowed(true);
-            }
-            transaction.commit();
+            cardFragment.setArguments(bundle);
+            transaction
+                    .add(R.id.navHostFragmentActivityMain, cardFragment, CardFragment.TAG)
+                    .addToBackStack(DeckFragment.TAG)
+                    .setReorderingAllowed(true)
+                    .commit();
         });
 
         return viewHolder;
