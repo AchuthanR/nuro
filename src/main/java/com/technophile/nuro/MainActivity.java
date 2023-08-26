@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.technophile.nuro.databinding.ActivityMainBinding;
 import com.technophile.nuro.ui.activity.ActivityFragment;
 import com.technophile.nuro.ui.deck.DeckFragment;
@@ -44,6 +46,11 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        if (BuildConfig.DEBUG) {
+            FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(false);
+            FirebaseAnalytics.getInstance(getApplicationContext()).setAnalyticsCollectionEnabled(false);
+        }
 
         File databaseFile = new File(getApplicationContext().getDatabasePath("database").getPath());
         if (!databaseFile.exists()) {
